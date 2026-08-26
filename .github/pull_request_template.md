@@ -1,3 +1,8 @@
+## DevTracker
+
+<!-- The tracker matches this line (or the branch name / PR title) to check the ticket off on merge. -->
+DevTracker: <TICKET-ID>
+
 ## Doctrine impact
 
 - [ ] No `karta.yaml` changes (skeleton unchanged)
