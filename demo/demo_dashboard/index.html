@@ -1,0 +1,25 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>HexaForge SLM Training Master — Demo</title>
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<h1>HexaForge SLM Training Master — pipeline demo</h1>
+<p class="profile">Profile: <code>request-response-v1</code> · Vertical: <code>ai-ml-ops</code></p>
+<div id="cards" class="cards">
+  <div class="card"><div class="label">Events processed</div><div class="value" id="m_events">—</div></div>
+  <div class="card"><div class="label">Incidents triaged</div><div class="value" id="m_incidents">—</div></div>
+  <div class="card"><div class="label">Escalated to SOC</div><div class="value" id="m_escalated">—</div></div>
+  <div class="card"><div class="label">Mo (cohort) signals</div><div class="value" id="m_mo">—</div></div>
+  <div class="card"><div class="label">Avg latency (ms)</div><div class="value" id="m_lat">—</div></div>
+</div>
+<pre id="raw">loading results.json…</pre>
+<script>
+fetch('results.json').then(r=>r.json()).then(d=>{
+  document.getElementById('m_events').textContent=d.events_processed ?? '0';
+  document.getElementById('m_incidents').textContent=d.incidents_triaged ?? '0';
+  document.getElementById('m_escalated').textContent=d.escalated_to_soc ?? '0';
+  document.getElementById('m_mo').textContent=d.mo_signals ?? '0';
+  document.getElementById('m_lat').textContent=(d.avg_latency_ms ?? 0).toFixed ? d.avg_latency_ms.toFixed(1) : d.avg_latency_ms;
+  document.getElementById('raw').textContent=JSON.stringify(d,null,2);
+}).catch(e=>{document.getElementById('raw').textContent='Run demo_runner.py first to produce results.json';});
+</script>
+</body></html>

@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_IMAGE_PROVENANCE_BOUND",
+  "name": "Image Provenance Bound (built image carries the signed bundle identity as labels; pushed digest Sigstore-attested by the emitted build chain)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_image_provenance_bound.py"
+}

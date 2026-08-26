@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HexaBox Admin · Runtime</title>
+<style>
+:root {
+  --bg: #0F0F28; --bg2: #1A1A3E; --bg3: #252550;
+  --fg: #E6E8F2; --fg2: #94A3B8; --fg3: #64748B;
+  --accent: #8B5CF6; --accent-deep: #6D28D9; --accent-soft: #2A1F4C;
+  --ok: #10B981; --warn: #F59E0B; --bad: #DC2626; --info: #06B6D4;
+  --border: #334155;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg); color: var(--fg); font-size: 13px; line-height: 1.5; min-height: 100vh; }
+.app { display: grid; grid-template-rows: 48px 1fr 24px; height: 100vh; }
+.topbar { background: var(--bg2); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; padding: 0 16px; }
+.topbar .left { display: flex; align-items: center; gap: 12px; }
+.topbar .right { display: flex; gap: 14px; font-size: 12px; color: var(--fg2); }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.ok { background: var(--ok); } .dot.warn { background: var(--warn); } .dot.bad { background: var(--bad); }
+.title { font-size: 13px; font-weight: 600; }
+.subtitle { font-size: 11px; color: var(--fg2); }
+.pill { padding: 2px 8px; border-radius: 10px; font-weight: 600; font-size: 11px; }
+.pill.shadow { background: #432B0E; color: #F59E0B; }
+.pill.live { background: #14532D; color: #4ADE80; }
+.body { display: grid; grid-template-columns: 130px 1fr; overflow: hidden; }
+.nav { background: var(--bg2); border-right: 1px solid var(--border); padding: 8px 0; overflow-y: auto; }
+.nav-item { padding: 8px 14px; font-size: 12px; color: var(--fg2); cursor: pointer;
+  border-left: 2px solid transparent; user-select: none; }
+.nav-item:hover { background: var(--bg3); color: var(--fg); }
+.nav-item.active { background: var(--bg3); color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+.nav-item .ico { display: inline-block; width: 16px; text-align: center; margin-right: 6px; }
+.view { overflow: auto; padding: 16px; }
+.statusbar { background: var(--bg2); border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
+  font-size: 11px; color: var(--fg3); }
+.view-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; color: var(--fg); }
+.view-sub { font-size: 12px; color: var(--fg2); margin-bottom: 16px; }
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px; margin-bottom: 12px; }
+.card-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--fg2); margin-bottom: 8px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.metric { background: var(--bg3); padding: 10px; border-radius: 6px; }
+.metric-label { font-size: 11px; color: var(--fg2); }
+.metric-value { font-size: 20px; font-weight: 600; color: var(--fg); margin-top: 2px; }
+.metric-delta { font-size: 11px; color: var(--ok); margin-top: 2px; }
+.table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.table th, .table td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--border); }
+.table th { color: var(--fg2); font-weight: 500; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.5px; }
+.tag { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+.tag.green { background: #14532D; color: #4ADE80; }
+.tag.amber { background: #432B0E; color: #F59E0B; }
+.tag.red { background: #531A1A; color: #F87171; }
+.tag.violet { background: #2D1B69; color: #C4B5FD; }
+.tag.slate { background: #1E293B; color: #94A3B8; }
+button { background: var(--accent); color: white; border: none; padding: 6px 12px;
+  border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
+button:hover { background: var(--accent-deep); }
+button.secondary { background: transparent; color: var(--fg2); border: 1px solid var(--border); }
+button.secondary:hover { background: var(--bg3); color: var(--fg); }
+.toggle { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.toggle input { cursor: pointer; }
+textarea, input[type=text] { width: 100%; background: var(--bg); color: var(--fg);
+  border: 1px solid var(--border); border-radius: 6px; padding: 8px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; }
+.muted { color: var(--fg3); }
+.hash { font-family: ui-monospace, monospace; font-size: 11px; color: var(--fg2); }
+.empty-state { text-align: center; color: var(--fg2); padding: 40px 20px; }
+.node-rect { cursor: pointer; transition: fill 0.2s; }
+.node-rect:hover { fill: var(--accent-soft) !important; }
+.node-rect.selected { stroke: var(--accent) !important; stroke-width: 2 !important; fill: var(--accent-soft) !important; }
+.row-actions button { padding: 4px 8px; font-size: 11px; }
+hr { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="left">
+      <span class="dot ok" id="health-dot"></span>
+      <span class="title" id="bundle-name">HexaBox Runtime</span>
+      <span class="subtitle" id="bundle-meta">loading…</span>
+    </div>
+    <div class="right">
+      <span id="evts-rate">— evts/min</span>
+      <span id="doctrine-status">doctrine —</span>
+      <span class="pill shadow" id="mode-pill">SHADOW</span>
+    </div>
+  </div>
+  <div class="body">
+    <div class="nav">
+      <div class="nav-item active" data-view="topology"><span class="ico">⊟</span>Topology</div>
+      <div class="nav-item" data-view="events"><span class="ico">⚡</span>Events</div>
+      <div class="nav-item" data-view="test"><span class="ico">⚗</span>Test Center</div>
+      <div class="nav-item" data-view="audit"><span class="ico">≡</span>Audit chain</div>
+      <div class="nav-item" data-view="config"><span class="ico">⚙</span>Config</div>
+      <div class="nav-item" data-view="health"><span class="ico">⌬</span>Health</div>
+    </div>
+    <div class="view" id="view"></div>
+  </div>
+  <div class="statusbar">
+    <span id="status-left">localhost:8080 · served by orchestrator.py</span>
+    <span id="status-right">audit ✓ · k≥5 enforced</span>
+  </div>
+</div>
+<div id="node-editor-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
+  <div class="card" style="max-width:480px; width:90%;">
+    <div class="card-title" id="node-editor-title">Edit node binding</div>
+    <div style="margin-bottom:12px;">
+      <label class="metric-label">SLM binding</label>
+      <select id="node-editor-slm" style="width:100%; background:var(--bg); color:var(--fg); border:1px solid var(--border); border-radius:6px; padding:8px;">
+        <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+        <option value="claude-haiku-4-5">claude-haiku-4-5</option>
+        <option value="claude-sonnet-4-5">claude-sonnet-4-5</option>
+        <option value="gpt-4o-mini">gpt-4o-mini</option>
+        <option value="gpt-4o">gpt-4o</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px;">
+      <label class="metric-label">Confidence threshold (<span id="node-editor-threshold-display">0.75</span>)</label>
+      <input type="range" id="node-editor-threshold" min="0.50" max="0.95" step="0.05" value="0.75" style="width:100%;" oninput="document.getElementById('node-editor-threshold-display').textContent=this.value"/>
+      <div class="muted" style="font-size:11px;">0.50 = mer eskalering · 0.95 = mer auto-resolve</div>
+    </div>
+    <div id="node-editor-status" style="margin-bottom:8px; font-size:11px; min-height:14px;"></div>
+    <div style="display:flex; gap:6px; justify-content:flex-end;">
+      <button class="secondary" onclick="closeNodeEditor()">Cancel</button>
+      <button onclick="saveNodeEditor()" id="node-editor-save-btn">Save</button>
+    </div>
+  </div>
+</div>
+<script>
+const state = { bundle: null, topology: null, selectedNode: null,
+  events: [], audit: [], config: null, health: null, view: "topology" };
+
+// API base is configurable via ?api=<url> query param. Defaults to /api for
+// bundle-runtime mode (orchestrator.py serves both UI and API on same origin).
+// When embedded inside Doable Studio as a preview iframe, the host passes
+// ?api=/functions/v1/forseti-admin-preview/<agent_id> so the same UI reads
+// from Studio's Supabase instead of the local in-memory store.
+const API_BASE = new URLSearchParams(location.search).get("api") || "/api";
+
+async function api(path, opts) {
+  try {
+    const url = API_BASE + (path.startsWith("/api") ? path.slice(4) : path);
+    const r = await fetch(url, opts);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return await r.json();
+  }
+  catch (e) { console.error(`api ${path}:`, e); return null; }
+}
+async function loadBundle() {
+  const b = await api("/api/bundle");
+  if (b) { state.bundle = b;
+    document.getElementById("bundle-name").textContent = b.fleet_name || b.agent_name || "HexaBox Runtime";
+    document.getElementById("bundle-meta").textContent =
+      `${b.runtime_location || "studio_edge"} · session ${(b.session_id || "—").slice(0, 8)}… · audit ✓`;
+    document.getElementById("mode-pill").textContent = b.shadow_mode ? "SHADOW" : "LIVE";
+    document.getElementById("mode-pill").className = "pill " + (b.shadow_mode ? "shadow" : "live");
+  }
+}
+async function loadTopology() { const t = await api("/api/topology"); if (t) state.topology = t; }
+async function loadHealth() {
+  const h = await api("/api/health");
+  if (h) { state.health = h;
+    document.getElementById("evts-rate").textContent = `${h.events_per_min ?? 0} evts/min`;
+    document.getElementById("doctrine-status").textContent = `doctrine ${h.doctrine_score ?? "—"}`;
+  }
+}
+function escapeHtml(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function colorForRole(role) {
+  return { ingress: "#1E3A5F", egress: "#1E3A5F", hexalearn: "#3D2A6F",
+    governance: "#5A3A1F", coordinator: "#3D2A6F", core: "#1E293B" }[role] || "#1E293B";
+}
+function renderTopology() {
+  const t = state.topology;
+  if (!t || !t.nodes) return `<div class="empty-state">No topology loaded. Check /api/topology.</div>`;
+  const cols = { ingress: 1, hexalearn: 2, governance: 2, core: 2, coordinator: 3, egress: 4 };
+  const buckets = {};
+  for (const n of t.nodes) {
+    const c = cols[n.role] ?? 2;
+    buckets[c] = buckets[c] || []; buckets[c].push(n);
+  }
+  const colCount = Math.max(...Object.keys(buckets).map(Number)) + 1;
+  const colW = 320, rowH = 110;
+  const svgW = (colCount + 1) * colW;
+  let maxRows = 0;
+  for (const c of Object.values(buckets)) maxRows = Math.max(maxRows, c.length);
+  const svgH = Math.max(420, (maxRows + 1) * rowH + 40);
+  let nodeRects = "", edges = "";
+  const nodePos = {};
+  for (const [c, list] of Object.entries(buckets)) {
+    const col = Number(c);
+    list.forEach((n, i) => {
+      const x = col * colW + 20, y = 30 + i * rowH;
+      const sel = state.selectedNode === n.id ? " selected" : "";
+      const fill = colorForRole(n.role);
+      nodePos[n.id] = { x: x + 80, y: y + 22 };
+      nodeRects += `<g class="node-group" data-id="${escapeHtml(n.id)}">
+        <rect class="node-rect${sel}" x="${x}" y="${y}" width="160" height="44" rx="6"
+              fill="${fill}" stroke="#334155" stroke-width="0.8"/>
+        <text x="${x + 80}" y="${y + 20}" text-anchor="middle" font-size="11"
+              font-weight="600" fill="#E6E8F2">${escapeHtml(n.id)}</text>
+        <text x="${x + 80}" y="${y + 35}" text-anchor="middle" font-size="9"
+              fill="#94A3B8">${escapeHtml(n.role)} · ${(n.throughput_per_min ?? 0).toFixed(1)}/min</text>
+      </g>`;
+    });
+  }
+  for (const e of t.edges || []) {
+    const from = nodePos[e.source_node], to = nodePos[e.target_node];
+    if (!from || !to) continue;
+    edges += `<line x1="${from.x + 80}" y1="${from.y}" x2="${to.x - 80}" y2="${to.y}"
+                stroke="#475569" stroke-width="1" stroke-dasharray="2 2"/>`;
+  }
+  return `
+    <div class="view-title">Live topology</div>
+    <div class="view-sub">${t.nodes.length} nodes · ${(t.edges || []).length} edges · click a node to inspect</div>
+    <div class="card" style="padding: 8px; overflow-x: auto;">
+      <svg viewBox="0 0 ${svgW} ${svgH}" width="100%" height="${svgH}">${edges}${nodeRects}</svg>
+    </div>
+    ${state.selectedNode ? renderNodeInspector(state.selectedNode) : ""}`;
+}
+function renderNodeInspector(nodeId) {
+  const n = (state.topology?.nodes || []).find(x => x.id === nodeId);
+  if (!n) return "";
+  return `<div class="card">
+    <div class="card-title">Inspector — ${escapeHtml(n.id)}</div>
+    <div class="grid-2">
+      <div>
+        <div class="metric-label">Role</div>
+        <div style="font-weight: 600; color: var(--accent); margin-bottom: 8px;">${escapeHtml(n.role)}</div>
+        <div class="metric-label">Ports</div>
+        <div style="margin-bottom: 8px;">${(n.ports || []).map(p => `<span class="tag slate">${escapeHtml(p.id)}</span>`).join(" ")}</div>
+        <div class="metric-label">SLM binding</div>
+        <div>${escapeHtml(n.slm_binding || "gemini-2.5-flash (default)")}</div>
+      </div>
+      <div>
+        <div class="metric-label">Confidence threshold</div>
+        <div style="font-size: 18px; font-weight: 600;">${(n.confidence_threshold ?? 0.75).toFixed(2)}</div>
+        <div class="metric-label" style="margin-top: 8px;">Last hour</div>
+        <div>${n.decisions_last_hour ?? 0} decisions · avg conf ${(n.avg_confidence ?? 0).toFixed(2)}</div>
+        <div class="muted" style="font-size: 11px; margin-top: 8px;">${n.escalations_last_hour ?? 0} escalations</div>
+      </div>
+    </div>
+    <hr/>
+    <div class="row-actions" style="display: flex; gap: 6px;">
+      <button onclick="state.view='test'; render();">Test event</button>
+      <button class="secondary" onclick="state.view='config'; render();">Change SLM</button>
+      <button class="secondary" onclick="state.view='audit'; render();">Recent audit</button>
+    </div>
+  </div>`;
+}
+function renderEvents() {
+  const evs = state.events || [];
+  if (!evs.length) return `<div class="view-title">Live events</div>
+    <div class="view-sub">Events from the ingress feed, scrolling as they arrive.</div>
+    <div class="empty-state">Waiting for events… or no events received yet.</div>`;
+  // Columns are derived from the agent's OWN event fields — no domain assumptions.
+  const skip = new Set(["ts", "audit_hash"]);
+  const cols = [];
+  for (const e of evs) for (const k of Object.keys(e || {})) if (!skip.has(k) && !cols.includes(k)) cols.push(k);
+  const fmt = (v) => {
+    if (v === null || v === undefined) return "";
+    if (typeof v === "number") return Number.isInteger(v) ? String(v) : v.toFixed(2);
+    if (typeof v === "object") return escapeHtml(JSON.stringify(v));
+    return escapeHtml(String(v));
+  };
+  const head = `<th>Time</th>${cols.map(c => `<th>${escapeHtml(c)}</th>`).join("")}<th>Hash</th>`;
+  const rows = evs.map(e => `<tr>
+        <td class="muted">${escapeHtml((e.ts || "").slice(11, 19))}</td>
+        ${cols.map(c => `<td>${fmt(e[c])}</td>`).join("")}
+        <td class="hash">${escapeHtml((e.audit_hash || "").slice(0, 10))}…</td>
+      </tr>`).join("");
+  return `<div class="view-title">Live events</div>
+    <div class="view-sub">${evs.length} recent events · auto-refresh every 3 sec · columns from the agent's own event fields</div>
+    <div class="card"><table class="table">
+      <thead><tr>${head}</tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`;
+}
+function renderTest() {
+  return `<div class="view-title">Test Center</div>
+    <div class="view-sub">Paste a JSON event — shaped like your agent's ingress (XI) contract — and run it through the topology with real LLM dispatch.</div>
+    <div class="card">
+      <textarea id="test-event" rows="8" placeholder='{"event_id":"test-001","ts":"2026-05-24T14:00:00Z","payload":{}}'></textarea>
+      <div style="margin-top: 10px; display: flex; gap: 8px;">
+        <button onclick="runTest()">Run through topology</button>
+        <button class="secondary" onclick="document.getElementById('test-event').value = JSON.stringify({event_id:'test-001',ts:new Date().toISOString(),payload:{}},null,2);">Load sample</button>
+      </div>
+    </div>
+    <div id="test-result"></div>`;
+}
+async function runTest() {
+  const raw = document.getElementById("test-event").value;
+  let parsed;
+  try { parsed = JSON.parse(raw); } catch (e) {
+    document.getElementById("test-result").innerHTML = `<div class="card" style="color:var(--bad)">Invalid JSON: ${escapeHtml(e.message)}</div>`;
+    return;
+  }
+  document.getElementById("test-result").innerHTML = `<div class="card"><span class="muted">Running…</span></div>`;
+  const r = await api("/api/test-run", { method: "POST",
+    headers: { "Content-Type": "application/json" }, body: JSON.stringify({ event: parsed }) });
+  if (!r) { document.getElementById("test-result").innerHTML = `<div class="card" style="color:var(--bad)">Test run failed — check console.</div>`; return; }
+  let trace = "";
+  for (const step of r.trace || []) {
+    trace += `<div style="margin-bottom: 8px;">
+      <span class="tag violet">${escapeHtml(step.node_id)}</span>
+      <span class="muted" style="margin-left: 8px;">${step.duration_ms ?? 0}ms · ${escapeHtml(step.model || "")}</span>
+      <div style="font-size: 11px; margin-top: 2px; color: var(--fg2);">${escapeHtml(step.reasoning || "")}</div>
+    </div>`;
+  }
+  document.getElementById("test-result").innerHTML = `<div class="card">
+    <div class="card-title">Trace</div>${trace || '<span class="muted">No trace returned.</span>'}
+    <hr/>
+    <div class="grid-2">
+      <div><div class="metric-label">Final verdict</div><div style="font-weight: 600; font-size: 16px;">${escapeHtml(r.verdict || "—")}</div></div>
+      <div><div class="metric-label">Confidence</div><div style="font-weight: 600; font-size: 16px;">${(r.confidence ?? 0).toFixed(2)}</div></div>
+    </div>
+    <div class="metric-label" style="margin-top: 8px;">Audit hash</div>
+    <div class="hash">${escapeHtml(r.audit_hash || "—")}</div></div>`;
+}
+function renderAudit() {
+  const a = state.audit || [];
+  if (!a.length) return `<div class="view-title">Audit chain</div>
+    <div class="view-sub">SHA-256 chained log of every decision.</div>
+    <div class="empty-state">No audit events yet.</div>`;
+  return `<div class="view-title">Audit chain</div>
+    <div class="view-sub">${a.length} events · most recent first · all SHA-256 chained</div>
+    <div class="card"><table class="table">
+      <thead><tr><th>Seq</th><th>Time</th><th>Event type</th><th>Node</th><th>Hash</th></tr></thead>
+      <tbody>${a.map(e => `<tr>
+        <td class="muted">#${e.sequence_num}</td>
+        <td class="muted">${escapeHtml((e.ts || "").slice(11, 19))}</td>
+        <td>${escapeHtml(e.event_type)}</td>
+        <td class="muted">${escapeHtml(e.node_id || "—")}</td>
+        <td class="hash">${escapeHtml((e.this_hash || "").slice(0, 12))}…</td>
+      </tr>`).join("")}</tbody>
+    </table></div>`;
+}
+function renderConfig() {
+  const c = state.config || {}; const nodes = state.topology?.nodes || [];
+  return `<div class="view-title">Configuration</div>
+    <div class="view-sub">Per-node SLM bindings, confidence thresholds, and global toggles. Changes versioned in audit chain.</div>
+    <div class="card"><div class="card-title">Global</div>
+      <div class="grid-2">
+        <label class="toggle"><input type="checkbox" ${c.shadow_mode ? "checked" : ""}
+          onchange="updateConfig('shadow_mode', this.checked)"/>Shadow mode (observe only, no actions)</label>
+        <label class="toggle"><input type="checkbox" ${c.federation_enabled ? "checked" : ""}
+          onchange="updateConfig('federation_enabled', this.checked)"/>Federation Mi/Mo enabled</label>
+      </div>
+    </div>
+    <div class="card"><div class="card-title">Per-node bindings</div>
+      <table class="table">
+        <thead><tr><th>Node</th><th>SLM</th><th>Threshold</th><th></th></tr></thead>
+        <tbody>${nodes.map(n => `<tr>
+          <td><span class="tag slate">${escapeHtml(n.id)}</span></td>
+          <td class="muted">${escapeHtml(n.slm_binding || "gemini-2.5-flash")}</td>
+          <td>${(n.confidence_threshold ?? 0.75).toFixed(2)}</td>
+          <td class="row-actions"><button class="secondary" onclick="openNodeEditor('${escapeHtml(n.id)}', '${escapeHtml(n.slm_binding || "gemini-2.5-flash")}', ${(n.confidence_threshold ?? 0.75).toFixed(2)})">Edit</button></td>
+        </tr>`).join("")}</tbody>
+      </table>
+    </div>`;
+}
+let _editorNodeId = null;
+function openNodeEditor(nodeId, currentSlm, currentThreshold) {
+  _editorNodeId = nodeId;
+  document.getElementById("node-editor-title").textContent = "Edit " + nodeId;
+  const slmClean = String(currentSlm).replace(/\s*\(default\)\s*$/, "").trim();
+  const select = document.getElementById("node-editor-slm");
+  let found = false;
+  for (const o of select.options) { if (o.value === slmClean) { select.value = slmClean; found = true; break; } }
+  if (!found) { select.value = "gemini-2.5-flash"; }
+  const range = document.getElementById("node-editor-threshold");
+  range.value = currentThreshold;
+  document.getElementById("node-editor-threshold-display").textContent = Number(currentThreshold).toFixed(2);
+  document.getElementById("node-editor-status").textContent = "";
+  document.getElementById("node-editor-modal").style.display = "flex";
+}
+function closeNodeEditor() {
+  const el = document.getElementById("node-editor-modal");
+  if (el) el.style.display = "none";
+  _editorNodeId = null;
+}
+async function saveNodeEditor() {
+  if (!_editorNodeId) return;
+  const slm = document.getElementById("node-editor-slm").value;
+  const threshold = parseFloat(document.getElementById("node-editor-threshold").value);
+  const statusEl = document.getElementById("node-editor-status");
+  const saveBtn = document.getElementById("node-editor-save-btn");
+  statusEl.style.color = "var(--fg2)";
+  statusEl.textContent = "Sparar…";
+  saveBtn.disabled = true;
+  try {
+    const resp = await api("/api/config/nodes/" + encodeURIComponent(_editorNodeId), {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slm_binding: slm, confidence_threshold: threshold }),
+    });
+    if (!resp) throw new Error("Server returned no response");
+    statusEl.style.color = "var(--ok)";
+    statusEl.textContent = "✓ Sparat. Refreshar…";
+    await loadAll();
+    setTimeout(() => { closeNodeEditor(); render(); }, 600);
+  } catch (e) {
+    statusEl.style.color = "var(--bad)";
+    statusEl.textContent = "✗ Misslyckades: " + ((e && e.message) ? e.message : String(e));
+  } finally {
+    saveBtn.disabled = false;
+  }
+}
+async function updateConfig(key, value) {
+  await api("/api/config", { method: "PUT", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ [key]: value }) });
+  await loadAll(); render();
+}
+function renderHealth() {
+  const h = state.health || {};
+  return `<div class="view-title">Health & metrics</div>
+    <div class="view-sub">Runtime statistics, refresh every 3 sec.</div>
+    <div class="grid-4">
+      <div class="metric"><div class="metric-label">Events / minute</div><div class="metric-value">${h.events_per_min ?? 0}</div><div class="metric-delta">${h.events_delta ?? ""}</div></div>
+      <div class="metric"><div class="metric-label">P95 latency</div><div class="metric-value">${h.p95_latency_ms ?? "—"}ms</div></div>
+      <div class="metric"><div class="metric-label">Doctrine score</div><div class="metric-value">${h.doctrine_score ?? "—"}</div></div>
+      <div class="metric"><div class="metric-label">Error rate</div><div class="metric-value">${((h.error_rate ?? 0) * 100).toFixed(1)}%</div></div>
+    </div>
+    <div class="card" style="margin-top: 12px;"><div class="card-title">Auto-resolve breakdown</div>
+      <div class="grid-3">
+        <div class="metric"><div class="metric-label">auto_resolve</div><div class="metric-value" style="color: var(--ok);">${h.auto_resolve_pct ?? 0}%</div></div>
+        <div class="metric"><div class="metric-label">auto_respond</div><div class="metric-value" style="color: var(--warn);">${h.auto_respond_pct ?? 0}%</div></div>
+        <div class="metric"><div class="metric-label">escalated</div><div class="metric-value" style="color: var(--bad);">${h.escalate_pct ?? 0}%</div></div>
+      </div>
+    </div>
+    <div class="card"><div class="card-title">Anonymization</div>
+      <div class="grid-2">
+        <div class="metric"><div class="metric-label">k-anonymity floor</div><div class="metric-value">k≥${h.k_minimum ?? 5}</div></div>
+        <div class="metric"><div class="metric-label">Cohort signals emitted</div><div class="metric-value">${h.cohort_signals_today ?? 0} today</div></div>
+      </div>
+    </div>`;
+}
+function render() {
+  document.querySelectorAll(".nav-item").forEach(el => {
+    el.classList.toggle("active", el.dataset.view === state.view);
+  });
+  const view = document.getElementById("view");
+  const r = { topology: renderTopology, events: renderEvents, test: renderTest,
+              audit: renderAudit, config: renderConfig, health: renderHealth };
+  view.innerHTML = (r[state.view] || (() => `<div class="empty-state">Unknown view</div>`))();
+  if (state.view === "topology") {
+    document.querySelectorAll(".node-group").forEach(g => {
+      g.addEventListener("click", () => { state.selectedNode = g.dataset.id; render(); });
+    });
+  }
+}
+document.querySelectorAll(".nav-item").forEach(el => {
+  el.addEventListener("click", () => { state.view = el.dataset.view; render(); });
+});
+async function loadAll() {
+  await Promise.all([loadBundle(), loadTopology(), loadHealth(),
+    api("/api/events").then(d => { if (d) state.events = d.events || []; }),
+    api("/api/audit").then(d => { if (d) state.audit = d.events || []; }),
+    api("/api/config").then(d => { if (d) state.config = d; })]);
+}
+async function tick() {
+  // D19.1 hotfix — pausa auto-refresh medan node-editor-modalen är öppen,
+  // annars triggar bakgrunds-render() ett re-paint av Config-vyn som kan
+  // störa input-fokus och dropdown-val.
+  const modal = document.getElementById("node-editor-modal");
+  if (modal && modal.style.display === "flex") return;
+  await loadAll(); render();
+}
+(async () => { await tick(); setInterval(tick, 3000); })();
+</script>
+</body>
+</html>

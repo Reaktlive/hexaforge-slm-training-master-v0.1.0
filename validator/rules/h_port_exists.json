@@ -1,0 +1,7 @@
+{
+  "gate_id": "H_PORT_EXISTS",
+  "name": "Port Existence (karta)",
+  "kind": "hard",
+  "category": "doctrine",
+  "module": "h_port_exists.py"
+}

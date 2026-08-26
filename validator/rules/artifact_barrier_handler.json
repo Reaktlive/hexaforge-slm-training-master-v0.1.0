@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_BARRIER_HANDLER",
+  "name": "Barrier-Sync",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_barrier_handler.py"
+}

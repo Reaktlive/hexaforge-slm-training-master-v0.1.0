@@ -1,0 +1,7 @@
+{
+  "gate_id": "H_PRIVILEGED_ACTION_DECLARED",
+  "name": "Privileged Action Declared + CCAS-Gated",
+  "kind": "hard",
+  "category": "doctrine",
+  "module": "h_privileged_action.py"
+}

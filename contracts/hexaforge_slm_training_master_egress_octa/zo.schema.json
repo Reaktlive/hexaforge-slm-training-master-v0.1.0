@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "port_id": "ZO",
+  "version": "1.0.0",
+  "direction": "out",
+  "maturity": "platform_complete",
+  "maturity_rule": "an empty object schema (no properties AND no required) is one whole-schema OPEN CUSTOMER SEAM (\"(schema)\"); otherwise top-level walk of schema.properties: a property whose definition has no typed shape (no non-empty properties/required) and no type constraint beyond object/untyped is an OPEN CUSTOMER SEAM (deliberate payload leniency, blocker2); >=1 seam => open_customer_seam, else platform_complete. domain_complete is never factory-emitted (only the customer can attest it).",
+  "schema": {
+    "type": "object",
+    "schema_type": "object",
+    "schema_version": "1.0.0",
+    "properties": {
+      "ts": {
+        "type": "string",
+        "description": "ISO 8601 timestamp"
+      },
+      "event": {
+        "type": "string"
+      },
+      "vertical": {
+        "type": "string"
+      },
+      "latency_ms": {
+        "type": "integer"
+      },
+      "session_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "event",
+      "session_id",
+      "vertical",
+      "ts"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "gate_id": "H12",
+  "name": "Schema Compatibility (karta)",
+  "kind": "hard",
+  "category": "doctrine",
+  "module": "h12.py"
+}

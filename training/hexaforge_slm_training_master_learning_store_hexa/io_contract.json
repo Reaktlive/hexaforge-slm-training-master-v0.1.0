@@ -1,0 +1,8 @@
+{
+  "node": "hexaforge_slm_training_master_learning_store_hexa",
+  "competence": null,
+  "input_schema": "contracts/hexaforge_slm_training_master_learning_store_hexa/xi.schema.json",
+  "output_schema": "contracts/hexaforge_slm_training_master_learning_store_hexa/xo.schema.json",
+  "determinism": "temperature_0",
+  "gate_rule": "uncertain=>escalate"
+}

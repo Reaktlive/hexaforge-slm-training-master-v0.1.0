@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_RUNTIME_JOIN_PARITY",
+  "name": "Runtime Join Parity",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_runtime_join_parity.py"
+}

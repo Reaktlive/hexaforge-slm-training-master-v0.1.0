@@ -1,0 +1,8 @@
+{
+  "node": "hexaforge_slm_training_master_gpu_telemetry_normalizer_hexa",
+  "competence": "gpu_telemetry_normalizer",
+  "input_schema": "contracts/hexaforge_slm_training_master_gpu_telemetry_normalizer_hexa/xi.schema.json",
+  "output_schema": "contracts/hexaforge_slm_training_master_gpu_telemetry_normalizer_hexa/xo.schema.json",
+  "determinism": "temperature_0",
+  "gate_rule": "uncertain=>escalate"
+}

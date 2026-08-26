@@ -1,0 +1,1931 @@
+{
+  "maturity_rule": "an empty object schema (no properties AND no required) is one whole-schema OPEN CUSTOMER SEAM (\"(schema)\"); otherwise top-level walk of schema.properties: a property whose definition has no typed shape (no non-empty properties/required) and no type constraint beyond object/untyped is an OPEN CUSTOMER SEAM (deliberate payload leniency, blocker2); >=1 seam => open_customer_seam, else platform_complete. domain_complete is never factory-emitted (only the customer can attest it).",
+  "totals": {
+    "platform_complete": 136,
+    "open_customer_seam": 138,
+    "total": 274
+  },
+  "contracts": [
+    {
+      "node": "hexaforge_slm_training_master_intake_octa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "payload"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_intake_octa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_intake_octa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_intake_octa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_intake_octa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_intake_octa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_intake_octa",
+      "port": "mi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "side_feed_writes"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_intake_octa",
+      "port": "mo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_enrichment_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_enrichment_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_enrichment_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_enrichment_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_enrichment_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_enrichment_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_event_parser_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_event_parser_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_event_parser_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_event_parser_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_event_parser_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_event_parser_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_campaign_planner_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_campaign_planner_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_campaign_planner_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_campaign_planner_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_campaign_planner_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_campaign_planner_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_job_supervisor_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_job_supervisor_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_job_supervisor_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_job_supervisor_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_job_supervisor_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_job_supervisor_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_gpu_telemetry_normalizer_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_gpu_telemetry_normalizer_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_gpu_telemetry_normalizer_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_gpu_telemetry_normalizer_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_gpu_telemetry_normalizer_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_gpu_telemetry_normalizer_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_failure_diagnoser_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_failure_diagnoser_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_failure_diagnoser_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_failure_diagnoser_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_failure_diagnoser_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_failure_diagnoser_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_eval_gatekeeper_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_eval_gatekeeper_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_eval_gatekeeper_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_eval_gatekeeper_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_eval_gatekeeper_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_eval_gatekeeper_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_provenance_recorder_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_provenance_recorder_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_provenance_recorder_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_provenance_recorder_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_provenance_recorder_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_provenance_recorder_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_proposer_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_proposer_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_proposer_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_proposer_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_proposer_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_proposer_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_explainer_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_explainer_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_explainer_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_explainer_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_explainer_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_explainer_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_quality_checker_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_quality_checker_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_quality_checker_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_quality_checker_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_quality_checker_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_quality_checker_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_ledger_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_ledger_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_ledger_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_ledger_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_ledger_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_ledger_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_artifact_meter_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_artifact_meter_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_artifact_meter_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_artifact_meter_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_artifact_meter_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_artifact_meter_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_provenance_recorder_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_provenance_recorder_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_provenance_recorder_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_provenance_recorder_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_provenance_recorder_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_data_provenance_recorder_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_drift_detector_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_drift_detector_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_drift_detector_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_drift_detector_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_drift_detector_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_drift_detector_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_retrain_proposer_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_retrain_proposer_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_retrain_proposer_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_retrain_proposer_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_retrain_proposer_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_retrain_proposer_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_fleet_binder_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_fleet_binder_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_fleet_binder_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_fleet_binder_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_fleet_binder_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_fleet_binder_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_delegation_registrar_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_delegation_registrar_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_delegation_registrar_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_delegation_registrar_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_delegation_registrar_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_delegation_registrar_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_decision_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_model_freshness_validator_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_model_freshness_validator_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_model_freshness_validator_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_model_freshness_validator_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_model_freshness_validator_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_model_freshness_validator_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_safety_validator_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_safety_validator_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_safety_validator_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_safety_validator_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_safety_validator_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_safety_validator_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_packager_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_packager_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_packager_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_packager_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_packager_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_packager_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_egress_octa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_egress_octa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "governance_metadata"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_egress_octa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_egress_octa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_egress_octa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_egress_octa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_egress_octa",
+      "port": "mi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "side_feed_writes"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_egress_octa",
+      "port": "mo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "aggregate_payload"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_learning_store_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_learning_store_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_learning_store_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_learning_store_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_learning_store_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_learning_store_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_start_training_job_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_start_training_job_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_start_training_job_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_start_training_job_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_start_training_job_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_start_training_job_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_requeue_job_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_requeue_job_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_requeue_job_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_requeue_job_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_requeue_job_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_requeue_job_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_retry_with_adjustment_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_retry_with_adjustment_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_retry_with_adjustment_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_retry_with_adjustment_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_retry_with_adjustment_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_retry_with_adjustment_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_kill_job_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_kill_job_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_kill_job_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_kill_job_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_kill_job_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_kill_job_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_pause_campaign_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_pause_campaign_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_pause_campaign_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_pause_campaign_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_pause_campaign_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_pause_campaign_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_resume_campaign_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_resume_campaign_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_resume_campaign_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_resume_campaign_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_resume_campaign_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_resume_campaign_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_park_job_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_park_job_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_park_job_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_park_job_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_park_job_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_park_job_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_keep_parked_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_keep_parked_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_keep_parked_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_keep_parked_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_keep_parked_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_keep_parked_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_remove_flagged_rows_and_recheck_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_remove_flagged_rows_and_recheck_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_remove_flagged_rows_and_recheck_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_remove_flagged_rows_and_recheck_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_remove_flagged_rows_and_recheck_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_remove_flagged_rows_and_recheck_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_promote_and_bind_adapter_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_promote_and_bind_adapter_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_promote_and_bind_adapter_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_promote_and_bind_adapter_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_promote_and_bind_adapter_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_promote_and_bind_adapter_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_deny_bind_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_deny_bind_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_deny_bind_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_deny_bind_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_deny_bind_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_deny_bind_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_binding_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_binding_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_binding_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_binding_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_binding_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_binding_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_delete_artifact_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_delete_artifact_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_delete_artifact_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_delete_artifact_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_delete_artifact_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_delete_artifact_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_trigger_retrain_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_trigger_retrain_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_trigger_retrain_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_trigger_retrain_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_trigger_retrain_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_trigger_retrain_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_adapter_to_fleet_agent_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_adapter_to_fleet_agent_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_adapter_to_fleet_agent_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_adapter_to_fleet_agent_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_adapter_to_fleet_agent_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_bind_adapter_to_fleet_agent_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_fleet_binding_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_fleet_binding_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_fleet_binding_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_fleet_binding_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_fleet_binding_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_rollback_fleet_binding_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_grant_shared_adapter_training_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_grant_shared_adapter_training_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_grant_shared_adapter_training_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_grant_shared_adapter_training_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_grant_shared_adapter_training_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_grant_shared_adapter_training_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_issue_delegation_grant_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_issue_delegation_grant_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_issue_delegation_grant_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_issue_delegation_grant_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_issue_delegation_grant_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_issue_delegation_grant_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_revoke_delegation_grant_approval_gate_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_revoke_delegation_grant_approval_gate_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "(schema)"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_revoke_delegation_grant_approval_gate_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_revoke_delegation_grant_approval_gate_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_revoke_delegation_grant_approval_gate_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_revoke_delegation_grant_approval_gate_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_action_selector_hexa",
+      "port": "xi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_action_selector_hexa",
+      "port": "xo",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "action_parameters",
+        "payload"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_action_selector_hexa",
+      "port": "yi",
+      "maturity": "open_customer_seam",
+      "open_seams": [
+        "effective_k_minimum"
+      ]
+    },
+    {
+      "node": "hexaforge_slm_training_master_action_selector_hexa",
+      "port": "yo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_action_selector_hexa",
+      "port": "zi",
+      "maturity": "platform_complete",
+      "open_seams": []
+    },
+    {
+      "node": "hexaforge_slm_training_master_action_selector_hexa",
+      "port": "zo",
+      "maturity": "platform_complete",
+      "open_seams": []
+    }
+  ]
+}

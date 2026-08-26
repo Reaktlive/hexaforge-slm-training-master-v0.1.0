@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "port_id": "XO",
+  "version": "1.0.0",
+  "direction": "out",
+  "maturity": "open_customer_seam",
+  "open_seams": [
+    "action_parameters",
+    "payload"
+  ],
+  "maturity_rule": "an empty object schema (no properties AND no required) is one whole-schema OPEN CUSTOMER SEAM (\"(schema)\"); otherwise top-level walk of schema.properties: a property whose definition has no typed shape (no non-empty properties/required) and no type constraint beyond object/untyped is an OPEN CUSTOMER SEAM (deliberate payload leniency, blocker2); >=1 seam => open_customer_seam, else platform_complete. domain_complete is never factory-emitted (only the customer can attest it).",
+  "schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "born_deterministic": true,
+    "schema_type": "object",
+    "schema_version": "1.0.0",
+    "properties": {
+      "ts": {
+        "type": "string"
+      },
+      "payload": {
+        "type": "object",
+        "description": "final payload ready for external emission"
+      },
+      "confidence": {
+        "type": "number",
+        "description": "Selection confidence 0..1."
+      },
+      "target_asset": {
+        "type": "string",
+        "description": "Subject the action applies to."
+      },
+      "idempotency_key": {
+        "type": "string",
+        "description": "Stable key so a replayed proposal cannot double-execute."
+      },
+      "selected_action": {
+        "type": "string",
+        "description": "Declared privileged-action name the router selected; empty string = no action."
+      },
+      "action_parameters": {
+        "type": "object",
+        "description": "Action-specific parameters."
+      },
+      "policy_requirements": {
+        "type": "array",
+        "description": "Policy/CCAS requirements the selected gate must satisfy."
+      },
+      "tenant_id": {
+        "type": "string",
+        "description": "Tenant the action is scoped to. Bound into the signed action hash and into the execution reservation; a gated action without it fails closed."
+      }
+    },
+    "required": [
+      "selected_action",
+      "target_asset",
+      "action_parameters",
+      "confidence",
+      "policy_requirements",
+      "idempotency_key",
+      "tenant_id"
+    ]
+  }
+}

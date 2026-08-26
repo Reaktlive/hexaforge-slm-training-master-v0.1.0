@@ -1,0 +1,7 @@
+{
+  "gate_id": "H_MACROHUB_ISOLATION",
+  "name": "MacroHub Isolation",
+  "kind": "hard",
+  "category": "doctrine",
+  "module": "h_macrohub_isolation.py"
+}

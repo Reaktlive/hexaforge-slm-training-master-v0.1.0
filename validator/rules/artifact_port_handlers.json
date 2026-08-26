@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_PORT_HANDLERS",
+  "name": "Port Existence",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_port_handlers.py"
+}

@@ -1,0 +1,7 @@
+{
+  "gate_id": "H_COHORT_ANONYMITY",
+  "name": "Cohort k-Anonymity",
+  "kind": "hard",
+  "category": "doctrine",
+  "module": "h_cohort_anonymity.py"
+}

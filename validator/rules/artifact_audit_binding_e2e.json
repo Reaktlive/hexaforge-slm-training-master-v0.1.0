@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_AUDIT_BINDING_E2E",
+  "name": "Audit Binding E2E (who / exact input / exact output)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_audit_binding_e2e.py"
+}

@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_SCHEMA_COMPAT",
+  "name": "Schema Compatibility",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_schema_compat.py"
+}

@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_SUPPLY_CHAIN_MEASURED",
+  "name": "Supply Chain Measured (transitive hash-locked lock + CycloneDX SBOM measured before export and signed; base-image digest two-state)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_supply_chain_measured.py"
+}

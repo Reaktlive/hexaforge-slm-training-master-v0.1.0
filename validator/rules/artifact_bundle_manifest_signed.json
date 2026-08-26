@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_BUNDLE_MANIFEST_SIGNED",
+  "name": "Bundle Manifest Signed (every delivered file hash-bound to the signed identity)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_bundle_manifest_signed.py"
+}

@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_CONTRACT_COMPLETENESS",
+  "name": "Contract Completeness (measurement)",
+  "kind": "report",
+  "category": "artifact",
+  "module": "artifact_contract_completeness.py"
+}

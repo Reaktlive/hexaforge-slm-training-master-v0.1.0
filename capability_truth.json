@@ -1,0 +1,234 @@
+{
+  "implemented": 23,
+  "ai_bound": 0,
+  "heuristic": 4,
+  "stub": 18,
+  "total": 45,
+  "nodes": [
+    {
+      "id": "hexaforge_slm_training_master_intake_octa",
+      "label": "intake",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_enrichment_hexa",
+      "label": "enrichment",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_event_parser_hexa",
+      "label": "event_parser",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_campaign_planner_hexa",
+      "label": "campaign_planner",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_job_supervisor_hexa",
+      "label": "job_supervisor",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_gpu_telemetry_normalizer_hexa",
+      "label": "gpu_telemetry_normalizer",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_failure_diagnoser_hexa",
+      "label": "failure_diagnoser",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_eval_gatekeeper_hexa",
+      "label": "eval_gatekeeper",
+      "bucket": "heuristic"
+    },
+    {
+      "id": "hexaforge_slm_training_master_provenance_recorder_hexa",
+      "label": "provenance_recorder",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_bind_proposer_hexa",
+      "label": "bind_proposer",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_explainer_hexa",
+      "label": "explainer",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_data_quality_checker_hexa",
+      "label": "data_quality_checker",
+      "bucket": "heuristic"
+    },
+    {
+      "id": "hexaforge_slm_training_master_decision_ledger_hexa",
+      "label": "decision_ledger",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_artifact_meter_hexa",
+      "label": "artifact_meter",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_data_provenance_recorder_hexa",
+      "label": "data_provenance_recorder",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_drift_detector_hexa",
+      "label": "drift_detector",
+      "bucket": "heuristic"
+    },
+    {
+      "id": "hexaforge_slm_training_master_retrain_proposer_hexa",
+      "label": "retrain_proposer",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_fleet_binder_hexa",
+      "label": "fleet_binder",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_delegation_registrar_hexa",
+      "label": "delegation_registrar",
+      "bucket": "heuristic"
+    },
+    {
+      "id": "hexaforge_slm_training_master_decision_hexa",
+      "label": "decision",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_model_freshness_validator_hexa",
+      "label": "model_freshness_validator",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_safety_validator_hexa",
+      "label": "safety_validator",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_packager_hexa",
+      "label": "packager",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_egress_octa",
+      "label": "egress",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_learning_store_hexa",
+      "label": "learning_store",
+      "bucket": "stub"
+    },
+    {
+      "id": "hexaforge_slm_training_master_start_training_job_approval_gate_hexa",
+      "label": "start_training_job_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_requeue_job_approval_gate_hexa",
+      "label": "requeue_job_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_retry_with_adjustment_approval_gate_hexa",
+      "label": "retry_with_adjustment_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_kill_job_approval_gate_hexa",
+      "label": "kill_job_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_pause_campaign_approval_gate_hexa",
+      "label": "pause_campaign_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_resume_campaign_approval_gate_hexa",
+      "label": "resume_campaign_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_park_job_approval_gate_hexa",
+      "label": "park_job_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_keep_parked_approval_gate_hexa",
+      "label": "keep_parked_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_remove_flagged_rows_and_recheck_approval_gate_hexa",
+      "label": "remove_flagged_rows_and_recheck_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_promote_and_bind_adapter_approval_gate_hexa",
+      "label": "promote_and_bind_adapter_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_deny_bind_approval_gate_hexa",
+      "label": "deny_bind_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_rollback_binding_approval_gate_hexa",
+      "label": "rollback_binding_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_delete_artifact_approval_gate_hexa",
+      "label": "delete_artifact_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_trigger_retrain_approval_gate_hexa",
+      "label": "trigger_retrain_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_bind_adapter_to_fleet_agent_approval_gate_hexa",
+      "label": "bind_adapter_to_fleet_agent_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_rollback_fleet_binding_approval_gate_hexa",
+      "label": "rollback_fleet_binding_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_grant_shared_adapter_training_approval_gate_hexa",
+      "label": "grant_shared_adapter_training_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_issue_delegation_grant_approval_gate_hexa",
+      "label": "issue_delegation_grant_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_revoke_delegation_grant_approval_gate_hexa",
+      "label": "revoke_delegation_grant_approval_gate",
+      "bucket": "implemented"
+    },
+    {
+      "id": "hexaforge_slm_training_master_action_selector_hexa",
+      "label": "action_selector",
+      "bucket": "stub"
+    }
+  ]
+}

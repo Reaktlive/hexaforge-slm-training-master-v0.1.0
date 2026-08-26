@@ -1,0 +1,8 @@
+{
+  "node": "hexaforge_slm_training_master_model_freshness_validator_hexa",
+  "competence": null,
+  "input_schema": "contracts/hexaforge_slm_training_master_model_freshness_validator_hexa/xi.schema.json",
+  "output_schema": "contracts/hexaforge_slm_training_master_model_freshness_validator_hexa/xo.schema.json",
+  "determinism": "temperature_0",
+  "gate_rule": "uncertain=>escalate"
+}

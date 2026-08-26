@@ -1,0 +1,7 @@
+{
+  "gate_id": "H_MACROHUB_STANDALONE",
+  "name": "MacroHub Standalone",
+  "kind": "hard",
+  "category": "doctrine",
+  "module": "h_macrohub_standalone.py"
+}

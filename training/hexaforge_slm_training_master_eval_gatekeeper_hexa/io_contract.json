@@ -1,0 +1,8 @@
+{
+  "node": "hexaforge_slm_training_master_eval_gatekeeper_hexa",
+  "competence": "eval_gatekeeper",
+  "input_schema": "contracts/hexaforge_slm_training_master_eval_gatekeeper_hexa/xi.schema.json",
+  "output_schema": "contracts/hexaforge_slm_training_master_eval_gatekeeper_hexa/xo.schema.json",
+  "determinism": "temperature_0",
+  "gate_rule": "uncertain=>escalate"
+}

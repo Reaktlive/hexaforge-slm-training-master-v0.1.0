@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_MACROHUB_HANDLER",
+  "name": "Macro Hub Compliance",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_macrohub_handler.py"
+}

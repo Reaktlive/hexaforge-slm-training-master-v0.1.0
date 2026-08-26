@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_HEXARECORD_CALL",
+  "name": "HexaRecord Logging",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_hexarecord_call.py"
+}

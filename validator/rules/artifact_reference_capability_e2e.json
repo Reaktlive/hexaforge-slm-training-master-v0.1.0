@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_REFERENCE_CAPABILITY_E2E",
+  "name": "Reference Capability E2E (opt-in factory harness runs the full happy path through the action gate; approval provenance never relaxed)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_reference_capability_e2e.py"
+}

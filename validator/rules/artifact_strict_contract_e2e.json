@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_STRICT_CONTRACT_E2E",
+  "name": "Strict Contract E2E",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_strict_contract_e2e.py"
+}

@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_SINGLE_GUARDED_ENTRYPOINT",
+  "name": "Single Guarded Entrypoint (no unauthenticated route surface)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_single_guarded_entrypoint.py"
+}

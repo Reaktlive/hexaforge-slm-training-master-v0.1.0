@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  validator:
+    build:
+      context: ..
+      dockerfile: validator/Dockerfile
+    volumes: ["../reports:/bundle/reports"]

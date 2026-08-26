@@ -1,0 +1,91 @@
+name: Supply Chain - verify (fail-closed)
+
+# Fas 2.18 (extern DD, Peter). The transitive hash-locked requirements.lock + full
+# CycloneDX SBOM are MEASURED BY THE FACTORY (bundle-invariant deps) and BORN IN
+# this bundle as SIGNED files in the Ed25519 manifest - measured before export,
+# not bootstrapped after delivery. So this workflow only VERIFIES them, fail-closed,
+# and never writes them (rewriting a signed file would break the manifest):
+#   - the signed lock installs with --require-hashes (full closure) + pip check;
+#   - the lock's pyproject-deps drift marker still matches pyproject.toml;
+#   - the CycloneDX SBOM covers every locked package;
+#   - deploy/base-image.lock, once the factory has measured it, is a valid digest.
+# The base-image registry digest is the one value the edge generator cannot reach;
+# the factory measures it (.github/workflows/supply-chain-measure.yml, factory repo)
+# and embeds it - nothing here needs write access.
+# Every uses: below is pinned to a full 40-hex commit SHA (Fas 2.14a).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  supply-chain:
+    name: Verify the born-in signed supply chain (fail-closed)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify - hashed install of the full transitive closure (fail-closed)
+        run: |
+          python -m venv /tmp/lockenv
+          # Fas 3.4 — pinned like every other install (the gate no longer exempts pip).
+          /tmp/lockenv/bin/pip install --quiet --no-cache-dir pip==24.2
+          /tmp/lockenv/bin/pip install --require-hashes --no-deps -r requirements.lock
+          /tmp/lockenv/bin/pip install --no-deps -e .
+          /tmp/lockenv/bin/pip check
+
+      - name: Verify - pyproject/lock drift marker (fail-closed)
+        run: |
+          python3 - <<'PY'
+          import hashlib, tomllib
+          deps = tomllib.load(open("pyproject.toml", "rb"))["project"]["dependencies"]
+          want = hashlib.sha256(chr(10).join(sorted(deps)).encode()).hexdigest()
+          head = open("requirements.lock").readline().strip()
+          assert head.startswith("# pyproject-deps-sha256: "), "requirements.lock lacks the drift marker - regenerate per docs/regenerate_measured_supply_chain.md"
+          got = head.split(": ", 1)[1]
+          assert got == want, "pyproject.toml dependencies changed since the lock was measured (drift) - regenerate per docs/regenerate_measured_supply_chain.md"
+          print("drift marker ok: %s..." % want[:16])
+          PY
+
+      - name: Verify - SBOM covers every locked package (fail-closed)
+        run: |
+          python3 - <<'PY'
+          import json, os
+          assert os.path.isfile("sbom/cyclonedx.json"), "sbom/cyclonedx.json missing while requirements.lock exists - regenerate per docs/regenerate_measured_supply_chain.md"
+          comps = set()
+          for c in (json.load(open("sbom/cyclonedx.json")).get("components") or []):
+              comps.add((str(c.get("name", "")).lower().replace("_", "-"), str(c.get("version", ""))))
+          missing = []
+          for line in open("requirements.lock"):
+              s = line.strip()
+              if not s or s.startswith("#") or s.startswith("--"):
+                  continue
+              req = s.split(" ")[0].split(";")[0]
+              if "==" not in req:
+                  continue
+              name, ver = req.split("==", 1)
+              name = name.split("[")[0].lower().replace("_", "-")
+              if (name, ver) not in comps:
+                  missing.append(req)
+          assert not missing, "SBOM missing locked packages: %s" % missing[:10]
+          print("sbom covers every locked package")
+          PY
+
+      - name: Verify - born-in base-image digest matches the factory measurement (fail-closed)
+        run: |
+          # LOCKED bundle: the measured digest ships SIGNED - it must be present and exact.
+          test -f deploy/base-image.lock || { echo "::error::deploy/base-image.lock missing - this bundle ships the measured digest SIGNED (tampered/incomplete checkout)"; exit 1; }
+          grep -qxF 'python:3.11-slim@sha256:db3ff2e1800a8581e2c48a27c3995339d47bdf046da21c7627accd3d51053a93' deploy/base-image.lock || { echo "::error::deploy/base-image.lock != the factory-measured ref"; exit 1; }
+          echo "base image lock ok (born-in, signed): $(cat deploy/base-image.lock)"

@@ -1,0 +1,52 @@
+version: "3.9"
+# Supply-chain (Fas 2.19): the BASE_IMAGE default below is the ref the FACTORY
+# measured at generation (digest-pinned, matches the SIGNED deploy/base-image.lock) — override per build with
+#   BASE_IMAGE=... docker compose -f deploy/docker-compose.yml build
+services:
+  doer:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      args:
+        BASE_IMAGE: ${BASE_IMAGE:-python:3.11-slim@sha256:db3ff2e1800a8581e2c48a27c3995339d47bdf046da21c7627accd3d51053a93}
+    ports:
+      - "8000:8000"   # FastAPI (node routers)
+    env_file: ../.env
+    # Fas 2.25 (external DD, Peter #7) — writable state (audit chain / approvals
+    # ledger / LLM-provenance), matching the Dockerfile's /app/state VOLUME. The
+    # root-owned WORKDIR is not doer-writable, so without this the first event
+    # PermissionErrors while /healthz stays green.
+    volumes:
+      - hexa-state:/app/state
+    # Readiness = /readyz (state writable), distinct from /healthz liveness.
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/readyz',timeout=3).status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+  # Fas 2.13b (extern DD) — admin-ytan startas INTE som standard (profile) och
+  # binder ENDAST loopback. `docker compose up` kör bara `doer`; admin-UI:t
+  # kräver `docker compose --profile admin up`. Även då nås det bara från
+  # värdens loopback, mutationer är fail-closed (sätt ADMIN_API_TOKEN för att
+  # aktivera) och CORS är låst (ingen wildcard).
+  admin-ui:
+    profiles: ["admin"]
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+      args:
+        BASE_IMAGE: ${BASE_IMAGE:-python:3.11-slim@sha256:db3ff2e1800a8581e2c48a27c3995339d47bdf046da21c7627accd3d51053a93}
+    command: ["python", "/app/runtime/orchestrator.py"]
+    environment:
+      - KARTA_PATH=/app/karta.yaml
+      - ADMIN_UI_DIR=/app/runtime/admin-ui
+      - PORT=8080
+      - ADMIN_BIND_HOST=127.0.0.1
+    volumes:
+      - ../karta.yaml:/app/karta.yaml:ro
+    ports:
+      - "127.0.0.1:8080:8080"   # Admin UI + JSON API (loopback only)
+# Fas 2.25 — named volume for the doer's writable state (audit/approvals/state).
+volumes:
+  hexa-state:

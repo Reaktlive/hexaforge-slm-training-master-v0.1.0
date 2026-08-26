@@ -1,0 +1,13 @@
+# Forseti SLM fine-tune recipe — hexaforge_slm_training_master_retrain_proposer_hexa
+# base_model + recipe are HexaLearn-resolved by competence_signature (../shelf.lock.json) — not a static map.
+base_model: meta-llama/Llama-3.2-3B-Instruct
+method: lora
+target_adapter_id: hexabox-hexaforge_slm_training_master_retrain_proposer_hexa-v1
+epochs: 3
+learning_rate: 0.0002
+context_length: 4096
+quantization: Q4_K_M
+train_file: ../seed_data/train.jsonl
+eval_file: ../seed_data/eval.jsonl
+output_schema: ../io_contract.json
+recipe_hash: 0abd3fcf

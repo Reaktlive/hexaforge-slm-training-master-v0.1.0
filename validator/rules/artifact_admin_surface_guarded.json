@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_ADMIN_SURFACE_GUARDED",
+  "name": "Admin Surface Guarded (loopback default, fail-closed mutations, no wildcard CORS, not default-started)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_admin_surface_guarded.py"
+}

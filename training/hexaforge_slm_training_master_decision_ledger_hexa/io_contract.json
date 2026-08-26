@@ -1,0 +1,8 @@
+{
+  "node": "hexaforge_slm_training_master_decision_ledger_hexa",
+  "competence": "decision_ledger",
+  "input_schema": "contracts/hexaforge_slm_training_master_decision_ledger_hexa/xi.schema.json",
+  "output_schema": "contracts/hexaforge_slm_training_master_decision_ledger_hexa/xo.schema.json",
+  "determinism": "temperature_0",
+  "gate_rule": "uncertain=>escalate"
+}

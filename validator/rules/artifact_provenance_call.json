@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_PROVENANCE_CALL",
+  "name": "HexaSource Provenance",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_provenance_call.py"
+}

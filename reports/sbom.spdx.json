@@ -1,0 +1,255 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "forseti_hexaforge_slm_training_master_agent-sbom",
+  "documentNamespace": "https://hexabox.one/sbom/d9eac7ca-9e09-48ee-803d-8f2ddaf4d156",
+  "creationInfo": {
+    "created": "2026-08-26T18:11:09.495Z",
+    "creators": [
+      "Tool: studio-studio-1.0.0",
+      "Organization: HexaBox AB"
+    ]
+  },
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-Root",
+      "name": "forseti_hexaforge_slm_training_master_agent",
+      "versionInfo": "1.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseDeclared": "LicenseRef-Proprietary",
+      "licenseConcluded": "LicenseRef-Proprietary",
+      "supplier": "Organization: HexaBox AB",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:generic/forseti_hexaforge_slm_training_master_agent@1.0.0"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pydantic",
+      "name": "pydantic",
+      "versionInfo": ">=2.5",
+      "downloadLocation": "https://pypi.org/project/pydantic/",
+      "filesAnalyzed": false,
+      "licenseDeclared": "MIT",
+      "licenseConcluded": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:pypi/pydantic"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-fastapi",
+      "name": "fastapi",
+      "versionInfo": ">=0.110",
+      "downloadLocation": "https://pypi.org/project/fastapi/",
+      "filesAnalyzed": false,
+      "licenseDeclared": "MIT",
+      "licenseConcluded": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:pypi/fastapi"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-uvicorn",
+      "name": "uvicorn",
+      "versionInfo": ">=0.27",
+      "downloadLocation": "https://pypi.org/project/uvicorn/",
+      "filesAnalyzed": false,
+      "licenseDeclared": "BSD-3-Clause",
+      "licenseConcluded": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:pypi/uvicorn"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-structlog",
+      "name": "structlog",
+      "versionInfo": ">=24.1",
+      "downloadLocation": "https://pypi.org/project/structlog/",
+      "filesAnalyzed": false,
+      "licenseDeclared": "Apache-2.0",
+      "licenseConcluded": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:pypi/structlog"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-prometheus-client",
+      "name": "prometheus-client",
+      "versionInfo": ">=0.19",
+      "downloadLocation": "https://pypi.org/project/prometheus-client/",
+      "filesAnalyzed": false,
+      "licenseDeclared": "Apache-2.0",
+      "licenseConcluded": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:pypi/prometheus-client"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pyyaml",
+      "name": "pyyaml",
+      "versionInfo": ">=6.0",
+      "downloadLocation": "https://pypi.org/project/pyyaml/",
+      "filesAnalyzed": false,
+      "licenseDeclared": "MIT",
+      "licenseConcluded": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:pypi/pyyaml"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-pytest",
+      "name": "pytest",
+      "versionInfo": ">=8.0",
+      "downloadLocation": "https://pypi.org/project/pytest/",
+      "filesAnalyzed": false,
+      "licenseDeclared": "MIT",
+      "licenseConcluded": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:pypi/pytest"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-httpx",
+      "name": "httpx",
+      "versionInfo": ">=0.27",
+      "downloadLocation": "https://pypi.org/project/httpx/",
+      "filesAnalyzed": false,
+      "licenseDeclared": "BSD-3-Clause",
+      "licenseConcluded": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:pypi/httpx"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-anthropic",
+      "name": "anthropic",
+      "versionInfo": ">=0.39",
+      "downloadLocation": "https://pypi.org/project/anthropic/",
+      "filesAnalyzed": false,
+      "licenseDeclared": "MIT",
+      "licenseConcluded": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:pypi/anthropic"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Model-claude-sonnet-4-5",
+      "name": "claude-sonnet-4-5",
+      "versionInfo": "NOASSERTION",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseDeclared": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "supplier": "Organization: Anthropic",
+      "primaryPackagePurpose": "OTHER",
+      "comment": "AI model binding declared by the agent (hosted service, not a vendored artifact)."
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-Root"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-Root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-pydantic"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-Root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-fastapi"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-Root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-uvicorn"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-Root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-structlog"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-Root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-prometheus-client"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-Root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-pyyaml"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-Root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-pytest"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-Root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-httpx"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-Root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-anthropic"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-Root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Model-claude-sonnet-4-5"
+    }
+  ]
+}

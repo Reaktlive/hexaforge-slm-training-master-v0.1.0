@@ -1,0 +1,7 @@
+{
+  "gate_id": "H_ACTION_SELECTION",
+  "name": "Action Selection (typed proposal routes exactly one gate)",
+  "kind": "hard",
+  "category": "doctrine",
+  "module": "h_action_selection.py"
+}

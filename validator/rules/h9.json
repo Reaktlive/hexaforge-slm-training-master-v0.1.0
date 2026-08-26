@@ -1,0 +1,7 @@
+{
+  "gate_id": "H9",
+  "name": "No Orphan Nodes",
+  "kind": "hard",
+  "category": "doctrine",
+  "module": "h9.py"
+}

@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_CONFIG_RUNTIME_PARITY",
+  "name": "Config/Runtime Parity (env knobs are read; single-replica default for process-local state)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_config_runtime_parity.py"
+}

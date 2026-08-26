@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_CCAS_TIER_RUNTIME",
+  "name": "CCAS Tier Runtime Coverage",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_ccas_tier_runtime.py"
+}

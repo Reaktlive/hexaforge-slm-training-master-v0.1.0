@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_TRAINING_PACK_E2E",
+  "name": "Training Pack E2E (SLM enablement chain)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_training_pack_e2e.py"
+}

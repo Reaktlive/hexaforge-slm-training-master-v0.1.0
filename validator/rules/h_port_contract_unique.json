@@ -1,0 +1,7 @@
+{
+  "gate_id": "H_PORT_CONTRACT_UNIQUE",
+  "name": "Port-Contract Uniqueness (karta)",
+  "kind": "hard",
+  "category": "doctrine",
+  "module": "h_port_contract_unique.py"
+}

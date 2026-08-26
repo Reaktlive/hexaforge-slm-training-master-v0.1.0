@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_PORT_INDEPENDENCE",
+  "name": "Port Independence",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_port_independence.py"
+}

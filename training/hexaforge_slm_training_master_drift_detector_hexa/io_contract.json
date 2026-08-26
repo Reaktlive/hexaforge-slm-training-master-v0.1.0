@@ -1,0 +1,8 @@
+{
+  "node": "hexaforge_slm_training_master_drift_detector_hexa",
+  "competence": "drift_detector",
+  "input_schema": "contracts/hexaforge_slm_training_master_drift_detector_hexa/xi.schema.json",
+  "output_schema": "contracts/hexaforge_slm_training_master_drift_detector_hexa/xo.schema.json",
+  "determinism": "temperature_0",
+  "gate_rule": "uncertain=>escalate"
+}

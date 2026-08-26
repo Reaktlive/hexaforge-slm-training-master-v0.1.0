@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_ANON_CONTRACT",
+  "name": "Anonymization Contract",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_anon_contract.py"
+}

@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_CCAS_APPROVAL_PROVENANCE",
+  "name": "CCAS Approval Provenance (structured, action-bound, signed, fail-closed — no bare-name approvals)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_ccas_approval_provenance.py"
+}

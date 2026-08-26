@@ -1,0 +1,24 @@
+__pycache__/
+*.pyc
+# In-tree debris of the package's own editable install (pip install -e .) —
+# metadata only; committing it would trip the signed-manifest disk sweep.
+*.egg-info/
+.venv/
+.env
+.idea/
+.vscode/
+.DS_Store
+
+# Runtime audit chains (written by the running agent, never committed)
+hexa_record.jsonl
+hexa_record.jsonl.head
+hexa_source.jsonl
+cohort_store.jsonl
+cohort_store.jsonl.hmac.key
+ccas_approvals.jsonl
+ccas_approvals.jsonl.hw
+
+# Local validator output (validator/engine.py writes its reports into reports/)
+validator/report.txt
+reports/artifact_conformance.json
+reports/doctrine_reverification.json

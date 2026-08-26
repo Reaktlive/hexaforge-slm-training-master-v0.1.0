@@ -1,0 +1,160 @@
+{
+  "schema": "hexabox.identity/v1",
+  "doctrine_version": "ruleset-14i-1.0.0",
+  "algorithm": "ed25519",
+  "agent_id": "a1c20f68-56dc-4dda-b667-7875c42e70d2",
+  "owner": {
+    "user_id": "979402b5-343d-4052-a8ce-6f508a2b8860"
+  },
+  "provenance_hash": "23c34de27e9c43170c029727d15fa0693b228f720c9d6cfe9cd66c94f11294f0",
+  "conformance": {
+    "purity_score": 86,
+    "purity_max": 100,
+    "purity_checks": 6,
+    "doctrine_version": "ruleset-14i-1.0.0",
+    "doctrine_pass": 11,
+    "doctrine_total": 11,
+    "doctrine_total_gates": 19,
+    "attested_at_composition": 8,
+    "artifact_pass": 22,
+    "artifact_warn": 0,
+    "artifact_fail": 0,
+    "artifact_na": 2,
+    "artifact_total": 24,
+    "build_pass": 3,
+    "build_fail": 0,
+    "build_total": 3,
+    "design": {
+      "schema": "hexabox.design/v1",
+      "node_count": 45,
+      "edge_count": 83,
+      "node_set_hash": "4b6e740c70e49002b110e39f8d5e6d0a51cfcce8e4b26b31143dbbc503110cf1",
+      "edge_set_hash": "c3834281ae9555da01739d32d2a59c664a090a041fd4ce94a8d443c116945060",
+      "capability_set_hash": "aa88728c52233dc762b0bf36fa33e73b683f070e6ac3a8fe851126e2df59bf02",
+      "action_set_hash": "16a085928ab007277ca51c9b52a3aeeac1721ed876cdad75db00db9b49cdab04"
+    },
+    "release_verdict": "STRUCTURALLY_RELEASABLE_SKELETON",
+    "runtime_tests": "deferred_to_bundle_ci",
+    "delivery_mode": "handoff",
+    "runtime_mode": "reference",
+    "manifest": {
+      "algorithm": "sha256",
+      "file_count": 1215,
+      "manifest_sha256": "830ff293c79071431283fbadf232da67d2d6474609d9b2d52029f53070776fec",
+      "excluded": [
+        "GENESIS.md",
+        "MANIFEST.json",
+        "PROVENANCE.json",
+        "generator.pub",
+        "identity.json",
+        "root.pub"
+      ],
+      "runtime_outputs": [
+        ".env",
+        "ccas_approvals.jsonl",
+        "ccas_approvals.jsonl.hw",
+        "cohort_store.jsonl",
+        "cohort_store.jsonl.hmac.key",
+        "demo/demo_dashboard/results.json",
+        "execution_ledger.jsonl",
+        "hexa_record.jsonl",
+        "hexa_record.jsonl.head",
+        "hexa_source.jsonl",
+        "reports/artifact_conformance.json",
+        "reports/doctrine_reverification.json",
+        "training/*/eval/slm_eval.json",
+        "validator/report.txt"
+      ],
+      "measured_outputs": []
+    }
+  },
+  "capabilities": {
+    "contracts": {
+      "real": 274,
+      "stub": 0,
+      "total": 274
+    },
+    "privileged_actions": [
+      {
+        "name": "start_training_job",
+        "ccas_tier": "tier_1"
+      },
+      {
+        "name": "requeue_job",
+        "ccas_tier": "tier_2"
+      },
+      {
+        "name": "retry_with_adjustment",
+        "ccas_tier": "tier_2"
+      },
+      {
+        "name": "kill_job",
+        "ccas_tier": "tier_2"
+      },
+      {
+        "name": "pause_campaign",
+        "ccas_tier": "tier_2"
+      },
+      {
+        "name": "resume_campaign",
+        "ccas_tier": "tier_2"
+      },
+      {
+        "name": "park_job",
+        "ccas_tier": "tier_2"
+      },
+      {
+        "name": "keep_parked",
+        "ccas_tier": "tier_2"
+      },
+      {
+        "name": "remove_flagged_rows_and_recheck",
+        "ccas_tier": "tier_2"
+      },
+      {
+        "name": "promote_and_bind_adapter",
+        "ccas_tier": "tier_3"
+      },
+      {
+        "name": "deny_bind",
+        "ccas_tier": "tier_3"
+      },
+      {
+        "name": "rollback_binding",
+        "ccas_tier": "tier_3"
+      },
+      {
+        "name": "delete_artifact",
+        "ccas_tier": "tier_4"
+      },
+      {
+        "name": "trigger_retrain",
+        "ccas_tier": "tier_2"
+      },
+      {
+        "name": "bind_adapter_to_fleet_agent",
+        "ccas_tier": "tier_3"
+      },
+      {
+        "name": "rollback_fleet_binding",
+        "ccas_tier": "tier_3"
+      },
+      {
+        "name": "grant_shared_adapter_training",
+        "ccas_tier": "tier_4"
+      },
+      {
+        "name": "issue_delegation_grant",
+        "ccas_tier": "tier_4"
+      },
+      {
+        "name": "revoke_delegation_grant",
+        "ccas_tier": "tier_2"
+      }
+    ],
+    "customer_slot_count": 18
+  },
+  "signature": null,
+  "delivery_mode": "handoff",
+  "notice": "unsigned — customer-owned handoff build; not attested"
+}

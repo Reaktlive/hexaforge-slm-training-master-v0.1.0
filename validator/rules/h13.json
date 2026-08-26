@@ -1,0 +1,7 @@
+{
+  "gate_id": "H13",
+  "name": "Barrier-Sync (karta)",
+  "kind": "hard",
+  "category": "doctrine",
+  "module": "h13.py"
+}

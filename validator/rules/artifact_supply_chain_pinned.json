@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_SUPPLY_CHAIN_PINNED",
+  "name": "Supply Chain Pinned (Actions on commit SHAs, no unpinned pip installs, Dependabot present)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_supply_chain_pinned.py"
+}

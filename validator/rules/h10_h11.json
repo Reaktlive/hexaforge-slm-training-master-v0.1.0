@@ -1,0 +1,7 @@
+{
+  "gate_id": "H10_H11",
+  "name": "Bookend & Single XI",
+  "kind": "hard",
+  "category": "doctrine",
+  "module": "h10_h11.py"
+}

@@ -1,0 +1,664 @@
+{
+  "score": 100,
+  "verdict": "PASS",
+  "rules_version": "studio-1.1.0+ruleset-14i-1.0.0",
+  "doctrine_version": "ruleset-14i-1.0.0",
+  "pass_count": 11,
+  "warn_count": 0,
+  "fail_count": 0,
+  "na_count": 0,
+  "build_blocked": false,
+  "doctrine": {
+    "note": "11 of 19 doctrine gates re-verified in this bundle; the remaining 8 were enforced as a HARD gate at composition (count signed in identity.json.conformance, not re-verifiable offline).",
+    "count": 11,
+    "gates": [
+      {
+        "id": "H9",
+        "kind": "hard",
+        "name": "No Orphan Nodes",
+        "status": "PASS",
+        "details": "Checked 45 nodes for inbound/outbound edges.",
+        "violations": []
+      },
+      {
+        "id": "H10_H11",
+        "kind": "hard",
+        "name": "Bookend & Single XI",
+        "status": "PASS",
+        "details": "Verified karta has exactly one ingress + one egress (OctaBox bookend pattern).",
+        "violations": []
+      },
+      {
+        "id": "H12",
+        "kind": "hard",
+        "name": "Schema Compatibility (karta)",
+        "status": "PASS",
+        "details": "Checked 83 edges for schema_version compat.",
+        "violations": []
+      },
+      {
+        "id": "H13",
+        "kind": "hard",
+        "name": "Barrier-Sync (karta)",
+        "status": "PASS",
+        "details": "Checked 2 multi-source XI join(s) against 2 declared barrier(s).",
+        "violations": []
+      },
+      {
+        "id": "H_PORT_EXISTS",
+        "kind": "hard",
+        "name": "Port Existence (karta)",
+        "status": "PASS",
+        "details": "Edge source/target ports must exist on their nodes.",
+        "violations": []
+      },
+      {
+        "id": "H_PORT_CONTRACT_UNIQUE",
+        "kind": "hard",
+        "name": "Port-Contract Uniqueness (karta)",
+        "status": "PASS",
+        "details": "Node ids and (node_id, port_id) contracts must be unique (matches studio_port_contracts_active_uniq).",
+        "violations": []
+      },
+      {
+        "id": "H_MACROHUB_ISOLATION",
+        "kind": "hard",
+        "name": "MacroHub Isolation",
+        "status": "PASS",
+        "details": "MacroHub nodes must be isolated from the primary chain.",
+        "violations": []
+      },
+      {
+        "id": "H_MACROHUB_STANDALONE",
+        "kind": "hard",
+        "name": "MacroHub Standalone",
+        "status": "PASS",
+        "details": "A MacroHub (coordinator) node must be a standalone cross-tenant agent, legitimate only in vertical=meta-platform.",
+        "violations": []
+      },
+      {
+        "id": "H_COHORT_ANONYMITY",
+        "kind": "hard",
+        "name": "Cohort k-Anonymity",
+        "status": "PASS",
+        "details": "Every MO port must carry anonymization_contract with k_minimum >= 5.",
+        "violations": []
+      },
+      {
+        "id": "H_PRIVILEGED_ACTION_DECLARED",
+        "kind": "hard",
+        "name": "Privileged Action Declared + CCAS-Gated",
+        "status": "PASS",
+        "details": "Checked 19 privileged action-emitting node(s) against 19 declared privileged_action(s); verified executable ccas_decide() on 19 privileged handler(s) (comment-stripped).",
+        "violations": []
+      },
+      {
+        "id": "H_ACTION_SELECTION",
+        "kind": "hard",
+        "name": "Action Selection (typed proposal routes exactly one gate)",
+        "status": "PASS",
+        "details": "Checked 19 privileged gate(s) against 1 action_selector(s): each gate reachable only via selector.XO -> gate.XI, selector XO carries the typed ActionProposal.",
+        "violations": []
+      }
+    ],
+    "na_count": 0,
+    "fail_count": 0,
+    "pass_count": 11,
+    "warn_count": 0,
+    "reverified_offline": 11,
+    "total_doctrine_gates": 19,
+    "attested_at_composition": [
+      "H1",
+      "H2",
+      "H4",
+      "H5",
+      "H6",
+      "H7",
+      "H8",
+      "H_K_FLOOR_DRIFT"
+    ]
+  },
+  "artifact_conformance": {
+    "count": 24,
+    "gates": [
+      {
+        "id": "ARTIFACT_PORT_HANDLERS",
+        "kind": "hard",
+        "name": "Port Existence",
+        "status": "PASS",
+        "details": "Verified an executable port handler def in 274 port files (comment-stripped).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_PORT_INDEPENDENCE",
+        "kind": "hard",
+        "name": "Port Independence",
+        "status": "PASS",
+        "details": "Static Mi/Mo bleed scan over every DECLARED Xi/Xo handler (a declared port with no file is a violation, not a skip).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_ANON_CONTRACT",
+        "kind": "hard",
+        "name": "Anonymization Contract",
+        "status": "PASS",
+        "details": "Mo anonymization contract check.",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_SCHEMA_COMPAT",
+        "kind": "hard",
+        "name": "Schema Compatibility",
+        "status": "PASS",
+        "details": "Checked 83 edges.",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_BARRIER_HANDLER",
+        "kind": "hard",
+        "name": "Barrier-Sync",
+        "status": "PASS",
+        "details": "Barrier coordination verified against comment-stripped run_pipeline (2 declared barriers).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_MACROHUB_HANDLER",
+        "kind": "hard",
+        "name": "Macro Hub Compliance",
+        "status": "N_A",
+        "details": "No macro_hub in karta.",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_HEXARECORD_CALL",
+        "kind": "hard",
+        "name": "HexaRecord Logging",
+        "status": "PASS",
+        "details": "Verified executable log_event() call on the YO return path of 45 YO ports (comment-stripped).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_PROVENANCE_CALL",
+        "kind": "hard",
+        "name": "HexaSource Provenance",
+        "status": "PASS",
+        "details": "Verified executable provenance call in 1 AI-using file (comment-stripped).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_CCAS_TIER_RUNTIME",
+        "kind": "hard",
+        "name": "CCAS Tier Runtime Coverage",
+        "status": "PASS",
+        "details": "Verified 4/4 declared tier(s) (auto, manual, human, dual_approval) are handled in executable ccas_gate.py code (comment-stripped: 4 canonical branch(es), 8 alias map entr(ies)).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_RUNTIME_JOIN_PARITY",
+        "kind": "hard",
+        "name": "Runtime Join Parity",
+        "status": "PASS",
+        "details": "Runtime join parity verified for 2 declared barriers.",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_STRICT_CONTRACT_E2E",
+        "kind": "hard",
+        "name": "Strict Contract E2E",
+        "status": "PASS",
+        "details": "Strict payload+envelope enforcement verified across 45 XO-emitting nodes: static wiring in the emitted runtime PLUS an emitted runtime proof that a contract violation actually RAISES (self-derived subject, runs in the suite and in CI where the flag is pinned). Proves ENFORCEMENT COMPLETENESS (declared contracts are enforced end-to-end at runtime) — not semantic maturity of the contract contents; see ARTIFACT_CONTRACT_COMPLETENESS for the declared-form measurement, and ARTIFACT_MO_CONTRACT_E2E for the cohort-boundary (MO) proof.",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_CONTRACT_COMPLETENESS",
+        "kind": "report",
+        "name": "Contract Completeness (measurement)",
+        "status": "PASS",
+        "details": "Contract completeness (measurement, never blocking): 274 contracts — 67 with empty properties, 115 without required, 1 with additionalProperties:false, 0 with hard constraints. Leniency is DECLARED policy (blocker2): payload sub-schemas stay lenient by design; enforcement of what IS declared is proven by ARTIFACT_STRICT_CONTRACT_E2E.",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_MO_CONTRACT_E2E",
+        "kind": "hard",
+        "name": "MO Contract E2E (cohort boundary)",
+        "status": "PASS",
+        "details": "MO cohort-boundary contract proven end-to-end on 1 MO-fed egress node (contract-driven release, fail-closed model validation, under-k hold, metadata containment, distinct-tenant k, emitted runtime proofs); 1 inactive MO port verified honest (relay-shaped contract + retained k-floor AC) (L7/L8).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_AUDIT_BINDING_E2E",
+        "kind": "hard",
+        "name": "Audit Binding E2E (who / exact input / exact output)",
+        "status": "PASS",
+        "details": "Audit chain binds WHO/WHAT-IN/WHAT-OUT in the HASHED core: principal established at the transport boundary (zt_guard -> set_principal, explicit \"auth_disabled\" in dev), 110 _record_audit sites bind exact input+output, canonical_sha256 is the single recomputable canonicalisation, and emitted unit+e2e proofs verify tamper-evidence (L7/L8).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_TRAINING_PACK_E2E",
+        "kind": "hard",
+        "name": "Training Pack E2E (SLM enablement chain)",
+        "status": "PASS",
+        "details": "SLM enablement chain proven on 24/24 training pack(s): complete spec/corpus/eval per model-bound node, LIVE output_schema reference to the node's own contract, a harness that truly enforces acceptance criterion 1 (required+types, fail-closed), and emitted runtime proofs (L7/L8).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_SINGLE_GUARDED_ENTRYPOINT",
+        "kind": "hard",
+        "name": "Single Guarded Entrypoint (no unauthenticated route surface)",
+        "status": "PASS",
+        "details": "One guarded app: build_app() returns runtime/api_server.py (every route Depends(zt_guard); only /healthz open), src/main.py + runtime.serve + Dockerfile CMD converge on it, no raw per-node router is served, and the emitted runtime test proves every served route rejects an unauthenticated caller (P0 auth-bypass closed by construction — L7/L8).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_BUNDLE_MANIFEST_SIGNED",
+        "kind": "hard",
+        "name": "Bundle Manifest Signed (every delivered file hash-bound to the signed identity)",
+        "status": "PASS",
+        "details": "Every delivered file (except the structurally-post-signature exclusions listed SIGNED in conformance.manifest.excluded) is hashed into MANIFEST.json, whose canonical hash is Ed25519-signed in identity.conformance.manifest. verify_identity.py recomputes the manifest hash + every file sha256 and sweeps the disk BEFORE any bundle code runs; the PY twin + emitted pytest re-verify on the complete artifact (supply-chain integrity — a code change that breaks no test is now caught cryptographically, L7/L8).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_ADMIN_SURFACE_GUARDED",
+        "kind": "hard",
+        "name": "Admin Surface Guarded (loopback default, fail-closed mutations, no wildcard CORS, not default-started)",
+        "status": "PASS",
+        "details": "The generated admin server binds loopback by default, emits no wildcard CORS, and fail-closes every mutating endpoint behind ADMIN_API_TOKEN; docker-compose does not start it by default (profile) and binds only 127.0.0.1 — no unauthenticated mutable control surface in the default package (external DD, L7/L8).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_CCAS_APPROVAL_PROVENANCE",
+        "kind": "hard",
+        "name": "CCAS Approval Provenance (structured, action-bound, signed, fail-closed — no bare-name approvals)",
+        "status": "PASS",
+        "details": "CCAS is a tier-enforcement interface + fail-closed approval seam: a bare name counts for nothing; an approval must be a structured record bound to THIS action, carry an approver role, use a fresh nonce, be unexpired (expires_at is signature-bound — stripping it breaks the signature), be NOT-YET-CONSUMED in the persistent ledger (Fas 2.17: an approval that released an action once can never release another — consumption is recorded BEFORE approval is returned, fail-closed on an unavailable ledger), and be signature-verified against the customer approval backend (CCAS_APPROVAL_KEY, a CUSTOMER_SLOT — fail-closed when unbound). Independence de-dupes on approver principal (external DD, L7/L8).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_CONFIG_RUNTIME_PARITY",
+        "kind": "hard",
+        "name": "Config/Runtime Parity (env knobs are read; single-replica default for process-local state)",
+        "status": "PASS",
+        "details": "Generated config/deploy artifacts match runtime: BARRIER_TIMEOUT_MS is read from the environment with a default equal to .env.example (no inert knob), and the k8s manifest defaults to a single replica because the state is process-local — scaling >1 requires binding external state (external DD, L8).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_SUPPLY_CHAIN_PINNED",
+        "kind": "hard",
+        "name": "Supply Chain Pinned (Actions on commit SHAs, no unpinned pip installs, Dependabot present)",
+        "status": "PASS",
+        "details": "Build supply chain is pinned: every GitHub Action uses: is a 40-hex commit SHA, no unpinned pip installs ship in the Dockerfile/workflows, and Dependabot keeps the pins current (external DD #5, 2.14a). The hashed transitive lock, full SBOM, and base-image digest are measured in CI (2.14b).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_SUPPLY_CHAIN_MEASURED",
+        "kind": "hard",
+        "name": "Supply Chain Measured (transitive hash-locked lock + CycloneDX SBOM measured before export and signed; base-image digest two-state)",
+        "status": "PASS",
+        "details": "[SUPPLY_CHAIN_MEASURED_AND_LOCKED] The transitive hash-locked requirements + full CycloneDX SBOM are MEASURED BY THE FACTORY (bundle-invariant deps) and BORN IN this bundle as signed files (hashed into the Ed25519 manifest) — measured before export, not by a post-delivery CI bootstrap; the lock's drift marker binds it to the emitted pyproject. The base image is digest-pinned, BORN IN SIGNED (MEASURED_AND_LOCKED) — Dockerfile, compose and build-image all consume the measured ref. Nothing is written post-signing (verify-only workflow re-proves fail-closed: --require-hashes install of the full closure + pip check + SBOM coverage + drift marker). External DD, 2.18/2.19, L8.",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_REFERENCE_CAPABILITY_E2E",
+        "kind": "hard",
+        "name": "Reference Capability E2E (opt-in factory harness runs the full happy path through the action gate; approval provenance never relaxed)",
+        "status": "PASS",
+        "details": "The factory-controlled reference capability ships end-to-end: an explicit opt-in harness (DOER_REFERENCE_MODE, default OFF, every output marked \"reference\") gives contract-derived outputs for unimplemented CUSTOMER_SLOTs and a side-effect-free reference execution AFTER ccas approval; approval material (request_id + SIGNED approvals) flows with the action request and 2.13c provenance is never relaxed; the emitted e2e proof covers fail-closed default, held ungated actions, and the full signed-approval happy path through the action gate with a verified audit chain (external DD #7, 2.16, L7/L8).",
+        "violations": []
+      },
+      {
+        "id": "ARTIFACT_IMAGE_PROVENANCE_BOUND",
+        "kind": "hard",
+        "name": "Image Provenance Bound (built image carries the signed bundle identity as labels; pushed digest Sigstore-attested by the emitted build chain)",
+        "status": "N_A",
+        "details": "The emitted build chain WIRES the image<->bundle binding (OCI labels resolved from the SIGNED files, pushed digest Sigstore-attested, verification doc shipped) and that wiring is re-verifiable. But the trust BOOTSTRAP is NOT externally anchored: the build workflow runs the in-checkout verifier (verify_identity.py) and reads MANIFEST.json from the same mutable checkout, so a party who controls the checkout can tamper the source, neutralise the in-checkout verifier and update its hash in the local manifest — the in-CI precheck would still pass and the image would be labelled bound. The binding is therefore tamper-EVIDENT, not externally anchored, and this control is N/A until an external trust anchor is configured: pin verification to a SHA-pinned cross-repo reusable workflow AND supply the HexaBox root fingerprint out-of-band (secret HEXABOX_ROOT_FINGERPRINT), not from the checkout (docs/verify_root_fingerprint.md). It does NOT PASS on the presence of the wiring alone.",
+        "violations": []
+      }
+    ],
+    "na_count": 2,
+    "fail_count": 0,
+    "pass_count": 22,
+    "warn_count": 0
+  },
+  "artifact_conformance_blurb": "Artifact conformance — proves the generated code implements what the karta declared. Re-runnable anywhere. Not a doctrine gate.",
+  "build_integrity": {
+    "count": 3,
+    "gates": [
+      {
+        "id": "BUILD_TEST_PARITY",
+        "kind": "hard",
+        "name": "Generated Test ↔ Schema Parity",
+        "status": "PASS",
+        "details": "Verified generated smoke payloads + contract requires-tests against per-node schemas.json (XI smoke parity + 8-port contract parity, comment-free).",
+        "violations": []
+      },
+      {
+        "id": "BUILD_IMPORT_INTEGRITY",
+        "kind": "hard",
+        "name": "Cross-Module Import Integrity",
+        "status": "PASS",
+        "details": "Every `from src.shared.<mod> import <symbol>` must resolve to a symbol actually defined in that module.",
+        "violations": []
+      },
+      {
+        "id": "BUILD_SAMPLE_EVENT_ACCEPTED",
+        "kind": "hard",
+        "name": "Signed Sample Event Accepted",
+        "status": "PASS",
+        "details": "The signed input_model sample_event satisfies the generated ingress envelope rules (source present; no blank envelope fields) — input model, demo and runtime cannot drift apart.",
+        "violations": []
+      }
+    ],
+    "na_count": 0,
+    "fail_count": 0,
+    "pass_count": 3,
+    "warn_count": 0
+  },
+  "build_integrity_blurb": "Factory QA — proves the generator emitted sound code. Not part of the doctrine score.",
+  "generated_at": "2026-08-26T17:57:08.782Z",
+  "gates": [
+    {
+      "id": "H9",
+      "kind": "hard",
+      "name": "No Orphan Nodes",
+      "status": "PASS",
+      "details": "Checked 45 nodes for inbound/outbound edges.",
+      "violations": []
+    },
+    {
+      "id": "H10_H11",
+      "kind": "hard",
+      "name": "Bookend & Single XI",
+      "status": "PASS",
+      "details": "Verified karta has exactly one ingress + one egress (OctaBox bookend pattern).",
+      "violations": []
+    },
+    {
+      "id": "H12",
+      "kind": "hard",
+      "name": "Schema Compatibility (karta)",
+      "status": "PASS",
+      "details": "Checked 83 edges for schema_version compat.",
+      "violations": []
+    },
+    {
+      "id": "H13",
+      "kind": "hard",
+      "name": "Barrier-Sync (karta)",
+      "status": "PASS",
+      "details": "Checked 2 multi-source XI join(s) against 2 declared barrier(s).",
+      "violations": []
+    },
+    {
+      "id": "H_PORT_EXISTS",
+      "kind": "hard",
+      "name": "Port Existence (karta)",
+      "status": "PASS",
+      "details": "Edge source/target ports must exist on their nodes.",
+      "violations": []
+    },
+    {
+      "id": "H_PORT_CONTRACT_UNIQUE",
+      "kind": "hard",
+      "name": "Port-Contract Uniqueness (karta)",
+      "status": "PASS",
+      "details": "Node ids and (node_id, port_id) contracts must be unique (matches studio_port_contracts_active_uniq).",
+      "violations": []
+    },
+    {
+      "id": "H_MACROHUB_ISOLATION",
+      "kind": "hard",
+      "name": "MacroHub Isolation",
+      "status": "PASS",
+      "details": "MacroHub nodes must be isolated from the primary chain.",
+      "violations": []
+    },
+    {
+      "id": "H_MACROHUB_STANDALONE",
+      "kind": "hard",
+      "name": "MacroHub Standalone",
+      "status": "PASS",
+      "details": "A MacroHub (coordinator) node must be a standalone cross-tenant agent, legitimate only in vertical=meta-platform.",
+      "violations": []
+    },
+    {
+      "id": "H_COHORT_ANONYMITY",
+      "kind": "hard",
+      "name": "Cohort k-Anonymity",
+      "status": "PASS",
+      "details": "Every MO port must carry anonymization_contract with k_minimum >= 5.",
+      "violations": []
+    },
+    {
+      "id": "H_PRIVILEGED_ACTION_DECLARED",
+      "kind": "hard",
+      "name": "Privileged Action Declared + CCAS-Gated",
+      "status": "PASS",
+      "details": "Checked 19 privileged action-emitting node(s) against 19 declared privileged_action(s); verified executable ccas_decide() on 19 privileged handler(s) (comment-stripped).",
+      "violations": []
+    },
+    {
+      "id": "H_ACTION_SELECTION",
+      "kind": "hard",
+      "name": "Action Selection (typed proposal routes exactly one gate)",
+      "status": "PASS",
+      "details": "Checked 19 privileged gate(s) against 1 action_selector(s): each gate reachable only via selector.XO -> gate.XI, selector XO carries the typed ActionProposal.",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_PORT_HANDLERS",
+      "kind": "hard",
+      "name": "Port Existence",
+      "status": "PASS",
+      "details": "Verified an executable port handler def in 274 port files (comment-stripped).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_PORT_INDEPENDENCE",
+      "kind": "hard",
+      "name": "Port Independence",
+      "status": "PASS",
+      "details": "Static Mi/Mo bleed scan over every DECLARED Xi/Xo handler (a declared port with no file is a violation, not a skip).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_ANON_CONTRACT",
+      "kind": "hard",
+      "name": "Anonymization Contract",
+      "status": "PASS",
+      "details": "Mo anonymization contract check.",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_SCHEMA_COMPAT",
+      "kind": "hard",
+      "name": "Schema Compatibility",
+      "status": "PASS",
+      "details": "Checked 83 edges.",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_BARRIER_HANDLER",
+      "kind": "hard",
+      "name": "Barrier-Sync",
+      "status": "PASS",
+      "details": "Barrier coordination verified against comment-stripped run_pipeline (2 declared barriers).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_MACROHUB_HANDLER",
+      "kind": "hard",
+      "name": "Macro Hub Compliance",
+      "status": "N_A",
+      "details": "No macro_hub in karta.",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_HEXARECORD_CALL",
+      "kind": "hard",
+      "name": "HexaRecord Logging",
+      "status": "PASS",
+      "details": "Verified executable log_event() call on the YO return path of 45 YO ports (comment-stripped).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_PROVENANCE_CALL",
+      "kind": "hard",
+      "name": "HexaSource Provenance",
+      "status": "PASS",
+      "details": "Verified executable provenance call in 1 AI-using file (comment-stripped).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_CCAS_TIER_RUNTIME",
+      "kind": "hard",
+      "name": "CCAS Tier Runtime Coverage",
+      "status": "PASS",
+      "details": "Verified 4/4 declared tier(s) (auto, manual, human, dual_approval) are handled in executable ccas_gate.py code (comment-stripped: 4 canonical branch(es), 8 alias map entr(ies)).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_RUNTIME_JOIN_PARITY",
+      "kind": "hard",
+      "name": "Runtime Join Parity",
+      "status": "PASS",
+      "details": "Runtime join parity verified for 2 declared barriers.",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_STRICT_CONTRACT_E2E",
+      "kind": "hard",
+      "name": "Strict Contract E2E",
+      "status": "PASS",
+      "details": "Strict payload+envelope enforcement verified across 45 XO-emitting nodes: static wiring in the emitted runtime PLUS an emitted runtime proof that a contract violation actually RAISES (self-derived subject, runs in the suite and in CI where the flag is pinned). Proves ENFORCEMENT COMPLETENESS (declared contracts are enforced end-to-end at runtime) — not semantic maturity of the contract contents; see ARTIFACT_CONTRACT_COMPLETENESS for the declared-form measurement, and ARTIFACT_MO_CONTRACT_E2E for the cohort-boundary (MO) proof.",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_CONTRACT_COMPLETENESS",
+      "kind": "report",
+      "name": "Contract Completeness (measurement)",
+      "status": "PASS",
+      "details": "Contract completeness (measurement, never blocking): 274 contracts — 67 with empty properties, 115 without required, 1 with additionalProperties:false, 0 with hard constraints. Leniency is DECLARED policy (blocker2): payload sub-schemas stay lenient by design; enforcement of what IS declared is proven by ARTIFACT_STRICT_CONTRACT_E2E.",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_MO_CONTRACT_E2E",
+      "kind": "hard",
+      "name": "MO Contract E2E (cohort boundary)",
+      "status": "PASS",
+      "details": "MO cohort-boundary contract proven end-to-end on 1 MO-fed egress node (contract-driven release, fail-closed model validation, under-k hold, metadata containment, distinct-tenant k, emitted runtime proofs); 1 inactive MO port verified honest (relay-shaped contract + retained k-floor AC) (L7/L8).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_AUDIT_BINDING_E2E",
+      "kind": "hard",
+      "name": "Audit Binding E2E (who / exact input / exact output)",
+      "status": "PASS",
+      "details": "Audit chain binds WHO/WHAT-IN/WHAT-OUT in the HASHED core: principal established at the transport boundary (zt_guard -> set_principal, explicit \"auth_disabled\" in dev), 110 _record_audit sites bind exact input+output, canonical_sha256 is the single recomputable canonicalisation, and emitted unit+e2e proofs verify tamper-evidence (L7/L8).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_TRAINING_PACK_E2E",
+      "kind": "hard",
+      "name": "Training Pack E2E (SLM enablement chain)",
+      "status": "PASS",
+      "details": "SLM enablement chain proven on 24/24 training pack(s): complete spec/corpus/eval per model-bound node, LIVE output_schema reference to the node's own contract, a harness that truly enforces acceptance criterion 1 (required+types, fail-closed), and emitted runtime proofs (L7/L8).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_SINGLE_GUARDED_ENTRYPOINT",
+      "kind": "hard",
+      "name": "Single Guarded Entrypoint (no unauthenticated route surface)",
+      "status": "PASS",
+      "details": "One guarded app: build_app() returns runtime/api_server.py (every route Depends(zt_guard); only /healthz open), src/main.py + runtime.serve + Dockerfile CMD converge on it, no raw per-node router is served, and the emitted runtime test proves every served route rejects an unauthenticated caller (P0 auth-bypass closed by construction — L7/L8).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_BUNDLE_MANIFEST_SIGNED",
+      "kind": "hard",
+      "name": "Bundle Manifest Signed (every delivered file hash-bound to the signed identity)",
+      "status": "PASS",
+      "details": "Every delivered file (except the structurally-post-signature exclusions listed SIGNED in conformance.manifest.excluded) is hashed into MANIFEST.json, whose canonical hash is Ed25519-signed in identity.conformance.manifest. verify_identity.py recomputes the manifest hash + every file sha256 and sweeps the disk BEFORE any bundle code runs; the PY twin + emitted pytest re-verify on the complete artifact (supply-chain integrity — a code change that breaks no test is now caught cryptographically, L7/L8).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_ADMIN_SURFACE_GUARDED",
+      "kind": "hard",
+      "name": "Admin Surface Guarded (loopback default, fail-closed mutations, no wildcard CORS, not default-started)",
+      "status": "PASS",
+      "details": "The generated admin server binds loopback by default, emits no wildcard CORS, and fail-closes every mutating endpoint behind ADMIN_API_TOKEN; docker-compose does not start it by default (profile) and binds only 127.0.0.1 — no unauthenticated mutable control surface in the default package (external DD, L7/L8).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_CCAS_APPROVAL_PROVENANCE",
+      "kind": "hard",
+      "name": "CCAS Approval Provenance (structured, action-bound, signed, fail-closed — no bare-name approvals)",
+      "status": "PASS",
+      "details": "CCAS is a tier-enforcement interface + fail-closed approval seam: a bare name counts for nothing; an approval must be a structured record bound to THIS action, carry an approver role, use a fresh nonce, be unexpired (expires_at is signature-bound — stripping it breaks the signature), be NOT-YET-CONSUMED in the persistent ledger (Fas 2.17: an approval that released an action once can never release another — consumption is recorded BEFORE approval is returned, fail-closed on an unavailable ledger), and be signature-verified against the customer approval backend (CCAS_APPROVAL_KEY, a CUSTOMER_SLOT — fail-closed when unbound). Independence de-dupes on approver principal (external DD, L7/L8).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_CONFIG_RUNTIME_PARITY",
+      "kind": "hard",
+      "name": "Config/Runtime Parity (env knobs are read; single-replica default for process-local state)",
+      "status": "PASS",
+      "details": "Generated config/deploy artifacts match runtime: BARRIER_TIMEOUT_MS is read from the environment with a default equal to .env.example (no inert knob), and the k8s manifest defaults to a single replica because the state is process-local — scaling >1 requires binding external state (external DD, L8).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_SUPPLY_CHAIN_PINNED",
+      "kind": "hard",
+      "name": "Supply Chain Pinned (Actions on commit SHAs, no unpinned pip installs, Dependabot present)",
+      "status": "PASS",
+      "details": "Build supply chain is pinned: every GitHub Action uses: is a 40-hex commit SHA, no unpinned pip installs ship in the Dockerfile/workflows, and Dependabot keeps the pins current (external DD #5, 2.14a). The hashed transitive lock, full SBOM, and base-image digest are measured in CI (2.14b).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_SUPPLY_CHAIN_MEASURED",
+      "kind": "hard",
+      "name": "Supply Chain Measured (transitive hash-locked lock + CycloneDX SBOM measured before export and signed; base-image digest two-state)",
+      "status": "PASS",
+      "details": "[SUPPLY_CHAIN_MEASURED_AND_LOCKED] The transitive hash-locked requirements + full CycloneDX SBOM are MEASURED BY THE FACTORY (bundle-invariant deps) and BORN IN this bundle as signed files (hashed into the Ed25519 manifest) — measured before export, not by a post-delivery CI bootstrap; the lock's drift marker binds it to the emitted pyproject. The base image is digest-pinned, BORN IN SIGNED (MEASURED_AND_LOCKED) — Dockerfile, compose and build-image all consume the measured ref. Nothing is written post-signing (verify-only workflow re-proves fail-closed: --require-hashes install of the full closure + pip check + SBOM coverage + drift marker). External DD, 2.18/2.19, L8.",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_REFERENCE_CAPABILITY_E2E",
+      "kind": "hard",
+      "name": "Reference Capability E2E (opt-in factory harness runs the full happy path through the action gate; approval provenance never relaxed)",
+      "status": "PASS",
+      "details": "The factory-controlled reference capability ships end-to-end: an explicit opt-in harness (DOER_REFERENCE_MODE, default OFF, every output marked \"reference\") gives contract-derived outputs for unimplemented CUSTOMER_SLOTs and a side-effect-free reference execution AFTER ccas approval; approval material (request_id + SIGNED approvals) flows with the action request and 2.13c provenance is never relaxed; the emitted e2e proof covers fail-closed default, held ungated actions, and the full signed-approval happy path through the action gate with a verified audit chain (external DD #7, 2.16, L7/L8).",
+      "violations": []
+    },
+    {
+      "id": "ARTIFACT_IMAGE_PROVENANCE_BOUND",
+      "kind": "hard",
+      "name": "Image Provenance Bound (built image carries the signed bundle identity as labels; pushed digest Sigstore-attested by the emitted build chain)",
+      "status": "N_A",
+      "details": "The emitted build chain WIRES the image<->bundle binding (OCI labels resolved from the SIGNED files, pushed digest Sigstore-attested, verification doc shipped) and that wiring is re-verifiable. But the trust BOOTSTRAP is NOT externally anchored: the build workflow runs the in-checkout verifier (verify_identity.py) and reads MANIFEST.json from the same mutable checkout, so a party who controls the checkout can tamper the source, neutralise the in-checkout verifier and update its hash in the local manifest — the in-CI precheck would still pass and the image would be labelled bound. The binding is therefore tamper-EVIDENT, not externally anchored, and this control is N/A until an external trust anchor is configured: pin verification to a SHA-pinned cross-repo reusable workflow AND supply the HexaBox root fingerprint out-of-band (secret HEXABOX_ROOT_FINGERPRINT), not from the checkout (docs/verify_root_fingerprint.md). It does NOT PASS on the presence of the wiring alone.",
+      "violations": []
+    },
+    {
+      "id": "BUILD_TEST_PARITY",
+      "kind": "hard",
+      "name": "Generated Test ↔ Schema Parity",
+      "status": "PASS",
+      "details": "Verified generated smoke payloads + contract requires-tests against per-node schemas.json (XI smoke parity + 8-port contract parity, comment-free).",
+      "violations": []
+    },
+    {
+      "id": "BUILD_IMPORT_INTEGRITY",
+      "kind": "hard",
+      "name": "Cross-Module Import Integrity",
+      "status": "PASS",
+      "details": "Every `from src.shared.<mod> import <symbol>` must resolve to a symbol actually defined in that module.",
+      "violations": []
+    },
+    {
+      "id": "BUILD_SAMPLE_EVENT_ACCEPTED",
+      "kind": "hard",
+      "name": "Signed Sample Event Accepted",
+      "status": "PASS",
+      "details": "The signed input_model sample_event satisfies the generated ingress envelope rules (source present; no blank envelope fields) — input model, demo and runtime cannot drift apart.",
+      "violations": []
+    }
+  ]
+}

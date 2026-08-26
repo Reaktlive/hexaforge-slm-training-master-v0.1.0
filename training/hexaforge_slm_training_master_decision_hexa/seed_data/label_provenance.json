@@ -1,0 +1,5 @@
+{
+  "label_source": "synthetic_baseline",
+  "count": 40,
+  "note": "Contract-shaped neutral bootstrap (same generator as demo synthetic). Replace/enrich with real, domain-labelled data; the eval-harness gates bind-readiness."
+}

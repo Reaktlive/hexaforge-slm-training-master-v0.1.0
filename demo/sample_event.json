@@ -1,0 +1,7 @@
+{
+  "event_id": "evt-000000",
+  "ts": "2026-01-01T00:00:00.000Z",
+  "source": "synthetic-source",
+  "payload": {},
+  "severity": ""
+}

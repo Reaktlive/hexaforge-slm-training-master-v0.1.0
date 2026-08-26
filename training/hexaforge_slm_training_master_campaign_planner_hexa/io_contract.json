@@ -1,0 +1,8 @@
+{
+  "node": "hexaforge_slm_training_master_campaign_planner_hexa",
+  "competence": "campaign_planner",
+  "input_schema": "contracts/hexaforge_slm_training_master_campaign_planner_hexa/xi.schema.json",
+  "output_schema": "contracts/hexaforge_slm_training_master_campaign_planner_hexa/xo.schema.json",
+  "determinism": "temperature_0",
+  "gate_rule": "uncertain=>escalate"
+}

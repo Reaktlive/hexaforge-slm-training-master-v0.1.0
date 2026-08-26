@@ -1,0 +1,7 @@
+{
+  "gate_id": "ARTIFACT_MO_CONTRACT_E2E",
+  "name": "MO Contract E2E (cohort boundary)",
+  "kind": "hard",
+  "category": "artifact",
+  "module": "artifact_mo_contract_e2e.py"
+}

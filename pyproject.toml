@@ -1,0 +1,32 @@
+[project]
+name = "forseti_hexaforge_slm_training_master_agent"
+version = "1.0.0"
+description = "This agent orchestrates the lifecycle of SLM training jobs, from planning and execution to evaluation and deployment, ensuring strict adherence to governance policies, data quality, and auditability. It supports both single-tenant and k-anonymized multi-tenant data scenarios. Hybrid vertical: ai-ml-ops + governance-risk-compliance + data-privacy."
+requires-python = ">=3.11"
+license = { text = "Proprietary" }
+authors = [{ name = "HexaBox AB" }]
+maintainers = [{ name = "HexaBox AB" }]
+classifiers = [
+  "Private :: Do Not Upload",
+  "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+  "pydantic>=2.5",
+  "fastapi>=0.110",
+  "uvicorn>=0.27",
+  "structlog>=24.1",
+  "prometheus-client>=0.19",
+  "pyyaml>=6.0",
+  # PG-3 (Purity Gate P3) — the bundled pytest suite imports these; declared
+  # in the main dependency list so `pip install .` makes the bundle's tests
+  # green out-of-the-box (there is no separate dev/test dependency group).
+  "pytest>=8.0",
+  "httpx>=0.27",
+  # PG-6 — src/shared/llm_binding.py builds the Anthropic client on the real
+  # (non-mocked) path; declared so the contract-bound LLM helper is installable.
+  "anthropic>=0.39",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"

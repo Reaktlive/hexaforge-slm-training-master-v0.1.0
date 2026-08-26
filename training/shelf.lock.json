@@ -1,0 +1,46 @@
+{
+  "schema": "hexabox.slm-shelf/v1",
+  "note": "HexaLearn-promoted base/recipe memory — resolved dynamically by competence_signature, not a static node-class map. Grows as outcomes are promoted.",
+  "integrity_policy": "Every entry declares `integrity`: 'measured' (sha256 is the real, verified digest) or 'unpinned' (sha256 is null — NOT yet measured). An unpinned entry is a candidate, not a lock: the fetch step MUST obtain the artifact, record its digest here and verify it before any training or binding. Never fetch-and-trust an unpinned entry. A placeholder digest is never shipped — an absent measurement is stated as null (red-team A8).",
+  "bases": [
+    {
+      "id": "llama-3.2-3b-instruct",
+      "kind": "base",
+      "base_model": "meta-llama/Llama-3.2-3B-Instruct",
+      "quant": "Q4_K_M",
+      "license": "Llama-3.2-Community",
+      "source_url": "https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct",
+      "sha256": null,
+      "integrity": "unpinned"
+    }
+  ],
+  "adapters": [
+    {
+      "id": "hexabox-soc-triage-guide",
+      "kind": "adapter",
+      "base_model": "meta-llama/Llama-3.2-3B-Instruct",
+      "domain": "soc-triage",
+      "quant": "Q4_K_M",
+      "sha256": "682f3da25fc48aa90e4aed56c267a363e9890817137237c348c4b87356481084",
+      "integrity": "measured"
+    },
+    {
+      "id": "hexabox-email-barracuda",
+      "kind": "adapter",
+      "base_model": "meta-llama/Llama-3.2-3B-Instruct",
+      "domain": "email",
+      "quant": "Q4_K_M",
+      "sha256": null,
+      "integrity": "unpinned"
+    },
+    {
+      "id": "hexabox-endpoint-acronis",
+      "kind": "adapter",
+      "base_model": "meta-llama/Llama-3.2-3B-Instruct",
+      "domain": "endpoint",
+      "quant": "Q4_K_M",
+      "sha256": null,
+      "integrity": "unpinned"
+    }
+  ]
+}

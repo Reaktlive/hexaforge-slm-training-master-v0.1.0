@@ -1,0 +1,8 @@
+{
+  "node": "hexaforge_slm_training_master_artifact_meter_hexa",
+  "competence": "artifact_meter",
+  "input_schema": "contracts/hexaforge_slm_training_master_artifact_meter_hexa/xi.schema.json",
+  "output_schema": "contracts/hexaforge_slm_training_master_artifact_meter_hexa/xo.schema.json",
+  "determinism": "temperature_0",
+  "gate_rule": "uncertain=>escalate"
+}

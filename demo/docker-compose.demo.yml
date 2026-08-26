@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  doer:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    ports: ["8000:8000"]
+    environment:
+      - DEMO_MODE=1
+      # ZT auth stays ON in the demo (fail-closed default, Fas 2.5). The
+      # identity below is LOCAL DEMO CONFIG only — scope-limited to
+      # events:write, never a production credential. Rotate/replace via
+      # ZT_IDENTITIES in real deployments (see docs/deployment-tls.md).
+      - 'ZT_IDENTITIES={"demo-token":{"identity":"demo","scopes":["events:write"],"expires_at":null}}'
+    # Fas 2.25 (external DD, Peter #7) — WRITABLE STATE. The Dockerfile points the
+    # audit chain / approvals ledger / LLM-provenance log at /app/state (doer-
+    # owned VOLUME). Without a mount here the first event would PermissionError
+    # under the root-owned WORKDIR while /healthz stayed green (healthy-but-broken).
+    volumes:
+      - hexa-state:/app/state
+    # A REAL readiness gate: /readyz proves the state dir is writable (distinct
+    # from /healthz liveness). Compose waits for it before the demo is "up".
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/readyz',timeout=3).status==200 else 1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+volumes:
+  hexa-state:
