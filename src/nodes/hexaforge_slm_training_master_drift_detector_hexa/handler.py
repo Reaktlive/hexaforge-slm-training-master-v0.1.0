@@ -248,20 +248,57 @@ async def handle_zo(payload: Any) -> dict:
 # ONE place customer logic lives; everything above is platform + baseline.
 # ─────────────────────────────────────────────────────────────────────
 def _drift_detector_impl(features: dict) -> float:
-    """Deterministic baseline score in [0, 1] over the named features.
+    """Drift urgency in [0, 1] from the locked four-signal policy (HST-213).
 
-    DEFAULT (honest heuristic, NOT a trained model): log-compress each feature's
-    magnitude with log1p(|f|) so the score discriminates across ORDERS OF
-    MAGNITUDE (a 9000 transaction reads materially higher than a 5 one, instead
-    of both saturating), take the equal-weight mean, then squash to [0, 1) with
-    z / (1 + z). With no features the score is 0.0 (nothing to go on). Monotone
-    in each |feature| and fully explainable. Override this function with your
-    model to productionise.
+    Competency logic (pass-3 addendum §B). Delegates to
+    src.shared.drift_policy.evaluate_drift: the returned score is the urgency of
+    the highest FIRED signal (high 0.9 / medium 0.6 / low 0.35), and 0.0 when
+    nothing fired. Signals: eval_regression (score < threshold+0.05 or -0.03 from
+    the promotion score), input_drift (PSI >= 0.20), new_governed_data (>= 500
+    unseen k-anon rows), age (>90d AND another signal marginal — never alone).
+    The FULL verdict — the four per-signal statuses, the honest
+    `cannot_assess` ("no baseline") states, and the tiered trigger_retrain = T2
+    proposal (never auto) — is available via drift_policy.evaluate_drift for the
+    runtime/UI; this seam exposes the scalar the classify envelope carries.
+    Pure and deterministic. Reads named signal fields off `features`; unmeasured
+    signals never fabricate drift.
     """
-    if not features:
-        return 0.0
-    total = 0.0
-    for value in features.values():
-        total += math.log1p(abs(float(value)))
-    z = total / float(len(features))
-    return z / (1.0 + z)
+    from src.shared.drift_policy import drift_urgency_score
+    return drift_urgency_score(features)
+
+
+# ─────────────────────────────────────────────────────────────────────
+# XO enrichment — surface the FULL four-signal drift verdict (HST-213).
+#
+# Re-generation-safe: we capture the AUTOGEN handle_xi as _baseline_handle_xi
+# and redefine handle_xi below the marker (the documented wrap pattern). The
+# baseline still runs — schema validation, THRESHOLD cut, H7 audit, XO backfill
+# are untouched — and we then attach the structured verdict under the XO
+# payload's `drift` key. `_xo_validate` forwards unknown fields, so the extra
+# `drift` object rides the contract-valid envelope without violating it. The
+# scalar `score` above and this structured `drift` are two views of one rule.
+# ─────────────────────────────────────────────────────────────────────
+_baseline_handle_xi = handle_xi  # the AUTOGEN classify handler, captured before override
+
+
+async def handle_xi(payload: Any) -> dict:  # noqa: F811 — intentional re-gen-safe override
+    """drift_detector.xi — baseline classify + the full drift verdict on XO.
+
+    Runs the factory baseline handler unchanged, then attaches the deterministic
+    four-signal verdict (evaluate_drift) to the emitted XO payload as `drift`:
+    per-signal statuses, the honest `cannot_assess` states, and the tiered
+    trigger_retrain=T2 proposal (never auto). Downstream / the /campaign/drift
+    binding layer reads `payload.payload.drift`.
+    """
+    from src.shared.drift_policy import evaluate_drift
+
+    result = await _baseline_handle_xi(payload)
+    body = payload.get("payload") if isinstance(payload, dict) and isinstance(payload.get("payload"), dict) else (payload if isinstance(payload, dict) else {})
+    try:
+        envelope = result.get("payload")
+        if isinstance(envelope, dict) and isinstance(envelope.get("payload"), dict):
+            envelope["payload"]["drift"] = evaluate_drift(body)
+    except Exception:
+        # Enrichment must never break the contract-valid baseline result.
+        pass
+    return result
