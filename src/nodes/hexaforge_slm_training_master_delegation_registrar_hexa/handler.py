@@ -248,20 +248,54 @@ async def handle_zo(payload: Any) -> dict:
 # ONE place customer logic lives; everything above is platform + baseline.
 # ─────────────────────────────────────────────────────────────────────
 def _delegation_registrar_impl(features: dict) -> float:
-    """Deterministic baseline score in [0, 1] over the named features.
+    """Delegation confidence in [0, 1] from the locked capability policy (HST-216).
 
-    DEFAULT (honest heuristic, NOT a trained model): log-compress each feature's
-    magnitude with log1p(|f|) so the score discriminates across ORDERS OF
-    MAGNITUDE (a 9000 transaction reads materially higher than a 5 one, instead
-    of both saturating), take the equal-weight mean, then squash to [0, 1) with
-    z / (1 + z). With no features the score is 0.0 (nothing to go on). Monotone
-    in each |feature| and fully explainable. Override this function with your
-    model to productionise.
+    Competency logic (pass-3 addendum §1B). Delegates to
+    src.shared.delegation_policy: 1.0 when a bind is cleanly delegable under an
+    active in-scope grant, 0.0 when it needs a live senior signature. The FULL
+    decision (delegated_ok vs needs_live_senior + the machine reason + both
+    delegate & authority on the record) is on the XO payload via the wrap below;
+    this seam exposes only the scalar the classify envelope carries. Pure,
+    deterministic. A grant/bind arrives structured on the payload body, so the
+    scalar over flat numeric `features` alone is conservatively 0.0 — the real
+    decision reads the structured body.
     """
-    if not features:
-        return 0.0
-    total = 0.0
-    for value in features.values():
-        total += math.log1p(abs(float(value)))
-    z = total / float(len(features))
-    return z / (1.0 + z)
+    from src.shared.delegation_policy import delegation_confidence
+    return delegation_confidence(features)
+
+
+# ─────────────────────────────────────────────────────────────────────
+# XO enrichment — surface the FULL delegation decision (HST-216).
+#
+# Re-generation-safe: capture the AUTOGEN handle_xi and redefine it below the
+# marker (documented wrap pattern). The baseline runs unchanged; we then attach
+# the capability decision under the XO payload's `delegation` key. `_xo_validate`
+# forwards unknown fields, so the extra object rides the contract-valid envelope.
+# The body carries {grant, bind, now_epoch}; a missing grant yields needs_live_senior.
+# ─────────────────────────────────────────────────────────────────────
+_baseline_handle_xi = handle_xi  # the AUTOGEN classify handler, captured before override
+
+
+async def handle_xi(payload: Any) -> dict:  # noqa: F811 — intentional re-gen-safe override
+    """delegation_registrar.xi — baseline classify + the full delegation decision on XO.
+
+    Runs the factory baseline unchanged, then attaches the capability decision
+    (delegated_ok | needs_live_senior, machine reason, both names on the record)
+    under the XO payload's `delegation` key. Downstream / the /delegations binding
+    layer reads `payload.payload.delegation`.
+    """
+    from src.shared.delegation_policy import verify_delegated_bind
+
+    result = await _baseline_handle_xi(payload)
+    body = payload.get("payload") if isinstance(payload, dict) and isinstance(payload.get("payload"), dict) else (payload if isinstance(payload, dict) else {})
+    try:
+        envelope = result.get("payload")
+        if isinstance(envelope, dict) and isinstance(envelope.get("payload"), dict):
+            grant = body.get("grant") if isinstance(body, dict) else None
+            bind = body.get("bind") if isinstance(body, dict) and isinstance(body.get("bind"), dict) else body
+            now = body.get("now_epoch") if isinstance(body, dict) else None
+            envelope["payload"]["delegation"] = verify_delegated_bind(grant or {}, bind or {}, now)
+    except Exception:
+        # Enrichment must never break the contract-valid baseline result.
+        pass
+    return result
