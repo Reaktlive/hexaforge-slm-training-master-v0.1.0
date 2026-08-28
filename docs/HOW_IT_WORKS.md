@@ -1,6 +1,6 @@
 # How HexaBox actually works — an engineer's walkthrough
 
-*You asked what a node is, and exactly how this works. This traces it in one real agent — the HexaForge SLM Training Master, the repo you were sent. Every claim below points to a file you can open in that repo and check. No diagrams you have to trust; the code is the source.*
+*How a HexaBox agent works, traced in one real agent — the HexaForge SLM Training Master. Every claim below points to a file in the repo you can open and check. No diagrams to trust; the code is the source.*
 
 Repo: `github.com/Reaktlive/hexaforge-slm-training-master-v0.1.0` · signed build: release `v0.1.0`
 
