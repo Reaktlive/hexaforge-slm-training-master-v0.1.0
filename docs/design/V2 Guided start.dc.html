@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#121310; }
+  a { color:#9ecf4a; text-decoration:none; }
+  a:hover { color:#b8e26b; }
+</style>
+</helmet>
+<div style="font-family:'Archivo',sans-serif; color:#e9ece5; background:#121310; min-height:100vh; box-sizing:border-box" data-screen-label="V2 Guided start">
+
+  <div style="display:flex; align-items:center; gap:14px; padding:14px 28px; border-bottom:1px solid #2a2d27; background:#161814">
+    <img src="logo-symbol.png" alt="HexaBox" style="height:22px; width:auto; display:block">
+    <div style="font-size:16px; font-weight:800; letter-spacing:0.02em">HexaForge</div>
+    <div style="font-size:13px; color:#a4a89e">Guided start — new training campaign</div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; padding:3px 9px; border-radius:4px; background:rgba(164,168,158,0.08); border:1px dashed #6c7066; color:#a4a89e">○ mock · dry-run</span>
+    <div style="flex:1"></div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#6c7066"><a href="V1 Campaign.dc.html">campaign board</a></div>
+    <button onClick="{{ toggleExpert }}" style="display:flex; align-items:center; gap:8px; font-family:'Archivo',sans-serif; font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:6px; border:1px solid {{ expertBorder }}; background:#20231e; color:{{ expertColor }}; cursor:pointer">
+      <span style="width:26px; height:14px; border-radius:99px; background:{{ expertTrack }}; position:relative; display:inline-block"><span style="position:absolute; top:2px; left:{{ expertKnob }}; width:10px; height:10px; border-radius:99px; background:#e9ece5; transition:left 0.15s"></span></span>
+      Expert mode
+    </button>
+  </div>
+
+  <div style="display:grid; grid-template-columns:280px 1fr; gap:28px; max-width:1240px; margin:0 auto; padding:30px 28px 48px; box-sizing:border-box; align-items:start">
+
+    <div style="display:flex; flex-direction:column; gap:6px; position:sticky; top:24px">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+        <div onClick="{{ s.go }}" style="display:flex; gap:12px; align-items:center; padding:12px 14px; border-radius:7px; border:1px solid {{ s.border }}; background:{{ s.bg }}; cursor:pointer">
+          <span style="width:24px; height:24px; border-radius:99px; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700; border:1px solid {{ s.numBorder }}; color:{{ s.numColor }}; background:{{ s.numBg }}; flex:none">{{ s.num }}</span>
+          <div>
+            <div style="font-size:13.5px; font-weight:600; color:{{ s.titleColor }}">{{ s.title }}</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; margin-top:1px">{{ s.sub }}</div>
+          </div>
+        </div>
+      </sc-for>
+      <div style="margin-top:14px; padding:12px 14px; border:1px solid #2a2d27; border-radius:7px; font-size:12px; color:#a4a89e; background:#191b17">Every field has a <span style="font-family:'JetBrains Mono',monospace; color:#7d9ab5">?</span> in plain language. Nothing here starts a job — the start button on the last step is the only trigger, and it stays within the approved plan (T1).</div>
+    </div>
+
+    <div style="min-width:0">
+
+      <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+        <div style="font-size:22px; font-weight:800">What do you want to train?</div>
+        <div style="font-size:13.5px; color:#a4a89e; margin-top:6px; max-width:560px">Pick the kind of skill. HexaForge trains a small adapter for it on this machine — your data never leaves the box.</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:22px; max-width:760px">
+          <sc-for list="{{ goals }}" as="g" hint-placeholder-count="4">
+            <div onClick="{{ g.pick }}" style="border:1px solid {{ g.border }}; background:{{ g.bg }}; border-radius:8px; padding:18px; cursor:pointer" style-hover="border-color:#6c7066">
+              <div style="font-size:15px; font-weight:700; color:{{ g.titleColor }}">{{ g.title }}</div>
+              <div style="font-size:12.5px; color:#a4a89e; margin-top:5px">{{ g.desc }}</div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066; margin-top:10px">{{ g.meta }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; align-items:baseline; gap:10px">
+          <div style="font-size:22px; font-weight:800">Pick training packs</div>
+          <button onClick="{{ expPacks }}" style="font-family:'JetBrains Mono',monospace; font-size:11px; width:20px; height:20px; border-radius:99px; border:1px solid #5d7a94; color:#7d9ab5; background:transparent; cursor:pointer">?</button>
+        </div>
+        <sc-if value="{{ showPacksExp }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:10px; padding:12px 14px; border:1px solid #33404c; border-radius:7px; background:rgba(125,154,181,0.07); font-size:13px; color:#cdd6df; max-width:640px">A pack bundles three things for one skill: seed data, an eval harness, and the score threshold the adapter must beat. Counts below come straight from the pack's run report.</div>
+        </sc-if>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:22px; max-width:760px">
+          <sc-for list="{{ packs }}" as="p" hint-placeholder-count="4">
+            <div onClick="{{ p.toggle }}" style="display:flex; align-items:center; gap:16px; border:1px solid {{ p.border }}; background:{{ p.bg }}; border-radius:8px; padding:15px 18px; cursor:pointer">
+              <span style="width:18px; height:18px; border-radius:4px; border:1px solid {{ p.boxBorder }}; background:{{ p.boxBg }}; display:flex; align-items:center; justify-content:center; font-size:12px; color:#0f1405; font-weight:800; flex:none">{{ p.check }}</span>
+              <div style="flex:1; min-width:0">
+                <div style="font-size:14.5px; font-weight:700">{{ p.name }}</div>
+                <div style="font-size:12.5px; color:#a4a89e; margin-top:2px">{{ p.desc }}</div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#a4a89e">{{ p.counts }}</div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; margin-top:2px">threshold {{ p.thr }} · {{ p.est }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; margin-top:12px">
+          <button onClick="{{ expCounts }}" style="font-family:'JetBrains Mono',monospace; font-size:11px; width:20px; height:20px; border-radius:99px; border:1px solid #5d7a94; color:#7d9ab5; background:transparent; cursor:pointer">?</button>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#6c7066">discovered / valid / registered</span>
+        </div>
+        <sc-if value="{{ showCountsExp }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:8px; padding:12px 14px; border:1px solid #33404c; border-radius:7px; background:rgba(125,154,181,0.07); font-size:13px; color:#cdd6df; max-width:640px">Discovered = rows found in the pack · valid = rows that passed checks · registered = what training will actually use. If valid is much lower than discovered, the pack's data needs a look before training.</div>
+        </sc-if>
+      </sc-if>
+
+      <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:22px; font-weight:800">Where should the training data come from?</div>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:22px; max-width:760px">
+          <sc-for list="{{ sources }}" as="src" hint-placeholder-count="3">
+            <div style="border:1px solid {{ src.border }}; background:{{ src.bg }}; border-radius:8px; padding:15px 18px">
+              <div style="display:flex; align-items:center; gap:14px; cursor:pointer" onClick="{{ src.pick }}">
+                <span style="width:16px; height:16px; border-radius:99px; border:1px solid {{ src.dotBorder }}; display:flex; align-items:center; justify-content:center; flex:none"><span style="width:8px; height:8px; border-radius:99px; background:{{ src.dotFill }}"></span></span>
+                <div style="flex:1">
+                  <div style="font-size:14.5px; font-weight:700">{{ src.name }} <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:400; padding:2px 7px; border-radius:3px; border:1px solid {{ src.tagBorder }}; color:{{ src.tagColor }}; margin-left:6px">{{ src.tag }}</span></div>
+                  <div style="font-size:12.5px; color:#a4a89e; margin-top:3px">{{ src.desc }}</div>
+                </div>
+                <button onClick="{{ src.exp }}" style="font-family:'JetBrains Mono',monospace; font-size:11px; width:20px; height:20px; border-radius:99px; border:1px solid #5d7a94; color:#7d9ab5; background:transparent; cursor:pointer; flex:none">?</button>
+              </div>
+              <sc-if value="{{ src.showExp }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:12px; padding:11px 13px; border:1px solid #33404c; border-radius:6px; background:rgba(125,154,181,0.07); font-size:12.5px; color:#cdd6df">{{ src.explain }}</div>
+              </sc-if>
+              <sc-if value="{{ src.showPath }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:12px; display:flex; gap:10px; align-items:center">
+                  <input value="/data/hexaforge/own/" readOnly style="flex:1; font-family:'JetBrains Mono',monospace; font-size:12.5px; padding:9px 12px; border-radius:6px; border:1px solid #454a41; background:#161814; color:#e9ece5; outline:none">
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#9ecf4a; white-space:nowrap">never leaves this machine</span>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isStepDQ }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:22px; font-weight:800">Data quality — checked before anything runs</div>
+        <div style="font-size:13.5px; color:#a4a89e; margin-top:6px; max-width:600px">{{ dqIntro }}</div>
+        <div style="margin-top:22px; border:1px solid {{ dqBorder }}; border-radius:8px; background:#191b17; max-width:760px; overflow:hidden">
+          <div style="padding:13px 18px; border-bottom:1px solid #22251f; display:flex; justify-content:space-between; align-items:baseline; gap:12px">
+            <div style="font-size:13.5px; font-weight:700; color:{{ dqVerdictColor }}">{{ dqVerdict }}</div>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066">{{ dqMeta }}</span>
+          </div>
+          <sc-for list="{{ dqRows }}" as="r" hint-placeholder-count="5">
+            <div style="display:flex; gap:14px; align-items:flex-start; padding:12px 18px; border-bottom:1px solid #1e211c">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:{{ r.color }}; flex:none; width:14px">{{ r.mark }}</span>
+              <div style="flex:1">
+                <div style="font-size:13px; font-weight:600; color:{{ r.titleColor }}">{{ r.title }}</div>
+                <div style="font-size:12.5px; color:#a4a89e; margin-top:2px">{{ r.detail }}</div>
+              </div>
+              <sc-if value="{{ r.hasFix }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ r.fix }}" style="font-family:'Archivo',sans-serif; font-size:12.5px; font-weight:600; padding:8px 13px; border-radius:6px; border:1px solid #454a41; background:#20231e; color:#e9ece5; cursor:pointer; white-space:nowrap" style-hover="border-color:#7d9ab5">{{ r.fixLabel }}</button>
+              </sc-if>
+            </div>
+          </sc-for>
+          <div style="padding:11px 18px; font-size:11.5px; color:#6c7066">Fail-closed: anything that fails here is parked, never silently trained.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep4 }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:22px; font-weight:800">Preflight — will this run cleanly?</div>
+        <div style="font-size:13.5px; color:#a4a89e; margin-top:6px">Checked against this machine right now. Red blocks the start until resolved — in plain language, with a fix.</div>
+
+        <div style="margin-top:22px; border:1px solid #2a2d27; border-radius:8px; background:#191b17; max-width:760px">
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:13px 18px; border-bottom:1px solid #22251f">
+            <div style="font-size:13.5px; font-weight:700">Training settings</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:{{ settingsModeColor }}">{{ settingsMode }}</div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0">
+            <sc-for list="{{ hypers }}" as="h" hint-placeholder-count="4">
+              <div style="padding:14px 18px; border-right:1px solid #1e211c">
+                <div style="display:flex; align-items:center; gap:7px">
+                  <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066">{{ h.label }}</span>
+                  <button onClick="{{ h.exp }}" style="font-family:'JetBrains Mono',monospace; font-size:10px; width:17px; height:17px; border-radius:99px; border:1px solid #5d7a94; color:#7d9ab5; background:transparent; cursor:pointer">?</button>
+                </div>
+                <sc-if value="{{ h.locked }}" hint-placeholder-val="{{ true }}">
+                  <div style="font-family:'JetBrains Mono',monospace; font-size:16px; font-weight:700; margin-top:6px">{{ h.value }}</div>
+                </sc-if>
+                <sc-if value="{{ h.editable }}" hint-placeholder-val="{{ false }}">
+                  <select value="{{ h.value }}" onChange="{{ h.set }}" style="margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:700; padding:5px 8px; border-radius:5px; border:1px solid #7fb92c; background:#161814; color:#e9ece5; outline:none">
+                    <sc-for list="{{ h.opts }}" as="o"><option value="{{ o }}">{{ o }}</option></sc-for>
+                  </select>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ openHyperExp }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:0 18px 14px; padding:11px 13px; border:1px solid #33404c; border-radius:6px; background:rgba(125,154,181,0.07); font-size:12.5px; color:#cdd6df">{{ hyperExpText }}</div>
+          </sc-if>
+          <div style="padding:10px 18px 14px; font-size:11.5px; color:#6c7066; border-top:1px solid #1e211c">Locked to good defaults. Expert mode (top right) unlocks them on this same screen — no separate app.</div>
+        </div>
+
+        <div style="margin-top:14px; display:flex; flex-direction:column; gap:8px; max-width:760px">
+          <sc-for list="{{ checks }}" as="c" hint-placeholder-count="4">
+            <div style="display:flex; gap:14px; align-items:center; padding:13px 16px; border-radius:7px; border:1px solid {{ c.border }}; background:{{ c.bg }}">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:{{ c.color }}; flex:none">{{ c.mark }}</span>
+              <div style="flex:1">
+                <div style="font-size:13.5px; font-weight:600; color:{{ c.titleColor }}">{{ c.title }}</div>
+                <div style="font-size:12.5px; color:#a4a89e; margin-top:2px">{{ c.detail }}</div>
+              </div>
+              <sc-if value="{{ c.hasFix }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ c.fix }}" style="font-family:'Archivo',sans-serif; font-size:12.5px; font-weight:600; padding:8px 13px; border-radius:6px; border:1px solid #454a41; background:#20231e; color:#e9ece5; cursor:pointer; white-space:nowrap" style-hover="border-color:#7d9ab5">{{ c.fixLabel }}</button>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ notStarted }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:22px; display:flex; align-items:center; gap:14px">
+            <button onClick="{{ start }}" disabled="{{ startDisabled }}" style="font-family:'Archivo',sans-serif; font-size:14.5px; font-weight:700; padding:13px 22px; border-radius:7px; border:1px solid {{ startBorder }}; background:{{ startBg }}; color:{{ startColor }}; cursor:{{ startCursor }}" style-hover="filter:brightness(1.07)">{{ startLabel }} <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:700; margin-left:7px; padding:2px 6px; border-radius:3px; background:rgba(15,20,5,0.22)">T1 · within approved plan</span></button>
+            <div style="font-size:12px; color:#6c7066; max-width:280px">Starts training only. Binding an adapter always comes back to you (T3).</div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ started }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:22px; padding:16px 18px; border:1px solid rgba(127,185,44,0.45); background:rgba(127,185,44,0.08); border-radius:8px; max-width:760px">
+            <div style="font-size:15px; font-weight:700; color:#9ecf4a">✓ Campaign plan created — 138 jobs queued</div>
+            <div style="font-size:13px; color:#a4a89e; margin-top:4px">Two jobs start now, the rest queue behind them. <a href="V1 Campaign.dc.html">Watch it on the campaign board →</a></div>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <div style="display:flex; gap:10px; margin-top:30px; padding-top:18px; border-top:1px solid #22251f; max-width:760px">
+        <sc-if value="{{ canBack }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ back }}" style="font-family:'Archivo',sans-serif; font-size:13px; font-weight:600; padding:10px 16px; border-radius:6px; border:1px solid #454a41; background:transparent; color:#a4a89e; cursor:pointer" style-hover="border-color:#6c7066">← Back</button>
+        </sc-if>
+        <div style="flex:1"></div>
+        <sc-if value="{{ canNext }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ next }}" disabled="{{ nextDisabled }}" style="font-family:'Archivo',sans-serif; font-size:13px; font-weight:700; padding:10px 18px; border-radius:6px; border:1px solid {{ nextBorder }}; background:{{ nextBg }}; color:{{ nextColor }}; cursor:{{ nextCursor }}">Continue →</button>
+        </sc-if>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1240, &quot;height&quot;: 1020}, &quot;preflight&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;all clear&quot;, &quot;vram blocker&quot;], &quot;default&quot;: &quot;all clear&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Scenario&quot;}, &quot;data&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;clean&quot;, &quot;below floor&quot;, &quot;pii hit&quot;], &quot;default&quot;: &quot;clean&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Scenario&quot;}}">
+class Component extends DCLogic {
+  state = { step: 1, goal: null, packs: { "contract-clauses": true, "infra-logs": true }, source: "bundled", expert: false, exp: null, batch: "8", r: "16", lr: "2e-4", epochs: "3", started: false, piiFixed: false };
+  renderVals() {
+    const S = this.state, set = (p) => this.setState(p);
+    const preflight = this.props.preflight ?? "all clear";
+    const nPacks = Object.values(S.packs).filter(Boolean).length;
+    const own = S.source === "own";
+    const dscn = this.props.data ?? "clean";
+    const piiBad = own && dscn === "pii hit" && !S.piiFixed;
+    const floorBad = own && dscn === "below floor";
+    const dqShort = piiBad ? "3 pii rows found" : floorBad ? "would park — low rows" : "checked · clean";
+    const stepDefs = [
+      { num: "1", title: "What to train", sub: S.goal ? S.goal : "pick a skill" },
+      { num: "2", title: "Training packs", sub: nPacks + " selected" },
+      { num: "3", title: "Data source", sub: S.source === "bundled" ? "bundled seed" : S.source === "synthetic" ? "synthetic" : "own data" },
+      { num: "4", title: "Data quality", sub: dqShort },
+      { num: "5", title: "Preflight and start", sub: "checks + settings" }
+    ];
+    const steps = stepDefs.map((d, i) => {
+      const n = i + 1, cur = S.step === n, done = S.step > n;
+      return { ...d, go: () => set({ step: n }),
+        num: done ? "✓" : d.num,
+        border: cur ? "rgba(127,185,44,0.5)" : "#2a2d27", bg: cur ? "rgba(127,185,44,0.06)" : "#191b17",
+        numBorder: done ? "rgba(127,185,44,0.5)" : cur ? "#7fb92c" : "#454a41",
+        numColor: done ? "#9ecf4a" : cur ? "#0f1405" : "#6c7066",
+        numBg: cur ? "#7fb92c" : "transparent", titleColor: cur || done ? "#e9ece5" : "#a4a89e" };
+    });
+    const goals = [
+      { key: "Extract from documents", desc: "Pull fields and clauses out of contracts, invoices, reports.", meta: "2 packs available" },
+      { key: "Classify and route", desc: "Sort logs, tickets, or mail into the right bucket.", meta: "3 packs available" },
+      { key: "Draft replies", desc: "Suggest support or email answers in your tone.", meta: "1 pack available" },
+      { key: "Write queries and code", desc: "Turn plain questions into SQL or small scripts.", meta: "2 packs available" }
+    ].map(g => ({ title: g.key, desc: g.desc, meta: g.meta, pick: () => set({ goal: g.key }),
+      border: S.goal === g.key ? "#7fb92c" : "#2a2d27", bg: S.goal === g.key ? "rgba(127,185,44,0.07)" : "#191b17",
+      titleColor: S.goal === g.key ? "#9ecf4a" : "#e9ece5" }));
+    const packDefs = [
+      { id: "contract-clauses", name: "contract-clauses", desc: "Tags and extracts clauses from contracts.", d: 1420, v: 1388, thr: "0.80", est: "~38m" },
+      { id: "infra-logs", name: "infra-logs", desc: "Classifies and routes infrastructure log lines.", d: 2210, v: 2148, thr: "0.80", est: "~52m" },
+      { id: "support-replies", name: "support-replies", desc: "Drafts first-pass support answers.", d: 960, v: 903, thr: "0.85", est: "~31m" },
+      { id: "sql-writing", name: "sql-writing", desc: "Plain questions to safe, read-only SQL.", d: 1188, v: 1121, thr: "0.85", est: "~35m" }
+    ];
+    const packs = packDefs.map(p => { const on = !!S.packs[p.id]; return {
+      name: p.name, desc: p.desc, thr: p.thr, est: p.est,
+      counts: p.d + " / " + p.v + " / " + p.v,
+      toggle: () => set({ packs: { ...S.packs, [p.id]: !on } }),
+      border: on ? "rgba(127,185,44,0.5)" : "#2a2d27", bg: on ? "rgba(127,185,44,0.06)" : "#191b17",
+      boxBorder: on ? "#7fb92c" : "#454a41", boxBg: on ? "#7fb92c" : "transparent", check: on ? "✓" : "" }; });
+    const srcDefs = [
+      { id: "bundled", name: "Bundled seed data", tag: "curated", tagB: "rgba(127,185,44,0.5)", tagC: "#9ecf4a", desc: "The example rows that ship with each pack. The right first run.", explain: "Curated, checked rows maintained with the pack. Counts on step 2 are these rows." },
+      { id: "synthetic", name: "Synthetic data", tag: "generated · labeled", tagB: "rgba(201,164,74,0.5)", tagC: "#c9a44a", desc: "Generated examples to widen coverage. Always labeled synthetic in the record.", explain: "Every synthetic row is marked in the training record — it is never silently mixed with real data. Good for rare cases the seed set misses." },
+      { id: "own", name: "Your own data", tag: "local only", tagB: "#454a41", tagC: "#a4a89e", desc: "A folder on this machine. Validated the same way as seed data.", explain: "Point at a folder of examples. They are checked (row count, format, duplicates) before training, and they never leave this machine." }
+    ];
+    const sources = srcDefs.map(s => { const on = S.source === s.id; return {
+      name: s.name, tag: s.tag, tagBorder: s.tagB, tagColor: s.tagC, desc: s.desc, explain: s.explain,
+      pick: () => set({ source: s.id }),
+      exp: (e) => { e.stopPropagation(); set({ exp: S.exp === s.id ? null : s.id }); },
+      showExp: S.exp === s.id, showPath: s.id === "own" && on,
+      border: on ? "rgba(127,185,44,0.5)" : "#2a2d27", bg: on ? "rgba(127,185,44,0.06)" : "#191b17",
+      dotBorder: on ? "#7fb92c" : "#454a41", dotFill: on ? "#7fb92c" : "transparent" }; });
+    const dqRowsRaw = own ? [
+      { mark: "✓", title: dscn === "below floor" ? "312 rows found" : "1,412 rows found", detail: "Read from /data/hexaforge/own/ — nothing has trained yet." },
+      { mark: "✓", title: dscn === "below floor" ? "6 duplicates removed → 306 used" : (dscn === "pii hit" && S.piiFixed ? "24 duplicates removed → 1,385 used" : "24 duplicates removed → 1,388 used"), detail: "Exact and near-duplicates collapse to one row each." },
+      { mark: "✓", title: "All rows parse", detail: "Every row has a prompt and an expected answer in the right format." },
+      piiBad
+        ? { mark: "✕", bad: true, title: "3 rows look like personal data", detail: "2 email addresses, 1 personal number. Remove them or confirm they belong — they would land in the training record.", hasFix: true, fixLabel: "Remove 3 rows and re-check", fix: () => this.setState({ piiFixed: true }) }
+        : { mark: "✓", title: dscn === "pii hit" && S.piiFixed ? "Personal data removed — re-checked clean" : "No personal data found", detail: dscn === "pii hit" && S.piiFixed ? "3 rows dropped; the scan ran again on the remainder." : "Scanned for emails, personal numbers, phone numbers, addresses." },
+      floorBad
+        ? { mark: "✕", bad: true, title: "Below the 500-row floor", detail: "306 rows after cleaning — this pack would be parked, not trained (fail-closed). Add rows or use the bundled seed." }
+        : { mark: "✓", title: "Above the 500-row floor", detail: "Enough data for this pack's smallest safe training run." }
+    ] : [
+      { mark: "✓", title: "Validated with the pack", detail: S.source === "synthetic" ? "Synthetic rows are generated, labeled, and checked at build time." : "Bundled seed rows are curated and checked at build time." },
+      { mark: "✓", title: "3,536 rows registered across " + nPacks + " packs", detail: "Counts match the packs' run reports (discovered / valid / registered)." },
+      { mark: "✓", title: "No personal data", detail: "Scanned at pack build; nothing new to scan here." },
+      { mark: "✓", title: "Above the row floor", detail: "All selected packs clear their minimums." }
+    ];
+    const dqRows = dqRowsRaw.map(r => ({ ...r, hasFix: !!r.hasFix, color: r.bad ? "#e07a6f" : "#9ecf4a", titleColor: r.bad ? "#e07a6f" : "#e9ece5" }));
+    const hyperDefs = [
+      { id: "r", label: "adapter size r", opts: ["8", "16", "32"], text: "r=16 keeps the adapter small and cheap — a good default. Bigger r can learn more but trains slower and needs more VRAM." },
+      { id: "lr", label: "learning rate", opts: ["1e-4", "2e-4", "3e-4"], text: "How big each learning step is. Too high and the loss diverges; too low and training crawls. 2e-4 suits most packs." },
+      { id: "batch", label: "batch size", opts: ["4", "8", "16"], text: "How many examples per step. Bigger is faster but needs more VRAM — this is the knob preflight asks you to lower when memory is tight." },
+      { id: "epochs", label: "epochs", opts: ["2", "3", "4"], text: "Full passes over the data. 3 is enough for most packs; more risks memorizing instead of learning." }
+    ];
+    const hypers = hyperDefs.map(h => ({
+      label: h.label, value: S[h.id], opts: h.opts,
+      locked: !S.expert, editable: S.expert,
+      set: (e) => set({ [h.id]: e.target.value }),
+      exp: () => set({ exp: S.exp === h.id ? null : h.id })
+    }));
+    const openHyper = hyperDefs.find(h => h.id === S.exp);
+    const vramTight = preflight === "vram blocker" && S.batch === "8";
+    const need = vramTight ? "52.1" : S.batch === "4" ? "26.9" : "21.4";
+    const checks = [
+      vramTight
+        ? { mark: "✕", title: "Won't fit in GPU memory", detail: "This plan needs " + need + " GB; 46.6 GB is free across 2 GPUs. Lowering batch to 4 makes it fit.", bad: true, hasFix: true, fixLabel: "Use batch 4 instead", fix: () => set({ batch: "4" }) }
+        : { mark: "✓", title: "Fits in GPU memory", detail: "Needs " + need + " GB of 46.6 GB free across 2 GPUs — with room for the running jobs." },
+      { mark: "✓", title: "Enough disk for artifacts", detail: "Needs ~38 GB for checkpoints and quantized outputs; 412 GB free." },
+      { mark: "✓", title: "Training environment ready", detail: "Runtime, drivers and eval harness respond. Versions pinned in the record." },
+      floorBad
+        ? { mark: "△", warn: true, title: "Own data below floor — that pack will park", detail: "306 rows registered — under the 500-row floor. That pack parks instead of training (fail-closed); the others run." }
+        : { mark: "✓", title: "Training data registered", detail: nPacks + " packs · " + (own ? (S.piiFixed && dscn === "pii hit" ? "1,385" : "1,388") : "3,536") + " rows validated and registered. Source: " + (S.source === "bundled" ? "bundled seed" : S.source === "synthetic" ? "synthetic (labeled)" : "own data (local)") + " — checked on the data quality step." }
+    ].map(c => ({ ...c,
+      border: c.bad ? "rgba(217,86,74,0.5)" : c.warn ? "rgba(201,164,74,0.5)" : "rgba(127,185,44,0.35)",
+      bg: c.bad ? "rgba(217,86,74,0.07)" : c.warn ? "rgba(201,164,74,0.07)" : "rgba(127,185,44,0.05)",
+      color: c.bad ? "#e07a6f" : c.warn ? "#c9a44a" : "#9ecf4a",
+      titleColor: c.bad ? "#e07a6f" : c.warn ? "#c9a44a" : "#e9ece5" }));
+    const blocked = checks.some(c => c.bad);
+    const nextDisabled = (S.step === 1 && !S.goal) || (S.step === 2 && nPacks === 0) || (S.step === 4 && piiBad);
+    return {
+      steps, goals, packs, sources, hypers,
+      isStep1: S.step === 1, isStep2: S.step === 2, isStep3: S.step === 3, isStepDQ: S.step === 4, isStep4: S.step === 5,
+      dqRows, dqIntro: own ? "Your folder was scanned just now. Anything red is fail-closed — it parks instead of training." : "Bundled and synthetic sources ship pre-validated — here is what was already checked.",
+      dqVerdict: piiBad ? "Fix needed — personal data found" : floorBad ? "Would be parked — too little data" : "Clean — ready to train",
+      dqVerdictColor: piiBad ? "#e07a6f" : floorBad ? "#c9a44a" : "#9ecf4a",
+      dqBorder: piiBad ? "rgba(217,86,74,0.5)" : floorBad ? "rgba(201,164,74,0.5)" : "rgba(127,185,44,0.4)",
+      dqMeta: own ? "/data/hexaforge/own/ · scanned just now" : "from pack run reports",
+      expPacks: () => set({ exp: S.exp === "packs" ? null : "packs" }), showPacksExp: S.exp === "packs",
+      expCounts: () => set({ exp: S.exp === "counts" ? null : "counts" }), showCountsExp: S.exp === "counts",
+      openHyperExp: !!openHyper, hyperExpText: openHyper ? openHyper.text : "",
+      toggleExpert: () => set({ expert: !S.expert }),
+      expertBorder: S.expert ? "#7fb92c" : "#454a41", expertColor: S.expert ? "#9ecf4a" : "#a4a89e",
+      expertTrack: S.expert ? "#7fb92c" : "#454a41", expertKnob: S.expert ? "14px" : "2px",
+      settingsMode: S.expert ? "expert — unlocked" : "defaults — locked", settingsModeColor: S.expert ? "#9ecf4a" : "#6c7066",
+      checks,
+      canBack: S.step > 1, back: () => set({ step: S.step - 1 }),
+      canNext: S.step < 5, next: () => { if (!nextDisabled) set({ step: S.step + 1 }); },
+      nextDisabled, nextBorder: nextDisabled ? "#454a41" : "#a3d95c",
+      nextBg: nextDisabled ? "#20231e" : "linear-gradient(180deg,#8ac938,#639617)",
+      nextColor: nextDisabled ? "#6c7066" : "#0f1405", nextCursor: nextDisabled ? "default" : "pointer",
+      notStarted: !S.started, started: S.started,
+      start: () => { if (!blocked) set({ started: true }); },
+      startDisabled: blocked, startLabel: blocked ? "Resolve the red check to start" : "Start campaign · " + nPacks + " packs",
+      startBorder: blocked ? "#454a41" : "#a3d95c", startBg: blocked ? "#20231e" : "linear-gradient(180deg,#8ac938,#639617)",
+      startColor: blocked ? "#6c7066" : "#0f1405", startCursor: blocked ? "default" : "pointer"
+    };
+  }
+}
+</script>
+</body>
+</html>

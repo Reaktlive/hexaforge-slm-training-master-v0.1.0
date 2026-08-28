@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#121310; }
+  a { color:#9ecf4a; text-decoration:none; }
+  a:hover { color:#b8e26b; }
+  @keyframes hf-pulse { 0%,100% { opacity:1 } 50% { opacity:0.35 } }
+</style>
+</helmet>
+<div style="font-family:'Archivo',sans-serif; color:#e9ece5; background:#121310; min-height:100vh; box-sizing:border-box" data-screen-label="V1 Campaign">
+
+  <div style="display:flex; align-items:center; gap:14px; padding:14px 28px; border-bottom:1px solid #2a2d27; background:#161814">
+    <img src="logo-symbol.png" alt="HexaBox" style="height:22px; width:auto; display:block">
+    <div style="font-size:16px; font-weight:800; letter-spacing:0.02em">HexaForge</div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6c7066">campaign <span style="color:#a4a89e">adapter-fleet-2026-08</span> · started aug 24 06:12</div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; padding:3px 9px; border-radius:4px; background:rgba(164,168,158,0.08); border:1px dashed #6c7066; color:#a4a89e">○ mock · dry-run</span>
+    <div style="flex:1"></div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#6c7066"><a href="Forge Kit.dc.html">kit</a> · <a href="V2 Guided start.dc.html">guided start</a> · <a href="V3 Approval card.dc.html">approval</a></div>
+    <button onClick="{{ togglePause }}" style="font-family:'Archivo',sans-serif; font-size:12.5px; font-weight:600; padding:8px 14px; border-radius:6px; border:1px solid #454a41; background:#20231e; color:#e9ece5; cursor:pointer" style-hover="border-color:#6c7066">{{ pauseLabel }} <span style="font-family:'JetBrains Mono',monospace; font-size:10px; margin-left:5px; padding:1px 5px; border-radius:3px; border:1px solid #5d7a94; color:#7d9ab5">T2</span></button>
+  </div>
+
+  <sc-if value="{{ paused }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:10px 28px; background:rgba(201,164,74,0.10); border-bottom:1px solid rgba(201,164,74,0.35); font-size:13px; color:#c9a44a">Campaign paused — running jobs finish their current step, nothing new starts. Resume any time (T2, reversible).</div>
+  </sc-if>
+
+  <div style="padding:22px 28px 0; display:grid; grid-template-columns:1.6fr 1fr 1fr 1.4fr; gap:14px; max-width:1560px; margin:0 auto; box-sizing:border-box">
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:16px 18px">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; font-size:12px; color:#a4a89e"><span>Campaign progress</span><span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#e9ece5">{{ bound }} / 138 bound</span></div>
+      <div style="height:10px; border-radius:5px; background:#22251f; overflow:hidden; display:flex; margin-top:10px">
+        <div style="width:{{ pctBound }}; background:linear-gradient(90deg,#4e7a12,#7fb92c)"></div>
+        <div style="width:{{ pctAwait }}; background:#c9a44a"></div>
+        <div style="width:{{ pctFlight }}; background:#565b52"></div>
+      </div>
+      <div style="font-size:11.5px; color:#6c7066; margin-top:8px">green bound · amber awaiting approval · grey in flight</div>
+    </div>
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:16px 18px">
+      <div style="font-size:12px; color:#a4a89e">Estimated finish</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:700; margin-top:6px">{{ eta }}</div>
+      <div style="font-size:11.5px; color:#6c7066; margin-top:4px">at {{ throughput }} adapters/h · 2 GPUs</div>
+    </div>
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:16px 18px">
+      <div style="font-size:12px; color:#a4a89e">Last 12 h</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:24px; font-weight:700; margin-top:6px">{{ last12 }}</div>
+      <div style="font-size:11.5px; color:#6c7066; margin-top:4px">adapters bound · 0 rolled back</div>
+    </div>
+    <div style="background:{{ healthBg }}; border:1px solid {{ healthBorder }}; border-radius:8px; padding:16px 18px">
+      <div style="font-size:12px; color:#a4a89e">Needs you</div>
+      <div style="font-size:16px; font-weight:700; margin-top:6px; color:{{ healthColor }}">{{ healthLine }}</div>
+      <div style="font-size:11.5px; color:#6c7066; margin-top:4px">{{ healthSub }}</div>
+    </div>
+  </div>
+
+  <div style="padding:16px 28px 0; max-width:1560px; margin:0 auto; box-sizing:border-box">
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:14px 18px">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap">
+        <div style="font-size:13.5px; font-weight:700">Autonomy — who did what</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#a4a89e">{{ ribbonSummary }}</div>
+      </div>
+      <div style="position:relative; height:30px; margin-top:12px">
+        <div style="position:absolute; left:0; right:0; top:11px; height:8px; border-radius:4px; background:#3f4a33"></div>
+        <sc-for list="{{ ribbonT2 }}" as="r" hint-placeholder-count="4">
+          <div style="position:absolute; top:11px; height:8px; left:{{ r.left }}; width:{{ r.width }}; background:#5d7a94"></div>
+        </sc-for>
+        <sc-for list="{{ ribbonPoints }}" as="p" hint-placeholder-count="8">
+          <div onMouseEnter="{{ p.enter }}" onMouseLeave="{{ p.leave }}" onClick="{{ p.enter }}" style="position:absolute; top:2px; left:{{ p.left }}; transform:translateX(-50%); width:22px; height:26px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:12px; color:{{ p.color }}; text-shadow:0 0 6px rgba(0,0,0,0.8)">{{ p.glyph }}</div>
+        </sc-for>
+        <sc-if value="{{ tipShow }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; bottom:32px; left:{{ tipLeft }}; transform:translateX(-50%); background:#20231e; border:1px solid #454a41; border-radius:6px; padding:8px 11px; white-space:nowrap; z-index:10; box-shadow:0 8px 24px rgba(0,0,0,0.5)">
+            <div style="font-size:12px; font-weight:600">{{ tipTitle }}</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#a4a89e; margin-top:2px">{{ tipMeta }}</div>
+          </div>
+        </sc-if>
+      </div>
+      <div style="display:flex; gap:16px; margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; flex-wrap:wrap">
+        <span><span style="display:inline-block; width:14px; height:6px; border-radius:3px; background:#3f4a33; vertical-align:middle"></span> autonomous T1</span>
+        <span><span style="display:inline-block; width:14px; height:6px; border-radius:3px; background:#5d7a94; vertical-align:middle"></span> one-click T2</span>
+        <span style="color:#9ecf4a">◆ T3 human bind</span>
+        <span style="color:#e07a6f">▲ T4 dual sign</span>
+        <span>hover a mark for who and what</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:14px 28px 0; max-width:1560px; margin:0 auto; box-sizing:border-box">
+    <div style="display:flex; gap:8px; flex-wrap:wrap">
+      <sc-for list="{{ stages }}" as="st" hint-placeholder-count="8">
+        <div style="display:flex; align-items:center; gap:8px; padding:7px 12px; border-radius:6px; border:1px solid {{ st.border }}; background:{{ st.bg }}">
+          <span style="font-size:12px; color:{{ st.color }}">{{ st.dot }} {{ st.name }}</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:{{ st.color }}">{{ st.count }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="padding:16px 28px 0; max-width:1560px; margin:0 auto; box-sizing:border-box">
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:16px 18px">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap">
+        <div style="font-size:13.5px; font-weight:700">GPU packing — the planner's schedule</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066">planned ahead is ghosted · ○ replay · dry-run</div>
+      </div>
+      <div style="display:grid; grid-template-columns:56px 1fr; gap:6px 12px; margin-top:14px; align-items:center">
+        <sc-for list="{{ lanes }}" as="ln" hint-placeholder-count="3">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#a4a89e; text-align:right">{{ ln.label }}</div>
+          <div style="position:relative; height:{{ ln.h }}; background:#141613; border:1px solid #22251f; border-radius:5px; overflow:hidden">
+            <sc-for list="{{ ln.blocks }}" as="b" hint-placeholder-count="5">
+              <div style="position:absolute; left:{{ b.l }}; width:{{ b.w }}; top:{{ b.top }}; height:16px; border-radius:3px; background:{{ b.bg }}; border:1px {{ b.bs }} {{ b.bc }}; color:{{ b.c }}; font-family:'JetBrains Mono',monospace; font-size:9.5px; line-height:14px; padding:0 5px; overflow:hidden; white-space:nowrap; box-sizing:border-box">{{ b.label }}</div>
+            </sc-for>
+            <div style="position:absolute; left:{{ nowPct }}; top:0; bottom:0; width:1.5px; background:#c9a44a"></div>
+          </div>
+        </sc-for>
+        <div></div>
+        <div style="position:relative; height:14px">
+          <sc-for list="{{ ticks }}" as="t" hint-placeholder-count="8">
+            <span style="position:absolute; left:{{ t.l }}; transform:translateX(-50%); font-family:'JetBrains Mono',monospace; font-size:9.5px; color:#565b52">{{ t.t }}</span>
+          </sc-for>
+          <span style="position:absolute; left:{{ nowPct }}; transform:translateX(-50%); top:0; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:#c9a44a; background:#191b17; padding:0 4px">now 21:14</span>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px; margin-top:12px; padding-top:12px; border-top:1px solid #22251f">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; width:56px; text-align:right">adpt/h</div>
+        <svg style="flex:1; height:40px" viewBox="0 0 600 40" preserveAspectRatio="none"><polyline points="{{ thrPts }}" fill="none" stroke="#7d9ab5" stroke-width="1.5" vector-effect="non-scaling-stroke"></polyline></svg>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#a4a89e">3.1 now · peak 3.8</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:18px 28px 0; display:grid; grid-template-columns:1.55fr 1fr; gap:16px; max-width:1560px; margin:0 auto; box-sizing:border-box; align-items:start">
+
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; overflow:hidden">
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid #2a2d27">
+          <div style="font-size:14px; font-weight:700">Active jobs</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066">click a row for detail · replayed from run_report · dry-run</div>
+        </div>
+        <div style="display:grid; grid-template-columns:2fr 1.1fr 1.6fr 1.1fr 0.7fr 0.7fr; gap:0 14px; padding:8px 18px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; letter-spacing:0.08em; text-transform:uppercase; border-bottom:1px solid #22251f">
+          <span>adapter</span><span>stage</span><span>progress</span><span>loss</span><span>gpu</span><span>eta</span>
+        </div>
+        <sc-for list="{{ jobs }}" as="j" hint-placeholder-count="5">
+          <div onClick="{{ j.open }}" style="display:grid; grid-template-columns:2fr 1.1fr 1.6fr 1.1fr 0.7fr 0.7fr; gap:0 14px; padding:12px 18px; border-bottom:1px solid #1e211c; align-items:center; cursor:pointer" style-hover="background:#1c1f1a">
+            <div>
+              <div style="font-size:13.5px; font-weight:600">{{ j.name }}</div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066">{{ j.id }} · {{ j.detail }}</div>
+            </div>
+            <span style="font-size:11.5px; padding:3px 9px; border-radius:99px; border:1px solid {{ j.stBorder }}; color:{{ j.stColor }}; background:{{ j.stBg }}; justify-self:start; white-space:nowrap"><span style="{{ j.dotStyle }}">{{ j.dot }}</span> {{ j.stage }}</span>
+            <div>
+              <div style="height:6px; border-radius:3px; background:#22251f; overflow:hidden"><div style="width:{{ j.pct }}; height:100%; background:{{ j.barColor }}"></div></div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; margin-top:4px">{{ j.pct }} · {{ j.step }}</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px">
+              <sc-if value="{{ j.hasLoss }}" hint-placeholder-val="{{ true }}">
+                <svg width="52" height="20" viewBox="0 0 52 20" style="flex:none"><polyline points="{{ j.spark }}" fill="none" stroke="#7d9ab5" stroke-width="1.5"></polyline></svg>
+              </sc-if>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:{{ j.lossColor }}">{{ j.loss }}</span>
+            </div>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#a4a89e">{{ j.gpu }}</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#a4a89e">{{ j.eta }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ hasIssues }}" hint-placeholder-val="{{ true }}">
+      <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; overflow:hidden">
+        <div style="display:flex; align-items:center; gap:10px; padding:14px 18px; border-bottom:1px solid #2a2d27">
+          <div style="font-size:14px; font-weight:700">Failed and parked</div>
+          <div style="font-size:12px; color:#6c7066">each with a diagnosis and a proposed remedy — nothing executes without you</div>
+        </div>
+        <sc-for list="{{ failures }}" as="f" hint-placeholder-count="4">
+          <div style="display:flex; gap:16px; align-items:center; padding:14px 18px; border-bottom:1px solid #1e211c">
+            <span style="font-size:11.5px; padding:3px 9px; border-radius:99px; border:1px solid {{ f.border }}; color:{{ f.color }}; background:{{ f.bg }}; white-space:nowrap">{{ f.dot }} {{ f.state }}</span>
+            <div style="flex:1; min-width:0">
+              <div style="font-size:13.5px; font-weight:600">{{ f.name }} <span style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:400; color:#6c7066">{{ f.id }}</span></div>
+              <div style="font-size:12.5px; color:#a4a89e; margin-top:2px">{{ f.diagnosis }}</div>
+            </div>
+            <sc-if value="{{ f.done }}" hint-placeholder-val="{{ false }}">
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9ecf4a; white-space:nowrap">✓ {{ f.doneLabel }}</span>
+            </sc-if>
+            <sc-if value="{{ f.notDone }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ f.apply }}" style="font-family:'Archivo',sans-serif; font-size:12.5px; font-weight:600; padding:8px 13px; border-radius:6px; border:1px solid #454a41; background:#20231e; color:#e9ece5; cursor:pointer; white-space:nowrap" style-hover="border-color:#7d9ab5">{{ f.remedy }} <span style="font-family:'JetBrains Mono',monospace; font-size:10px; margin-left:5px; padding:1px 5px; border-radius:3px; border:1px solid #5d7a94; color:#7d9ab5">T2</span></button>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      </sc-if>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:16px">
+      <div style="background:#191b17; border:1px solid rgba(201,164,74,0.4); border-radius:8px; overflow:hidden">
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid #2a2d27">
+          <div style="font-size:14px; font-weight:700; color:#c9a44a">◐ Awaiting your approval</div>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066">T3 · human</span>
+        </div>
+        <sc-for list="{{ approvals }}" as="a" hint-placeholder-count="3">
+          <div style="padding:13px 18px; border-bottom:1px solid #1e211c; display:flex; align-items:center; gap:12px">
+            <div style="flex:1">
+              <div style="font-size:13.5px; font-weight:600">{{ a.name }}</div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#a4a89e; margin-top:2px">eval {{ a.score }} vs threshold {{ a.thr }} · {{ a.age }}</div>
+            </div>
+            <a href="V3 Approval card.dc.html" style="font-size:12.5px; font-weight:600; padding:7px 12px; border-radius:6px; border:1px solid rgba(127,185,44,0.5); background:rgba(127,185,44,0.08); white-space:nowrap">Review evidence →</a>
+          </div>
+        </sc-for>
+        <div style="padding:10px 18px; font-size:11.5px; color:#6c7066">Nothing binds until you sign it on the approval card.</div>
+      </div>
+
+      <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:16px 18px">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px">
+          <div style="font-size:14px; font-weight:700">GPU telemetry</div>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; padding:2px 8px; border-radius:4px; border:1px dashed #6c7066; color:#a4a89e">○ replay · dry-run</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px">
+          <sc-for list="{{ gpus }}" as="g" hint-placeholder-count="2">
+            <div style="border:1px solid #22251f; border-radius:6px; padding:12px 14px">
+              <div style="display:flex; justify-content:space-between; align-items:baseline">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:12.5px; font-weight:700">{{ g.name }} · 48 GB</div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066">{{ g.job }}</div>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; margin-top:10px">
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:10.5px; color:#6c7066"><span>VRAM</span><span style="font-family:'JetBrains Mono',monospace; color:#a4a89e">{{ g.vram }}</span></div>
+                  <div style="height:5px; border-radius:3px; background:#22251f; margin-top:4px"><div style="width:{{ g.vramPct }}; height:100%; border-radius:3px; background:#7fb92c"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:10.5px; color:#6c7066"><span>Utilization</span><span style="font-family:'JetBrains Mono',monospace; color:#a4a89e">{{ g.util }}</span></div>
+                  <div style="height:5px; border-radius:3px; background:#22251f; margin-top:4px"><div style="width:{{ g.util }}; height:100%; border-radius:3px; background:#7fb92c"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:10.5px; color:#6c7066"><span>Temp</span><span style="font-family:'JetBrains Mono',monospace; color:{{ g.tempColor }}">{{ g.temp }}</span></div>
+                  <div style="height:5px; border-radius:3px; background:#22251f; margin-top:4px"><div style="width:{{ g.tempPct }}; height:100%; border-radius:3px; background:{{ g.tempBar }}"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:10.5px; color:#6c7066"><span>Power</span><span style="font-family:'JetBrains Mono',monospace; color:#a4a89e">{{ g.power }}</span></div>
+                  <div style="height:5px; border-radius:3px; background:#22251f; margin-top:4px"><div style="width:{{ g.powerPct }}; height:100%; border-radius:3px; background:#7d9ab5"></div></div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:16px 28px 40px; max-width:1560px; margin:0 auto; box-sizing:border-box">
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; overflow:hidden">
+      <div style="display:flex; align-items:center; gap:10px; padding:14px 18px; border-bottom:1px solid #2a2d27">
+        <div style="font-size:14px; font-weight:700">Adapter economics</div>
+        <button onClick="{{ effToggle }}" style="font-family:'JetBrains Mono',monospace; font-size:11px; width:20px; height:20px; border-radius:99px; border:1px solid #5d7a94; color:#7d9ab5; background:transparent; cursor:pointer">?</button>
+        <div style="flex:1"></div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066">measured on this machine · ○ replay · dry-run</div>
+      </div>
+      <sc-if value="{{ effExp }}" hint-placeholder-val="{{ false }}">
+        <div style="margin:12px 18px 4px; padding:11px 13px; border:1px solid #33404c; border-radius:6px; background:rgba(125,154,181,0.07); font-size:12.5px; color:#cdd6df">Each skill ships as a small quantized artifact next to one shared base model — that is how 138 skills fit on one box without 138 full models. VRAM shows what inference needs loaded; tokens/s is generation speed here.</div>
+      </sc-if>
+      <div style="display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr 1.6fr; gap:0 14px; padding:10px 18px 8px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; letter-spacing:0.08em; text-transform:uppercase; border-bottom:1px solid #22251f">
+        <span>adapter (bound)</span><span>artifact q4_k_m</span><span>vram at inference</span><span>tokens/s</span><span>vs a full model</span>
+      </div>
+      <sc-for list="{{ effRows }}" as="e" hint-placeholder-count="4">
+        <div style="display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr 1.6fr; gap:0 14px; padding:11px 18px; border-bottom:1px solid #1e211c; align-items:baseline">
+          <span style="font-size:13px; font-weight:600">{{ e.name }}</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12.5px">{{ e.size }}</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12.5px">{{ e.vram }}</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12.5px">{{ e.tps }}</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#9ecf4a">{{ e.vs }}</span>
+        </div>
+      </sc-for>
+      <div style="display:flex; gap:20px; flex-wrap:wrap; padding:13px 18px; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:#a4a89e">
+        <span><span style="color:#e9ece5; font-weight:700">41 bound</span> · artifacts 77.9 GB · one shared base 4.8 GB</span>
+        <span>vs ~197 GB if each skill were a full model</span>
+        <span>projected at 138: <span style="color:#e9ece5">262 GB</span> · 2 GPUs</span>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ drawerOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeDrawer }}" style="position:fixed; inset:0; background:rgba(6,7,5,0.62); z-index:40"></div>
+    <div style="position:fixed; left:0; right:0; bottom:0; z-index:41; background:#161814; border-top:1px solid #3a3e36; box-shadow:0 -20px 70px rgba(0,0,0,0.55)">
+      <div style="max-width:1560px; margin:0 auto; padding:16px 28px 24px; box-sizing:border-box; max-height:74vh; overflow:auto">
+        <div style="display:flex; align-items:center; gap:12px">
+          <div style="font-size:16px; font-weight:800">{{ dJob.name }}</div>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066">{{ dJob.id }} · {{ dJob.gpuNote }}</span>
+          <span style="font-size:11.5px; padding:3px 9px; border-radius:99px; border:1px solid {{ dJob.stBorder }}; color:{{ dJob.stColor }}; background:{{ dJob.stBg }}">{{ dJob.stageLabel }}</span>
+          <div style="flex:1"></div>
+          <button onClick="{{ closeDrawer }}" style="font-family:'JetBrains Mono',monospace; font-size:13px; width:30px; height:30px; border-radius:6px; border:1px solid #454a41; background:#20231e; color:#a4a89e; cursor:pointer" style-hover="border-color:#6c7066">✕</button>
+        </div>
+        <div style="display:grid; grid-template-columns:1.7fr 1fr; gap:18px; margin-top:14px; align-items:start">
+          <div style="border:1px solid #22251f; border-radius:8px; padding:14px 16px">
+            <div style="display:flex; justify-content:space-between; align-items:baseline">
+              <div style="font-size:12.5px; font-weight:700">Loss · per step</div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066">{{ dJob.lossNote }}</div>
+            </div>
+            <sc-if value="{{ dJob.hasSeries }}" hint-placeholder-val="{{ true }}">
+              <div style="position:relative; height:200px; margin-top:12px">
+                <svg style="position:absolute; inset:0; width:100%; height:100%" viewBox="0 0 640 200" preserveAspectRatio="none">
+                  <line x1="0" y1="50" x2="640" y2="50" stroke="#22251f" stroke-width="1"></line>
+                  <line x1="0" y1="100" x2="640" y2="100" stroke="#22251f" stroke-width="1"></line>
+                  <line x1="0" y1="150" x2="640" y2="150" stroke="#22251f" stroke-width="1"></line>
+                  <polyline points="{{ dJob.pre }}" fill="none" stroke="#7d9ab5" stroke-width="1.8" vector-effect="non-scaling-stroke"></polyline>
+                  <sc-if value="{{ dJob.hasPost }}" hint-placeholder-val="{{ false }}">
+                    <polyline points="{{ dJob.post }}" fill="none" stroke="#7fb92c" stroke-width="1.8" vector-effect="non-scaling-stroke"></polyline>
+                  </sc-if>
+                </svg>
+                <sc-if value="{{ dJob.hasMarker }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute; left:{{ dJob.markerX }}; top:0; bottom:0; width:1px; border-left:1px dashed rgba(217,86,74,0.55)"></div>
+                  <div style="position:absolute; left:{{ dJob.markerX }}; top:{{ dJob.markerY }}; width:9px; height:9px; border-radius:99px; background:#d9564a; transform:translate(-50%,-50%); box-shadow:0 0 0 3px rgba(217,86,74,0.25)"></div>
+                  <div style="position:absolute; left:{{ dJob.noteX }}; top:8px; max-width:310px; background:#20231e; border:1px solid rgba(217,86,74,0.5); border-radius:6px; padding:9px 11px; font-size:12px; line-height:1.45">
+                    <span style="color:#e07a6f; font-weight:700">✕ loss went NaN here</span> → proposed <span style="font-family:'JetBrains Mono',monospace">lr 2e-4 → 1e-4</span> <span style="font-family:'JetBrains Mono',monospace; font-size:10px; padding:1px 5px; border-radius:3px; border:1px solid #5d7a94; color:#7d9ab5">T2</span>
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; margin-top:4px">applied 19:52 · restarted from checkpoint step 1,000 <span style="color:#9ecf4a">— green curve</span></div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ dJob.cleanNote }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute; right:8px; top:8px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066">healthy descent — no interventions</div>
+                </sc-if>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10px; color:#565b52; margin-top:6px"><span>step 0</span><span>1,000</span><span>2,000</span><span>3,000</span></div>
+            </sc-if>
+            <sc-if value="{{ dJob.noSeries }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:12px; padding:26px 16px; border:1px dashed #454a41; border-radius:6px; background:rgba(164,168,158,0.04); font-size:12.5px; color:#a4a89e; text-align:center">{{ dJob.noSeriesText }}</div>
+            </sc-if>
+          </div>
+          <div style="border:1px solid #22251f; border-radius:8px; padding:14px 16px">
+            <div style="display:flex; justify-content:space-between; align-items:baseline">
+              <div style="font-size:12.5px; font-weight:700">Record slice</div>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#9ecf4a">chain intact ✓</span>
+            </div>
+            <div style="margin-top:10px">
+              <sc-for list="{{ dJob.events }}" as="e" hint-placeholder-count="5">
+                <div style="display:flex; gap:11px">
+                  <div style="display:flex; flex-direction:column; align-items:center; flex:none; width:12px">
+                    <span style="width:7px; height:7px; border-radius:99px; background:{{ e.dot }}; margin-top:5px"></span>
+                    <sc-if value="{{ e.line }}" hint-placeholder-val="{{ true }}"><span style="width:1px; flex:1; background:#2a2d27; margin-top:3px"></span></sc-if>
+                  </div>
+                  <div style="padding-bottom:9px; min-width:0">
+                    <div style="font-size:12px; font-weight:600; color:{{ e.color }}">{{ e.t }}</div>
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#6c7066; margin-top:1px">{{ e.m }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:14px">
+          <div style="border:1px solid #22251f; border-radius:8px; padding:12px 14px">
+            <div style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:11.5px; font-weight:700">Tokens/s</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#a4a89e">{{ dJob.tpsNow }}</span></div>
+            <sc-if value="{{ dJob.hasSeries }}" hint-placeholder-val="{{ true }}">
+              <svg style="width:100%; height:52px; margin-top:8px" viewBox="0 0 200 52" preserveAspectRatio="none"><polyline points="{{ dJob.tps }}" fill="none" stroke="#7d9ab5" stroke-width="1.5" vector-effect="non-scaling-stroke"></polyline></svg>
+            </sc-if>
+            <sc-if value="{{ dJob.noSeries }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px; padding:14px 10px; border:1px dashed #454a41; border-radius:5px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; text-align:center">not recorded for this stage</div></sc-if>
+          </div>
+          <div style="border:1px solid #22251f; border-radius:8px; padding:12px 14px">
+            <div style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:11.5px; font-weight:700">Step time</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#a4a89e">{{ dJob.stepStat }}</span></div>
+            <sc-if value="{{ dJob.hasSeries }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; align-items:flex-end; gap:3px; height:52px; margin-top:8px">
+                <sc-for list="{{ dJob.bars }}" as="b" hint-placeholder-count="12"><div style="flex:1; height:{{ b }}; background:#3f4a33; border-radius:2px 2px 0 0"></div></sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ dJob.noSeries }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px; padding:14px 10px; border:1px dashed #454a41; border-radius:5px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; text-align:center">not recorded for this stage</div></sc-if>
+          </div>
+          <div style="border:1px solid #22251f; border-radius:8px; padding:12px 14px">
+            <div style="display:flex; justify-content:space-between; align-items:baseline"><span style="font-size:11.5px; font-weight:700">VRAM headroom</span><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#a4a89e">{{ dJob.vramNow }}</span></div>
+            <sc-if value="{{ dJob.hasVram }}" hint-placeholder-val="{{ true }}">
+              <svg style="width:100%; height:52px; margin-top:8px" viewBox="0 0 200 52" preserveAspectRatio="none"><line x1="0" y1="48" x2="200" y2="48" stroke="rgba(217,86,74,0.4)" stroke-width="1" stroke-dasharray="3 3"></line><polyline points="{{ dJob.vram }}" fill="none" stroke="#7fb92c" stroke-width="1.5" vector-effect="non-scaling-stroke"></polyline></svg>
+            </sc-if>
+            <sc-if value="{{ dJob.noVram }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px; padding:14px 10px; border:1px dashed #454a41; border-radius:5px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; text-align:center">{{ dJob.noVramText }}</div></sc-if>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1560, &quot;height&quot;: 1080}, &quot;scenario&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;attention&quot;, &quot;steady&quot;], &quot;default&quot;: &quot;attention&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Scenario&quot;}, &quot;divergence&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;NaN with remedy&quot;, &quot;clean run&quot;], &quot;default&quot;: &quot;NaN with remedy&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Scenario&quot;}}">
+class Component extends DCLogic {
+  state = { paused: false, applied: {}, drawer: null, tip: null, effExp: false };
+  renderVals() {
+    const scenario = this.props.scenario ?? "attention";
+    const attention = scenario === "attention";
+    const P = (n) => Math.round(n / 138 * 1000) / 10 + "%";
+    const bound = attention ? 41 : 52, awaiting = attention ? 3 : 1, flight = 5;
+    const stMap = {
+      queued: { dot: "○", border: "#454a41", color: "#a4a89e", bg: "transparent" },
+      training: { dot: "◉", border: "rgba(127,185,44,0.5)", color: "#9ecf4a", bg: "rgba(127,185,44,0.08)" },
+      quantizing: { dot: "◒", border: "rgba(125,154,181,0.5)", color: "#7d9ab5", bg: "rgba(125,154,181,0.08)" },
+      eval: { dot: "◈", border: "rgba(125,154,181,0.5)", color: "#7d9ab5", bg: "rgba(125,154,181,0.08)" },
+      awaiting: { dot: "◐", border: "rgba(201,164,74,0.55)", color: "#c9a44a", bg: "rgba(201,164,74,0.10)" },
+      bound: { dot: "●", border: "rgba(127,185,44,0.55)", color: "#9ecf4a", bg: "rgba(127,185,44,0.14)" },
+      failed: { dot: "✕", border: "rgba(217,86,74,0.5)", color: "#e07a6f", bg: "rgba(217,86,74,0.08)" },
+      parked: { dot: "⏸", border: "#454a41", color: "#6c7066", bg: "transparent" }
+    };
+    const stages = [
+      { name: "queued", count: attention ? 84 : 80 }, { name: "training", count: 2 },
+      { name: "quantizing", count: 1 }, { name: "eval", count: 2 },
+      { name: "awaiting approval", count: awaiting, key: "awaiting" }, { name: "bound", count: bound },
+      { name: "failed", count: attention ? 4 : 0 }, { name: "parked", count: attention ? 1 : 0 }
+    ].map(s => ({ ...s, ...stMap[s.key || s.name] }));
+    const mkJob = (id, name, detail, stage, pct, step, loss, spark, gpu, eta) => ({
+      id, name, detail, stage, pct: pct + "%", step, loss, gpu, eta,
+      open: () => this.setState({ drawer: id }),
+      spark, ...["stBorder", "stColor", "stBg"].reduce((o, k, i) => (o[k] = stMap[stage.split(" ")[0]][["border", "color", "bg"][i]], o), {}),
+      dot: stMap[stage.split(" ")[0]].dot,
+      hasLoss: loss !== "—", lossColor: loss === "—" ? "#6c7066" : "#e9ece5",
+      dotStyle: stage === "training" ? "animation:hf-pulse 1.6s ease-in-out infinite" : "",
+      barColor: stage === "training" ? "linear-gradient(90deg,#4e7a12,#7fb92c)" : "#7d9ab5"
+    });
+    const div = (this.props.divergence ?? "NaN with remedy") === "NaN with remedy";
+    const lossNow = div ? "0.42" : "0.34";
+    const sp = (vals) => vals.map((v, i) => `${2 + i * 48 / (vals.length - 1)},${18 - v * 16}`).join(" ");
+    const jobs = [
+      mkJob("hf-0117", "contract-clause-tagger v3", "pack: contract-clauses", "training", 62, "step 1860/3000", lossNow, sp([1, .82, .66, .55, .46, .4, .36, .33]), "GPU 0", "14m"),
+      mkJob("hf-0118", "log-triage-classifier v1", "pack: infra-logs", "training", 23, "step 690/3000", "1.63", sp([1, .93, .84, .78, .74, .7, .68, .66]), "GPU 1", "31m"),
+      mkJob("hf-0112", "support-reply-drafter v2", "quant q4_k_m", "quantizing", 78, "layer 22/28", "—", sp([.4, .4, .4, .4, .4, .4, .4, .4]), "—", "3m"),
+      mkJob("hf-0109", "sql-writer v1", "harness: 128 cases", "eval", 41, "case 52/128", "—", sp([.5, .48, .52, .5, .49, .51, .5, .5]), "CPU", "6m"),
+      mkJob("hf-0110", "pii-scrubber v2", "harness: 96 cases", "eval", 12, "case 12/96", "—", sp([.5, .5, .49, .51, .5, .5, .5, .5]), "CPU", "9m")
+    ];
+    const failData = attention ? [
+      { id: "hf-0104", name: "doc-classifier v1", state: "failed", diagnosis: "Out of memory at step 240 — batch 8 does not fit next to the running job.", remedy: "Retry with batch 8→4" },
+      { id: "hf-0097", name: "code-reviewer v1", state: "failed", diagnosis: "Loss diverged (NaN at step 1.1k) — learning rate too high for this pack.", remedy: "Retry with lr 2e-4→1e-4" },
+      { id: "hf-0102", name: "translation-checker v1", state: "failed", diagnosis: "No heartbeat for 11 minutes — the job is hung, not progressing.", remedy: "Kill and requeue" },
+      { id: "hf-0089", name: "email-triager v1", state: "failed", diagnosis: "Eval 0.74 below threshold 0.80 — adapter stays unbound (fail-closed).", remedy: "Park for data review" },
+      { id: "hf-0071", name: "quote-generator v1", state: "parked", diagnosis: "Seed data has 312 rows — below the 500-row floor for this pack.", remedy: "Keep parked" }
+    ] : [];
+    const failures = failData.map(f => ({
+      ...f, ...stMap[f.state], done: !!this.state.applied[f.id], notDone: !this.state.applied[f.id],
+      doneLabel: f.state === "parked" ? "kept parked" : "requeued",
+      apply: () => this.setState(s => ({ applied: { ...s.applied, [f.id]: true } }))
+    }));
+    const approvals = (attention ? [
+      { name: "invoice-extractor v1", score: "0.86", thr: "0.80", age: "12m ago" },
+      { name: "meeting-summarizer v2", score: "0.82", thr: "0.80", age: "38m ago" },
+      { name: "ticket-router v1", score: "0.91", thr: "0.85", age: "1h 4m ago" }
+    ] : [{ name: "ticket-router v1", score: "0.91", thr: "0.85", age: "9m ago" }]);
+    return {
+      ...this.pass2(stMap, div),
+      paused: this.state.paused, pauseLabel: this.state.paused ? "Resume campaign" : "Pause campaign",
+      togglePause: () => this.setState(s => ({ paused: !s.paused })),
+      bound, pctBound: P(bound), pctAwait: P(awaiting), pctFlight: P(flight),
+      eta: "1d 3h", throughput: "3.1", last12: attention ? "37" : "41",
+      healthLine: attention ? (awaiting + " approvals · 4 failed") : "Nothing — running clean",
+      healthSub: attention ? "approvals hold binding; failures hold 4 slots" : "next approval expected in ~2h",
+      healthBg: attention ? "rgba(201,164,74,0.07)" : "rgba(127,185,44,0.06)",
+      healthBorder: attention ? "rgba(201,164,74,0.4)" : "rgba(127,185,44,0.35)",
+      healthColor: attention ? "#c9a44a" : "#9ecf4a",
+      stages, jobs, failures, hasIssues: failures.length > 0, approvals,
+      gpus: [
+        { name: "GPU 0", job: "hf-0117", vram: "41.8 / 48 GB", vramPct: "87%", util: "96%", temp: "74°C", tempPct: "74%", tempColor: "#c9a44a", tempBar: "#c9a44a", power: "291 / 300 W", powerPct: "97%" },
+        { name: "GPU 1", job: "hf-0118", vram: "37.2 / 48 GB", vramPct: "78%", util: "91%", temp: "69°C", tempPct: "69%", tempColor: "#a4a89e", tempBar: "#7d9ab5", power: "268 / 300 W", powerPct: "89%" }
+      ]
+    };
+  }
+  pass2(stMap, div) {
+    const S = this.state;
+    const line = (a, w, h, mx, pad) => a.map(p => (p[0] * w).toFixed(1) + "," + (h - pad - p[1] / mx * (h - 2 * pad)).toFixed(1)).join(" ");
+    const ev = (t, m, dot, color) => ({ t, m, dot, color: color || "#e9ece5" });
+    const preD = [[0,1.92],[0.04,1.55],[0.08,1.31],[0.12,1.18],[0.16,1.09],[0.2,1.01],[0.24,0.97],[0.28,0.93],[0.31,0.9],[0.33,0.94],[0.35,1.24],[0.365,1.78],[0.372,2.18]];
+    const postD = [[0.33,1.02],[0.37,0.86],[0.41,0.74],[0.45,0.65],[0.49,0.58],[0.53,0.52],[0.57,0.47],[0.6,0.44],[0.62,0.42]];
+    const preC = [[0,1.92],[0.06,1.4],[0.12,1.13],[0.18,0.95],[0.24,0.8],[0.3,0.68],[0.36,0.59],[0.42,0.52],[0.48,0.46],[0.54,0.41],[0.58,0.37],[0.62,0.34]];
+    const pre18 = [[0,1.95],[0.05,1.72],[0.1,1.66],[0.15,1.64],[0.2,1.63],[0.23,1.62]];
+    const tpsS = [[0,0.55],[0.1,0.6],[0.2,0.58],[0.3,0.62],[0.35,0.22],[0.4,0.57],[0.5,0.6],[0.62,0.61],[0.8,0.6],[1,0.61]];
+    const tpsC = [[0,0.55],[0.1,0.6],[0.2,0.58],[0.3,0.62],[0.4,0.6],[0.5,0.61],[0.62,0.6],[0.8,0.61],[1,0.61]];
+    const vramS = [[0,0.62],[0.1,0.58],[0.2,0.55],[0.3,0.54],[0.35,0.28],[0.4,0.53],[0.55,0.52],[0.75,0.52],[1,0.52]];
+    const vramC = [[0,0.62],[0.15,0.57],[0.3,0.54],[0.5,0.53],[0.75,0.52],[1,0.52]];
+    const ev17d = [ev("Pack registered", "19:02 · contract-clauses · seed c21a…88f0", "#565b52"), ev("Training started", "19:38 · job hf-0117 · base 9f3c…a41e", "#565b52"), ev("Loss diverged — NaN at step 1,116", "19:51 · cause: lr too high for this pack", "#d9564a", "#e07a6f"), ev("Remedy applied: lr 2e-4 → 1e-4", "19:52 · T2 · one click by r.akesson", "#7d9ab5"), ev("Restarted from checkpoint 1,000", "19:53 · cost: 8 minutes, nothing else", "#565b52"), ev("Training · step 1,860 / 3,000", "now · loss 0.42 and falling", "#7fb92c", "#9ecf4a")];
+    const ev17c = [ev("Pack registered", "19:02 · contract-clauses · seed c21a…88f0", "#565b52"), ev("Training started", "19:38 · job hf-0117 · base 9f3c…a41e", "#565b52"), ev("Checkpoint saved at step 1,000", "20:14 · restart point if anything fails", "#565b52"), ev("Training · step 1,860 / 3,000", "now · loss 0.34 and falling", "#7fb92c", "#9ecf4a")];
+    const D = {
+      "hf-0117": { name: "contract-clause-tagger v3", id: "hf-0117", gpuNote: "GPU 0 · 48 GB", stage: "training", stageLabel: div ? "training · restarted once" : "training · clean run", hasSeries: true, pre: line(div ? preD : preC, 640, 200, 2.3, 10), hasPost: div, post: div ? line(postD, 640, 200, 2.3, 10) : "", hasMarker: div, markerX: "37.2%", markerY: "9.7%", noteX: "41%", cleanNote: !div, lossNote: "sampled every 20 steps · replay", tpsNow: "8.4k tok/s", tps: line(div ? tpsS : tpsC, 200, 52, 1, 5), stepStat: "p50 412 ms · p95 505 ms", bars: ["14%", "26%", "44%", "66%", "88%", "100%", "68%", "40%", "22%", "12%", "8%", "5%"], hasVram: true, vram: line(div ? vramS : vramC, 200, 52, 1, 5), vramNow: div ? "6.2 GB free · dipped 3.1" : "6.2 GB free", events: div ? ev17d : ev17c },
+      "hf-0118": { name: "log-triage-classifier v1", id: "hf-0118", gpuNote: "GPU 1 · 48 GB", stage: "training", stageLabel: "training · step 690/3,000", hasSeries: true, pre: line(pre18, 640, 200, 2.3, 10), hasPost: false, post: "", hasMarker: false, cleanNote: true, lossNote: "sampled every 20 steps · replay", tpsNow: "8.1k tok/s", tps: line(tpsC.slice(0, 4), 200, 52, 1, 5), stepStat: "p50 428 ms · p95 512 ms", bars: ["10%", "22%", "40%", "62%", "84%", "100%", "70%", "42%", "20%", "10%", "6%", "4%"], hasVram: true, vram: line(vramC.slice(0, 3), 200, 52, 1, 5), vramNow: "10.8 GB free", events: [ev("Pack registered", "20:12 · infra-logs · seed 4be2…c711", "#565b52"), ev("Training started", "20:30 · job hf-0118 · base 9f3c…a41e", "#565b52"), ev("Training · step 690 / 3,000", "now · loss 1.62, early descent", "#7fb92c", "#9ecf4a")] },
+      "hf-0112": { name: "support-reply-drafter v2", id: "hf-0112", gpuNote: "CPU · quantization", stage: "quantizing", stageLabel: "quantizing · layer 22/28", hasSeries: false, noSeries: true, noSeriesText: "Quantization reports layers, not loss — no loss series exists for this stage (dry-run).", cleanNote: false, hasMarker: false, hasPost: false, lossNote: "—", tpsNow: "—", stepStat: "—", hasVram: false, noVram: true, noVramText: "not on a GPU — quantization runs on CPU here", vramNow: "—", events: [ev("Training finished", "20:41 · final loss 0.36 · 3 epochs", "#565b52"), ev("Quantizing q4_k_m · layer 22/28", "now · output estimate 1.9 GB", "#7d9ab5", "#7d9ab5")] },
+      "hf-0109": { name: "sql-writer v1", id: "hf-0109", gpuNote: "CPU · eval harness", stage: "eval", stageLabel: "eval · case 52/128", hasSeries: false, noSeries: true, noSeriesText: "Eval reports cases, not loss — the score lands on the approval card when all 128 cases finish.", cleanNote: false, hasMarker: false, hasPost: false, lossNote: "—", tpsNow: "—", stepStat: "—", hasVram: false, noVram: true, noVramText: "not on a GPU — eval runs on CPU here", vramNow: "—", events: [ev("Quantized q4_k_m", "20:48 · 88a4…10ce · 1.8 GB", "#565b52"), ev("Eval running · case 52/128", "now · fail-closed gate at 0.85", "#7d9ab5", "#7d9ab5")] },
+      "hf-0110": { name: "pii-scrubber v2", id: "hf-0110", gpuNote: "CPU · eval harness", stage: "eval", stageLabel: "eval · case 12/96", hasSeries: false, noSeries: true, noSeriesText: "Eval reports cases, not loss — the score lands on the approval card when all 96 cases finish.", cleanNote: false, hasMarker: false, hasPost: false, lossNote: "—", tpsNow: "—", stepStat: "—", hasVram: false, noVram: true, noVramText: "not on a GPU — eval runs on CPU here", vramNow: "—", events: [ev("Quantized q4_k_m", "21:01 · f2c9…7b3d · 1.9 GB", "#565b52"), ev("Eval running · case 12/96", "now · fail-closed gate at 0.80", "#7d9ab5", "#7d9ab5")] }
+    };
+    const sel = S.drawer && D[S.drawer];
+    const dJob = sel ? Object.assign({}, sel, { stBorder: stMap[sel.stage].border, stColor: stMap[sel.stage].color, stBg: stMap[sel.stage].bg, events: sel.events.map((e, i) => Object.assign({}, e, { line: i < sel.events.length - 1 })) }) : {};
+    const bindNames = ["doc-tagger", "faq-answerer", "log-summarizer", "mail-router", "quote-drafter", "kb-linker", "form-filler", "alert-triager", "spec-checker", "term-extractor", "risk-flagger", "note-taker", "field-mapper", "dupe-finder", "policy-checker"];
+    const pad2 = (n) => (n < 10 ? "0" : "") + n;
+    const rawPts = [];
+    for (let i = 0; i < 41; i++) {
+      const t = 7.6 + i * (20.7 - 7.6) / 40 + Math.sin(i * 2.7) * 0.12;
+      const hh = Math.floor(t), mm = Math.floor((t - hh) * 60);
+      const who = i % 3 === 2 ? "j.lind" : "r.akesson";
+      rawPts.push({ at: (t - 6.2) / 15.03 * 100, g: "◆", c: "#9ecf4a", title: "Bound " + bindNames[i % bindNames.length] + " v" + (Math.floor(i / bindNames.length) + 1), meta: "T3 · signed " + who + " · " + pad2(hh) + ":" + pad2(mm) });
+    }
+    rawPts.push({ at: (9.68 - 6.2) / 15.03 * 100, g: "▲", c: "#e07a6f", title: "Deleted artifact doc-tagger v0", meta: "T4 · dual: r.akesson + j.lind · 09:41" });
+    const tp = S.tip != null ? rawPts[S.tip] : null;
+    const lb = (l, w, label, kind, top) => ({ l: l + "%", w: w + "%", label, top: (top || 4) + "px",
+      bg: kind === "t" ? "rgba(127,185,44,0.14)" : kind === "q" ? "rgba(125,154,181,0.12)" : kind === "e" ? "rgba(125,154,181,0.09)" : "transparent",
+      bs: kind === "g" ? "dashed" : "solid",
+      bc: kind === "t" ? "rgba(127,185,44,0.45)" : kind === "q" ? "rgba(125,154,181,0.45)" : kind === "e" ? "#33404c" : "#454a41",
+      c: kind === "t" ? "#9ecf4a" : kind === "g" ? "#6c7066" : "#7d9ab5" });
+    return {
+      drawerOpen: !!sel, dJob, closeDrawer: () => this.setState({ drawer: null }),
+      ribbonSummary: "06:12 → now (15 h 02 m) · agent: 47 T1/T2 decisions · you: 42 moments (41 binds · 1 dual sign)",
+      ribbonT2: [[27.5, 2.2], [45.8, 1.7], [69.6, 1.7], [90.8, 0.9]].map(s => ({ left: s[0] + "%", width: s[1] + "%" })),
+      ribbonPoints: rawPts.map((p, i) => ({ left: p.at.toFixed(1) + "%", glyph: p.g, color: p.c, enter: () => this.setState({ tip: i }), leave: () => this.setState({ tip: null }) })),
+      tipShow: !!tp, tipLeft: tp ? Math.min(88, Math.max(10, tp.at)).toFixed(1) + "%" : "0%", tipTitle: tp ? tp.title : "", tipMeta: tp ? tp.meta : "",
+      lanes: [
+        { label: "GPU 0", h: "24px", blocks: [lb(0, 15.6, "hf-0114 train", "t"), lb(16.7, 4.4, "qnt", "q"), lb(23.3, 21.1, "hf-0116 train", "t"), lb(45.6, 4.4, "qnt", "q"), lb(61.8, 21.3, "hf-0117 train", "t"), lb(83.4, 9.9, "planned", "g"), lb(94.4, 5.4, "next", "g")] },
+        { label: "GPU 1", h: "24px", blocks: [lb(1.1, 23.3, "hf-0111 train", "t"), lb(25.6, 4.4, "qnt", "q"), lb(33.3, 32.2, "hf-0113 train", "t"), lb(66.7, 4.4, "qnt", "q"), lb(73.3, 9.8, "hf-0118", "t"), lb(83.4, 14.9, "planned finish", "g")] },
+        { label: "CPU", h: "40px", blocks: [lb(31.1, 5.6, "eval", "e", 3), lb(72.2, 5.6, "eval", "e", 3), lb(78.9, 4.2, "eval", "e", 3), lb(81.1, 2.4, "ev", "e", 21), lb(84.5, 6, "eval", "g", 21)] }
+      ],
+      ticks: [15, 16, 17, 18, 19, 20, 22].map(h => ({ t: h + ":00", l: ((h - 15) / 7.5 * 100).toFixed(1) + "%" })),
+      nowPct: "83.1%",
+      thrPts: line([[0, 0.55], [0.1, 0.65], [0.2, 0.72], [0.3, 0.82], [0.4, 0.9], [0.5, 0.95], [0.6, 0.87], [0.7, 0.8], [0.83, 0.78], [1, 0.78]], 600, 40, 1, 5),
+      effRows: [
+        { name: "doc-tagger v1", size: "1.9 GB", vram: "2.4 GB loaded", tps: "41 tok/s", vs: "2.9 GB smaller" },
+        { name: "faq-answerer v1", size: "1.8 GB", vram: "2.3 GB loaded", tps: "44 tok/s", vs: "3.0 GB smaller" },
+        { name: "log-summarizer v1", size: "1.9 GB", vram: "2.4 GB loaded", tps: "39 tok/s", vs: "2.9 GB smaller" },
+        { name: "mail-router v2", size: "1.7 GB", vram: "2.2 GB loaded", tps: "47 tok/s", vs: "3.1 GB smaller" }
+      ],
+      effExp: S.effExp, effToggle: () => this.setState({ effExp: !S.effExp })
+    };
+  }
+}
+</script>
+</body>
+</html>

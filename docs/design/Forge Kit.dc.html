@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#121310; }
+  a { color:#9ecf4a; text-decoration:none; }
+  a:hover { color:#b8e26b; }
+</style>
+</helmet>
+<div style="font-family:'Archivo',sans-serif; color:#e9ece5; background:#121310; min-height:100vh; padding:48px 56px; box-sizing:border-box" data-screen-label="Forge kit">
+  <div style="display:flex; align-items:center; gap:16px; margin-bottom:8px">
+    <img src="logo-symbol.png" alt="HexaBox" style="height:26px; width:auto; display:block">
+    <div style="font-size:26px; font-weight:800; letter-spacing:0.02em">HexaForge forge-kit</div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#6c7066">primitives · v1 · <a href="V1 Campaign.dc.html">V1</a> · <a href="V2 Guided start.dc.html">V2</a> · <a href="V3 Approval card.dc.html">V3</a></div>
+  </div>
+  <div style="font-size:14px; color:#a4a89e; max-width:660px; margin-bottom:40px">Own identity — a machine hall, not a SOC. Near-black graphite, one signal green reserved for go-decisions and healthy compute, mono for everything measured. Sentence case everywhere; no vendor names on the surface.</div>
+
+  <div style="display:grid; grid-template-columns:repeat(2, minmax(420px, 1fr)); gap:24px; max-width:1240px">
+
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:24px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:16px">Color</div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px">
+        <sc-for list="{{ swatches }}" as="s" hint-placeholder-count="8">
+          <div>
+            <div style="height:44px; border-radius:5px; background:{{ s.hex }}; border:1px solid #2a2d27"></div>
+            <div style="font-size:12px; margin-top:6px; color:#e9ece5">{{ s.name }}</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066">{{ s.hex }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size:12px; color:#a4a89e; margin-top:14px">Signal green is the decision color — approvals, bound adapters, healthy compute. Fail red and approval amber are signals, never decoration. Reference amber is duller than approval amber on purpose.</div>
+    </div>
+
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:24px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:16px">Type</div>
+      <div style="font-size:24px; font-weight:800; letter-spacing:0.01em">Archivo 800 — screen titles</div>
+      <div style="font-size:16px; font-weight:600; margin-top:10px">Archivo 600 — card titles, actions</div>
+      <div style="font-size:14px; color:#a4a89e; margin-top:10px">Archivo 400 — body and explainers, sentence case, plain language.</div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#e9ece5; margin-top:12px">JetBrains Mono — 0.84 · 41.8 GB · sha256:9f3c…a41e</div>
+      <div style="font-size:12px; color:#a4a89e; margin-top:12px">Mono for everything measured or hashed: scores, telemetry, digests, timestamps. If a number matters, it is mono.</div>
+    </div>
+
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:24px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:16px">Authorization tiers — on every consequential action</div>
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="4">
+          <div style="display:flex; align-items:center; gap:14px">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; padding:3px 8px; border-radius:4px; border:1px solid {{ t.border }}; color:{{ t.color }}; background:{{ t.bg }}; letter-spacing:0.06em; white-space:nowrap">{{ t.chip }}</span>
+            <div style="font-size:13px; color:#a4a89e">{{ t.desc }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size:12px; color:#a4a89e; margin-top:14px; padding-top:12px; border-top:1px solid #2a2d27">T3 and T4 never auto-execute. A T3 control is always signal green and always names the human step; T4 shows both approvals explicitly.</div>
+    </div>
+
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:24px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:16px">Source badges — on every view</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; padding:4px 10px; border-radius:4px; background:rgba(127,185,44,0.12); border:1px solid rgba(127,185,44,0.45); color:#9ecf4a">● live</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; padding:4px 10px; border-radius:4px; background:rgba(181,152,84,0.10); border:1px solid rgba(181,152,84,0.45); color:#b59854">◐ reference</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; padding:4px 10px; border-radius:4px; background:rgba(164,168,158,0.08); border:1px dashed #6c7066; color:#a4a89e">○ mock · dry-run</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px; margin-top:16px">
+        <div style="display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px dashed #454a41; border-radius:6px; background:rgba(164,168,158,0.04)">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#a4a89e">—</span>
+          <div style="font-size:12.5px; color:#a4a89e">Degraded / no data: state the absence in words, never a fake zero. <span style="font-family:'JetBrains Mono',monospace; color:#6c7066">telemetry not connected in dry-run</span></div>
+        </div>
+      </div>
+      <div style="font-size:12px; color:#a4a89e; margin-top:14px">Mock is dashed, muted, and says so. Nothing decorative pretends to be measured.</div>
+    </div>
+
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:24px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:16px">Job states</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap">
+        <sc-for list="{{ states }}" as="st" hint-placeholder-count="8">
+          <span style="font-size:12px; padding:4px 10px; border-radius:99px; border:1px solid {{ st.border }}; color:{{ st.color }}; background:{{ st.bg }}">{{ st.dot }} {{ st.name }}</span>
+        </sc-for>
+      </div>
+      <div style="margin-top:18px; display:flex; flex-direction:column; gap:10px">
+        <div style="display:flex; justify-content:space-between; font-size:12px; color:#a4a89e"><span>Campaign progress</span><span style="font-family:'JetBrains Mono',monospace">41 / 138 bound</span></div>
+        <div style="height:8px; border-radius:4px; background:#22251f; overflow:hidden; display:flex">
+          <div style="width:30%; background:linear-gradient(90deg,#4e7a12,#7fb92c)"></div>
+          <div style="width:4%; background:#c9a44a"></div>
+          <div style="width:2.5%; background:#6c7066"></div>
+        </div>
+        <div style="font-size:11.5px; color:#6c7066">Green = bound · amber = awaiting approval · grey = in flight</div>
+      </div>
+    </div>
+
+    <div style="background:#191b17; border:1px solid #2a2d27; border-radius:8px; padding:24px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:16px">Actions — tier always attached</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center">
+        <button style="font-family:'Archivo',sans-serif; font-size:13.5px; font-weight:700; padding:10px 18px; border-radius:6px; border:1px solid #a3d95c; background:linear-gradient(180deg,#8ac938,#639617); color:#0f1405; cursor:pointer" style-hover="filter:brightness(1.08)">Approve and bind <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; margin-left:6px; padding:1px 5px; border-radius:3px; background:rgba(15,20,5,0.22)">T3</span></button>
+        <button style="font-family:'Archivo',sans-serif; font-size:13.5px; font-weight:600; padding:10px 18px; border-radius:6px; border:1px solid #454a41; background:#20231e; color:#e9ece5; cursor:pointer" style-hover="border-color:#6c7066">Retry with batch 4 <span style="font-family:'JetBrains Mono',monospace; font-size:10px; margin-left:6px; padding:1px 5px; border-radius:3px; border:1px solid #5d7a94; color:#7d9ab5">T2</span></button>
+        <button style="font-family:'Archivo',sans-serif; font-size:13.5px; font-weight:600; padding:10px 18px; border-radius:6px; border:1px solid rgba(217,86,74,0.5); background:rgba(217,86,74,0.08); color:#e07a6f; cursor:pointer" style-hover="background:rgba(217,86,74,0.14)">Delete artifact <span style="font-family:'JetBrains Mono',monospace; font-size:10px; margin-left:6px; padding:1px 5px; border-radius:3px; border:1px solid rgba(217,86,74,0.6)">T4 · dual</span></button>
+      </div>
+      <div style="margin-top:16px; padding:12px 14px; border:1px solid #2a2d27; border-radius:6px; background:#161814">
+        <div style="font-size:12.5px; color:#a4a89e"><span style="font-family:'JetBrains Mono',monospace; color:#7d9ab5; font-size:11px">?</span>&nbsp; Explainer pattern — every field: <span style="color:#e9ece5">"r=16 keeps the adapter small and cheap — a good default."</span> Plain language first, the number second.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1360, &quot;height&quot;: 1080}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      swatches: [
+        { name: "Graphite", hex: "#121310" }, { name: "Panel", hex: "#191b17" },
+        { name: "Line", hex: "#2a2d27" }, { name: "Ink", hex: "#e9ece5" },
+        { name: "Signal", hex: "#7fb92c" }, { name: "Compute", hex: "#7d9ab5" },
+        { name: "Fail", hex: "#d9564a" }, { name: "Approval", hex: "#c9a44a" }
+      ],
+      tiers: [
+        { chip: "T1", border: "#454a41", color: "#a4a89e", bg: "transparent", desc: "Auto within the approved campaign plan — start training job." },
+        { chip: "T2", border: "#5d7a94", color: "#7d9ab5", bg: "rgba(125,154,181,0.08)", desc: "Agent proposes, one click executes, reversible — retry, kill, pause." },
+        { chip: "T3 · human", border: "#7fb92c", color: "#9ecf4a", bg: "rgba(127,185,44,0.10)", desc: "Signed human decision — promote and bind, rollback. Never auto." },
+        { chip: "T4 · dual", border: "#d9564a", color: "#e07a6f", bg: "rgba(217,86,74,0.08)", desc: "Two approvers, irreversible — delete artifact. Both shown explicitly." }
+      ],
+      states: [
+        { name: "queued", dot: "○", border: "#454a41", color: "#a4a89e", bg: "transparent" },
+        { name: "training", dot: "◉", border: "rgba(127,185,44,0.5)", color: "#9ecf4a", bg: "rgba(127,185,44,0.08)" },
+        { name: "quantizing", dot: "◒", border: "rgba(125,154,181,0.5)", color: "#7d9ab5", bg: "rgba(125,154,181,0.08)" },
+        { name: "eval", dot: "◈", border: "rgba(125,154,181,0.5)", color: "#7d9ab5", bg: "rgba(125,154,181,0.08)" },
+        { name: "awaiting approval", dot: "◐", border: "rgba(201,164,74,0.55)", color: "#c9a44a", bg: "rgba(201,164,74,0.10)" },
+        { name: "bound", dot: "●", border: "rgba(127,185,44,0.55)", color: "#9ecf4a", bg: "rgba(127,185,44,0.14)" },
+        { name: "failed", dot: "✕", border: "rgba(217,86,74,0.5)", color: "#e07a6f", bg: "rgba(217,86,74,0.08)" },
+        { name: "parked", dot: "⏸", border: "#454a41", color: "#6c7066", bg: "transparent" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
