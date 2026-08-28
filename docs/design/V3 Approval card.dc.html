@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#0d0e0c; }
+  a { color:#9ecf4a; text-decoration:none; }
+  a:hover { color:#b8e26b; }
+</style>
+</helmet>
+<div style="font-family:'Archivo',sans-serif; color:#e9ece5; background:#0d0e0c; min-height:100vh; display:flex; justify-content:center" data-screen-label="V3 Approval card">
+<div style="width:100%; max-width:430px; background:#121310; min-height:100vh; box-sizing:border-box; padding-bottom:40px">
+
+  <div style="display:flex; align-items:center; gap:10px; padding:14px 18px; border-bottom:1px solid #2a2d27; background:#161814; position:sticky; top:0; z-index:5">
+    <img src="logo-symbol.png" alt="HexaBox" style="height:20px; width:auto; display:block">
+    <div style="font-size:14px; font-weight:800">HexaForge</div>
+    <div style="font-size:12.5px; color:#a4a89e">approvals</div>
+    <div style="flex:1"></div>
+    <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:3px 8px; border-radius:4px; background:rgba(164,168,158,0.08); border:1px dashed #6c7066; color:#a4a89e">○ mock</span>
+  </div>
+
+  <div style="padding:18px 16px 0">
+    <div style="border:1px solid rgba(201,164,74,0.45); border-radius:10px; background:#191b17; overflow:hidden">
+      <div style="padding:16px 18px; border-bottom:1px solid #22251f; background:rgba(201,164,74,0.06)">
+        <div style="display:flex; align-items:center; gap:8px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:4px; border:1px solid #7fb92c; color:#9ecf4a; background:rgba(127,185,44,0.10)">T3 · human decision</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066">proposed by agent · never auto</span>
+        </div>
+        <div style="font-size:19px; font-weight:800; margin-top:10px">Bind meeting-summarizer v2?</div>
+        <div style="font-size:12.5px; color:#a4a89e; margin-top:3px">Passed its eval gate {{ agoLabel }}. Binding replaces v1 — reversible by rollback (T3).</div>
+      </div>
+
+      <div style="padding:16px 18px; border-bottom:1px solid #22251f">
+        <div style="display:flex; justify-content:space-between; align-items:baseline">
+          <div style="font-size:12px; color:#a4a89e">Eval score vs threshold</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066">harness v1.3 · 96 cases</div>
+        </div>
+        <div style="display:flex; align-items:baseline; gap:10px; margin-top:8px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:34px; font-weight:700; color:#9ecf4a">{{ score }}</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#a4a89e">≥ 0.80 required</span>
+        </div>
+        <div style="position:relative; height:10px; border-radius:5px; background:#22251f; margin-top:10px; overflow:visible">
+          <div style="position:absolute; inset:0; border-radius:5px; overflow:hidden"><div style="width:{{ scorePct }}; height:100%; background:linear-gradient(90deg,#4e7a12,#7fb92c)"></div></div>
+          <div style="position:absolute; left:80%; top:-3px; width:2px; height:16px; background:#c9a44a"></div>
+          <div style="position:absolute; left:80%; top:18px; transform:translateX(-50%); font-family:'JetBrains Mono',monospace; font-size:10px; color:#c9a44a">0.80</div>
+        </div>
+        <div style="height:16px"></div>
+        <sc-if value="{{ borderline }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:6px; padding:10px 12px; border:1px solid rgba(201,164,74,0.45); border-radius:6px; background:rgba(201,164,74,0.08); font-size:12.5px; color:#c9a44a">Passed by 0.005 — technically above the gate, but thin. Consider more seed data before binding.</div>
+        </sc-if>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px">
+          <sc-for list="{{ subscores }}" as="s" hint-placeholder-count="3">
+            <div style="border:1px solid #22251f; border-radius:6px; padding:9px 10px">
+              <div style="font-size:10.5px; color:#6c7066">{{ s.name }}</div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:700; margin-top:3px; color:{{ s.color }}">{{ s.val }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="padding:16px 18px; border-bottom:1px solid #22251f">
+        <div style="font-size:12px; color:#a4a89e; margin-bottom:10px">Provenance — goes into the record as-is</div>
+        <div style="display:flex; flex-direction:column; gap:7px; font-family:'JetBrains Mono',monospace; font-size:11.5px">
+          <div style="display:flex; justify-content:space-between; gap:12px"><span style="color:#6c7066">base model</span><span style="text-align:right">slm-2b-instruct · 9f3c…a41e</span></div>
+          <div style="display:flex; justify-content:space-between; gap:12px"><span style="color:#6c7066">seed data</span><span style="text-align:right">1,388 rows · bundled · c21a…88f0</span></div>
+          <div style="display:flex; justify-content:space-between; gap:12px"><span style="color:#6c7066">settings</span><span style="text-align:right">r=16 · lr 2e-4 · batch 8 · 3 epochs</span></div>
+          <div style="display:flex; justify-content:space-between; gap:12px"><span style="color:#6c7066">quantized</span><span style="text-align:right">q4_k_m · 77b1…03c9</span></div>
+          <div style="display:flex; justify-content:space-between; gap:12px"><span style="color:#6c7066">trained on</span><span style="text-align:right">this machine · aug 24 · 41m</span></div>
+        </div>
+      </div>
+
+      <div style="padding:16px 18px; border-bottom:1px solid #22251f">
+        <div style="font-size:12px; color:#a4a89e; margin-bottom:10px">What changed vs v1 (currently bound)</div>
+        <div style="display:flex; flex-direction:column; gap:7px">
+          <sc-for list="{{ diffs }}" as="d" hint-placeholder-count="3">
+            <div style="display:flex; align-items:center; gap:10px; font-size:12.5px">
+              <span style="width:110px; color:#6c7066; font-family:'JetBrains Mono',monospace; font-size:11px; flex:none">{{ d.k }}</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#a4a89e">{{ d.from }}</span>
+              <span style="color:#6c7066">→</span>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; color:{{ d.color }}">{{ d.to }}</span>
+              <span style="font-size:11.5px; color:#6c7066">{{ d.note }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <sc-if value="{{ deciding }}" hint-placeholder-val="{{ true }}">
+        <div style="padding:16px 18px; display:flex; flex-direction:column; gap:10px">
+          <sc-if value="{{ notConfirming }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex; gap:10px">
+              <button onClick="{{ askConfirm }}" style="flex:1.6; font-family:'Archivo',sans-serif; font-size:15px; font-weight:700; padding:15px 10px; border-radius:8px; border:1px solid #a3d95c; background:linear-gradient(180deg,#8ac938,#639617); color:#0f1405; cursor:pointer" style-hover="filter:brightness(1.07)">Approve and bind</button>
+              <button onClick="{{ deny }}" style="flex:1; font-family:'Archivo',sans-serif; font-size:14px; font-weight:600; padding:15px 10px; border-radius:8px; border:1px solid #454a41; background:#20231e; color:#e9ece5; cursor:pointer" style-hover="border-color:#6c7066">Deny</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ confirming }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:12px 14px; border:1px solid rgba(127,185,44,0.5); border-radius:8px; background:rgba(127,185,44,0.07); font-size:13px">Sign as <span style="font-family:'JetBrains Mono',monospace">operator r.akesson</span> and bind v2? This lands in the record.</div>
+            <div style="display:flex; gap:10px">
+              <button onClick="{{ approve }}" style="flex:1.6; font-family:'Archivo',sans-serif; font-size:15px; font-weight:700; padding:15px 10px; border-radius:8px; border:1px solid #a3d95c; background:linear-gradient(180deg,#8ac938,#639617); color:#0f1405; cursor:pointer">Confirm — sign and bind</button>
+              <button onClick="{{ cancelConfirm }}" style="flex:1; font-family:'Archivo',sans-serif; font-size:14px; font-weight:600; padding:15px 10px; border-radius:8px; border:1px solid #454a41; background:#20231e; color:#a4a89e; cursor:pointer">Back</button>
+            </div>
+          </sc-if>
+          <div style="font-size:11.5px; color:#6c7066; text-align:center">Deny keeps the adapter unbound (fail-closed) and sends it to data review.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ approved }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:16px 18px">
+          <div style="padding:14px 16px; border:1px solid rgba(127,185,44,0.5); border-radius:8px; background:rgba(127,185,44,0.08)">
+            <div style="font-size:15px; font-weight:700; color:#9ecf4a">✓ Bound — v2 is live</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#a4a89e; margin-top:5px">signed operator r.akesson · {{ nowLabel }} · record 5e0d…91aa</div>
+            <div style="font-size:12.5px; color:#a4a89e; margin-top:8px">Wrong call? <span style="color:#9ecf4a; font-weight:600">Rollback to v1</span> stays one tap away (T3).</div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ denied }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:16px 18px">
+          <div style="padding:14px 16px; border:1px solid #454a41; border-radius:8px; background:#161814">
+            <div style="font-size:15px; font-weight:700; color:#a4a89e">Denied — v2 stays unbound</div>
+            <div style="font-size:12.5px; color:#6c7066; margin-top:5px">Fail-closed: v1 remains live. The adapter and your denial are kept in the record; the pack goes to data review.</div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="padding:22px 16px 0">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:0 2px 10px">
+      <div style="font-size:14px; font-weight:700">Training record — meeting-summarizer</div>
+      <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#9ecf4a">chain verified ✓ {{ linkCount }} links</span>
+    </div>
+    <div style="border:1px solid #2a2d27; border-radius:10px; background:#191b17; padding:6px 0">
+      <sc-for list="{{ chain }}" as="e" hint-placeholder-count="5">
+        <div style="display:flex; gap:12px; padding:10px 16px">
+          <div style="display:flex; flex-direction:column; align-items:center; flex:none; width:14px">
+            <span style="width:8px; height:8px; border-radius:99px; background:{{ e.dot }}; margin-top:4px"></span>
+            <sc-if value="{{ e.line }}" hint-placeholder-val="{{ true }}"><span style="width:1px; flex:1; background:#2a2d27; margin-top:3px"></span></sc-if>
+          </div>
+          <div style="min-width:0; padding-bottom:2px">
+            <div style="font-size:12.5px; font-weight:600; color:{{ e.color }}">{{ e.title }}</div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#6c7066; margin-top:2px">{{ e.meta }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="font-size:11.5px; color:#6c7066; margin-top:8px; padding:0 2px">Each entry hashes the one before it — the adapter's birth certificate. Exportable, verifiable offline.</div>
+  </div>
+
+  <div style="padding:26px 16px 0">
+    <div style="border:1px solid rgba(217,86,74,0.45); border-radius:10px; background:#191b17; overflow:hidden">
+      <div style="padding:14px 18px; border-bottom:1px solid #22251f; background:rgba(217,86,74,0.05)">
+        <div style="display:flex; align-items:center; gap:8px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:4px; border:1px solid rgba(217,86,74,0.6); color:#e07a6f; background:rgba(217,86,74,0.08)">T4 · dual approval</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#e07a6f">not reversible</span>
+        </div>
+        <div style="font-size:16px; font-weight:800; margin-top:9px">Delete artifact — meeting-summarizer v0</div>
+        <div style="font-size:12.5px; color:#a4a89e; margin-top:3px">Superseded, never bound. Deleting frees 3.1 GB. Two people must sign; there is no undo.</div>
+      </div>
+      <div style="padding:14px 18px; display:flex; flex-direction:column; gap:9px">
+        <div style="display:flex; align-items:center; gap:10px; font-size:12.5px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9ecf4a">✓</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px">operator r.akesson</span>
+          <span style="color:#6c7066; font-size:11.5px">signed 09:41</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; font-size:12.5px">
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:{{ sig2Color }}">{{ sig2Mark }}</span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11.5px">operator j.lind</span>
+          <span style="color:{{ sig2Color }}; font-size:11.5px">{{ sig2Label }}</span>
+        </div>
+        <sc-if value="{{ t4Pending }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ signSecond }}" style="margin-top:6px; font-family:'Archivo',sans-serif; font-size:13.5px; font-weight:700; padding:13px 10px; border-radius:8px; border:1px solid rgba(217,86,74,0.6); background:rgba(217,86,74,0.10); color:#e07a6f; cursor:pointer" style-hover="background:rgba(217,86,74,0.16)">Sign as second approver — delete permanently</button>
+        </sc-if>
+        <sc-if value="{{ t4Done }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:6px; padding:12px 14px; border:1px solid rgba(217,86,74,0.5); border-radius:8px; background:rgba(217,86,74,0.08); font-size:13px; color:#e07a6f">Deleted by dual approval. Both signatures are in the record; the artifact is gone.</div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:22px 16px 0; font-family:'JetBrains Mono',monospace; font-size:11px; color:#6c7066; text-align:center"><a href="V1 Campaign.dc.html">campaign board</a> · <a href="V2 Guided start.dc.html">guided start</a> · <a href="Forge Kit.dc.html">kit</a></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 430, &quot;height&quot;: 940}, &quot;margin&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;clear pass&quot;, &quot;borderline&quot;], &quot;default&quot;: &quot;clear pass&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Scenario&quot;}}">
+class Component extends DCLogic {
+  state = { phase: "deciding", confirming: false, t4Signed: false };
+  renderVals() {
+    const margin = this.props.margin ?? "clear pass";
+    const borderline = margin === "borderline";
+    const score = borderline ? "0.805" : "0.82";
+    const scorePct = borderline ? "80.5%" : "82%";
+    const approved = this.state.phase === "approved";
+    const chain = [
+      { title: "Pack registered", meta: "aug 24 09:02 · seed c21a…88f0 · 1,388 rows", dot: "#565b52" },
+      { title: "Training started", meta: "job hf-0113 · base slm-2b-instruct 9f3c…a41e", dot: "#565b52" },
+      { title: "Training finished", meta: "3 epochs · 41m · final loss 0.34", dot: "#565b52" },
+      { title: "Quantized q4_k_m", meta: "77b1…03c9 · 1.9 GB", dot: "#7d9ab5" },
+      { title: "Eval passed " + score + " ≥ 0.80", meta: "harness v1.3 · 96 cases · fail-closed gate", dot: "#c9a44a" }
+    ];
+    if (approved) chain.push({ title: "Approved and bound", meta: "signed operator r.akesson · record 5e0d…91aa", dot: "#7fb92c", color: "#9ecf4a" });
+    if (this.state.phase === "denied") chain.push({ title: "Denied — kept unbound", meta: "operator r.akesson · sent to data review", dot: "#a4a89e" });
+    return {
+      score, scorePct, borderline,
+      agoLabel: "38 minutes ago",
+      nowLabel: "aug 24 21:14",
+      subscores: [
+        { name: "faithfulness", val: borderline ? "0.79" : "0.84", color: "#e9ece5" },
+        { name: "format", val: "0.91", color: "#e9ece5" },
+        { name: "refusals ok", val: borderline ? "0.72" : "0.78", color: borderline ? "#c9a44a" : "#e9ece5" }
+      ],
+      diffs: [
+        { k: "eval score", from: "0.79", to: score, color: "#9ecf4a", note: "better" },
+        { k: "adapter size r", from: "8", to: "16", color: "#e9ece5", note: "more capacity" },
+        { k: "seed rows", from: "1,188", to: "1,388", color: "#e9ece5", note: "+200 curated" },
+        { k: "quantization", from: "q4_k_m", to: "q4_k_m", color: "#a4a89e", note: "unchanged" }
+      ],
+      deciding: this.state.phase === "deciding",
+      notConfirming: !this.state.confirming, confirming: this.state.confirming,
+      askConfirm: () => this.setState({ confirming: true }),
+      cancelConfirm: () => this.setState({ confirming: false }),
+      approve: () => this.setState({ phase: "approved", confirming: false }),
+      deny: () => this.setState({ phase: "denied" }),
+      approved, denied: this.state.phase === "denied",
+      chain: chain.map((e, i) => ({ ...e, color: e.color || "#e9ece5", line: i < chain.length - 1 })),
+      linkCount: String(chain.length),
+      t4Pending: !this.state.t4Signed, t4Done: this.state.t4Signed,
+      signSecond: () => this.setState({ t4Signed: true }),
+      sig2Mark: this.state.t4Signed ? "✓" : "○",
+      sig2Color: this.state.t4Signed ? "#9ecf4a" : "#c9a44a",
+      sig2Label: this.state.t4Signed ? "signed just now" : "waiting — second person required"
+    };
+  }
+}
+</script>
+</body>
+</html>
